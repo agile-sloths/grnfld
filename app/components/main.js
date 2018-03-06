@@ -36,7 +36,6 @@ angular.module('app')
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
     });
-
   };
 
   //hacky way of refreshing the current view to get new posts
@@ -80,6 +79,14 @@ angular.module('app')
       console.log('select Solution completed');
     }
   };
+
+  // $scope.unselectSolution = (comment) => {
+  //   if ($rootScope.userId === $scope.currentPost.user_id && $scope.currentPost.solution_id === comment.comment_id) {
+  //     $scope.currentPost.solution_id = null;
+  //     commentsService.selectSolution(comment.comment_id, $scope.currentPost.post_id);
+  //     console.log('UNselect Solution completed');
+  //   }
+  // }
 
   $scope.likeComment = async (commentId, index) => {
     //need commmentId, usernameId(rootscope), how many coins to use (ng-click to send one and ng-double click to send more?)
