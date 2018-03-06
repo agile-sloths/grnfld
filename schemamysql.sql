@@ -1,4 +1,7 @@
+DROP DATABASE IF EXISTS grnfld;
+
 CREATE DATABASE grnfld;
+
 USE grnfld;
 
 DROP TABLE IF EXISTS comments;
