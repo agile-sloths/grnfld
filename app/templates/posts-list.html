@@ -57,8 +57,11 @@
                                             <small>
                                                 <a ng-class="{'disabled': $root.hackcoin <= 0 || !$root.userId}" ng-click="likeComment(comment.comment_id, $index)"
                                                     href="">Like</a> -
-                                                <a ng-show="currentPost.user_id === $root.userId" ng-click="selectSolution(comment)"
-                                                    href="">Mark as Solution</a> Votes: {{comment.votes}}
+                                                <a ng-show="currentPost.user_id === $root.userId && currentPost.solution_id !== comment.comment_id" ng-click="selectSolution(comment)"
+                                                    href="">Mark as Solution</a> 
+                                                <a ng-show="currentPost.user_id === $root.userId
+                                                && currentPost.solution_id === comment.comment_id" ng-click="unselectSolution(comment)"
+                                                    href="">Unmark as Solution</a> - Votes: {{comment.votes}}
                                             </small>
                                         </p>
                                     </div>
