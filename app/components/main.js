@@ -48,7 +48,7 @@ angular.module('app')
     let el = document.getElementById("styledark");
     let buttonText = document.getElementById("styletoggle");
     if (el.href.match("https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css")) {
-        el.href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
+        el.href = "https://bootswatch.com/3/flatly/bootstrap.min.css";
         buttonText.innerHTML = 'Dark Mode'
     }
     else {
