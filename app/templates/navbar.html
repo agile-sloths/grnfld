@@ -7,19 +7,19 @@
       </button>
       <a class="navbar-brand" href="/">grnfld.</a>
     </div>
-    <div class="collapse navbar-collapse">
-      <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="nav navbar-nav mr-auto">
-          <li><a href="/">Home</a></li>
-          <li ng-hide="$root.userId"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-          <li ng-hide="$root.userId"><a href="#" data-toggle="modal" data-target="#register-modal">Register</a></li>
-          <li ng-show="$root.userId"><a href="/submit">Submit</a></li>
-          <li ng-show="$root.userId"><a href="#" data-toggle="modal" data-target="#logout">Logout</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#about-modal">About us</a></li>
-          <li ng-show="$root.userId"><a href="#">Current Hackcoins: {{$root.hackcoin}}</a></li>
+    <div class="collapse navbar-collapse navbar-expand-md navbar-dark bg-dark">
+        <ul class="nav navbar-nav navbar-left">
+          <li class="nav-item" ng-show="$root.userId"><a href="/submit">Ask Question</a></li>
+          <li class="nav-item"><a href="#" data-toggle="modal" data-target="#about-modal">About us</a></li>
+          <li class="nav-item" ng-show="$root.userId"><a href="#">Current Hackcoins: {{$root.hackcoin}}</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-item" ng-hide="$root.userId"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+          <li class="nav-item" ng-hide="$root.userId"><a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a></li>  
+          <li class="nav-item" ng-show="$root.userId"><a href="#" data-toggle="modal" data-target="#logout">Logout</a></li>
         </ul>
       </div>
-    </div>
+    </div>  
   </div>
 </div>
 
