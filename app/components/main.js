@@ -36,7 +36,6 @@ angular.module('app')
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
     });
-
   };
 
   //hacky way of refreshing the current view to get new posts
