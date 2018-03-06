@@ -86,9 +86,9 @@ const checkCoin = (userId) => {
   return knex.select('hackcoin').from('users').where('user_id', userId);
 };
 
-const subtractCoins = (currenthackcoin, subtractinghackcoin, userId, commentId) => {
-  knex('users').where('user_id', userId).update('hackcoin', currenthackcoin - subtractinghackcoin);
-  knex('comments').where('comment_id', commentId).increment('votes', subtractinghackcoin);  //update votes by amount of hackcoins subtracted
+const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, commentId) => {
+  await knex('users').where('user_id', userId).update('hackcoin', currenthackcoin - subtractinghackcoin);
+  await knex('comments').where('comment_id', commentId).increment('votes', subtractinghackcoin);  //update votes by amount of hackcoins subtracted
 };
 
 const refreshCoins = () => {
