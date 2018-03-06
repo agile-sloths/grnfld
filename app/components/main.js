@@ -88,4 +88,18 @@ angular.module('app')
       }
     }
   };
+
+  $scope.unlikeComment = async (commentId, index) => {
+    let res = await commentsService.likeComment({
+      commentId: commentId,
+      userId: $rootScope.userId
+    });
+
+    if (res.status === 204) {
+      $scope.$apply(() => {
+        --$rootScope.hackcoin;
+        $scope.comments[index].votes++;
+      });
+    }
+  };
 });
