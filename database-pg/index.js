@@ -27,6 +27,11 @@ const getComments = (postId) => {
     .where(knex.raw(`comments.post_id = ${postId} and comments.user_id = users.user_id`));
 };
 
+const getVoters = (commentId) => {
+  return knex.column(knex.raw('userscomments.user_id')).select().from('userscomments')
+    .where(knex.raw(`comment_id = ${commentId}`));
+};
+
 //using async/await
 //currently not used
 // async function getPostsWithCommentsAsync() {
@@ -120,6 +125,7 @@ module.exports = {
   getAllPosts,
   createPost,
   getComments,
+  getVoters,
   // getPostsWithCommentsAsync,
   checkCredentials,
   createUser,

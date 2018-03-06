@@ -32,7 +32,7 @@ angular.module('app')
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
       console.log('comments', data);
-      $scope.comments = data;
+      $scope.comments = data.comments;
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
     });
@@ -44,20 +44,9 @@ angular.module('app')
     $scope.init();
   };
 
-  $scope.toggleStyle = () => {
-    let el = document.getElementById("styledark");
-    let buttonText = document.getElementById("styletoggle");
-    if (el.href.match("https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css")) {
-        el.href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
-        buttonText.innerHTML = 'Dark Mode'
-    }
-    else {
-        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css";  
-        buttonText.innerHTML = 'Light Mode'
-    }
-  };
-
   $scope.message = '';
+
+  $
 
   $scope.submitComment = (isValid) => {
     if (isValid) {

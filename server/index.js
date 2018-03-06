@@ -35,7 +35,13 @@ app.get('/posts', async (req, res) => {
 app.get('/comments', async (req, res) => {
   let postId = req.query.postId;
   let comments = await db.getComments(postId);
-  res.json(comments);
+  let voters = [];
+  for (let comment of comments) {
+    let results = await db.getVoters(comment.comment_id);
+    results.filter(result => result.length > 0)
+    voters.push(results);
+  }
+  res.json({ comments: comments, voters: voters });
 });
 
 app.post('/createPost', async (req, res) => {
