@@ -13,7 +13,7 @@ CREATE TABLE users
   user_id INT NOT NULL AUTO_INCREMENT,
   username VARCHAR(25) NOT NULL,
   password varchar(60) NOT NULL,
-  hackcoin int NOT NULL DEFAULT 5,
+  hackcoin int NOT NULL DEFAULT 100,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (user_id)
 );
