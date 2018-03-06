@@ -116,6 +116,6 @@ app.post('/solution', async (req, res) => {
 
 app.get('*', (req, res) => res.redirect('/'));
 
-app.listen(process.env.PORT || 8000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log('listening on port 3000!');
 });
