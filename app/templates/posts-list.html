@@ -1,5 +1,6 @@
 <div>
     <button ng-click="refresh()" type="button" class="btn btn-space btn-primary btn-sm pull-right">Refresh</button>
+    <button ng-click="toggleStyle()" type="button" id="styletoggle" class="btn btn-space btn-primary btn-sm pull-right">Light Mode</button>
     <h3 class="" style="margin-left: 10px;">Most Recent Posts:</h3>
     <div class="list-group">
         <a ng-repeat="post in filteredPosts track by $index" ng-click="handlePostClick($index)" post="post" class="list-group-item list-group-item-action flex-column align-items-start"
