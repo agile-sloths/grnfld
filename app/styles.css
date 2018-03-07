@@ -78,6 +78,11 @@ input[type=search]:focus  {
 	letter-spacing: 1px;
 }
 
+.navba-inner {
+	
+}
+
+
 /* hacky spacing fix */
 .navbar-brand {
    margin-bottom: 10px;
