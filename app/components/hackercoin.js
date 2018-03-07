@@ -1,16 +1,19 @@
 angular.module('app')
-.controller('TypeaheadCtrl', function($scope, $http, coinsService) {
-    coinsService.getAll(data => {
-        console.log("DATA", )
-    })
+.controller('TypeaheadCtrl', function($scope, $http) {
+    // coinsService.getAll(data => {
+    //     $scope.users = data
+    //     console.log('SCOPE USERS', $scope.users)
 
+    // })
     $scope.getUsers = function(val) {
+        console.log(val)
         return $http.get('/users', {
           params: {
-            username: val
+            username: val,
+            sensor: false
           }
         }).then(function(response){
-            console.log("SEARCH")
+            console.log(response)
           return response.data.results.map(function(item){
             console.log("SEARCH", item.username)
             return item.username;

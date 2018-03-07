@@ -52,8 +52,6 @@ app.get('/posts', async (req, res) => {
 // });
 
 app.get('/users', async(req, res) => {
-
-  console.log(req.body)
   let users = await db.getUsers();
   res.json(users);
 })

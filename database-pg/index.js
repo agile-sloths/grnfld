@@ -33,9 +33,9 @@ const getVoters = (commentId) => {
     .where(knex.raw(`comment_id = ${commentId}`));
 };
 
-const getUsers = () => {
+const getUsers = async () => {
   console.log('database works')
-  return knex.select('username').from('users');
+  return await knex.select('username').from('users');
 }
 
 //using async/await
