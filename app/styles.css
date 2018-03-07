@@ -38,7 +38,7 @@ input[type=search]:focus  {
 .nav-item {
 	font-family: 'Quicksand', sans-serif;
 	font-size: 18px;
-	letter-spacing: 0.5px;
+	letter-spacing: -1px;
 }
 
 .nav-item:hover {
@@ -60,23 +60,23 @@ input[type=search]:focus  {
 	font-family: 'Rammetto One', cursive;
 	font-size: 30px;
 	padding-bottom: 20px;
-	letter-spacing: 0.5px;
+	letter-spacing: -2px;
 }
 
 #logo {
 	font-family: 'Quicksand', sans-serif;
 	font-size: 34px;
 	padding-bottom: 20px;
-	letter-spacing: 0.5px;
+	letter-spacing: -2px;
 }
 
 #logo:hover #logo-x {
-	font-size: 36px;
+	/*font-size: 36px;*/
 	letter-spacing: 1px
 }
 
 #logo:hover {
-	font-size: 36px;
+	/*font-size: 36px;*/
 	letter-spacing: 1px;
 }
 
