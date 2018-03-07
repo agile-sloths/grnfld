@@ -120,17 +120,14 @@ angular.module('app')
 
   $scope.unlikeComment = async (commentId, index) => {
     if ($scope.comments[index].voters[$rootScope.userId] > 0) {
-      console.log($scope.comments[index].voters[$rootScope.userId] > 0);
       let res = await commentsService.unlikeComment($rootScope.userId, commentId);
 
       if (res.status === 204) {
         $scope.$apply(() => {
-          console.log($scope.comments[index].voters[$rootScope.userId])
           ++$rootScope.hackcoin;
           $scope.comments[index].votes--;
           $scope.comments[index].voters[$rootScope.userId]--;
         });
-        $('#like-alert').show();
       }
     }
   };

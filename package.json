@@ -12,6 +12,7 @@
   "dependencies": {
     "angular": "^1.6.9",
     "angular-cookies": "^1.6.9",
+    "angular-highlightjs": "^0.7.1",
     "angular-route": "^1.6.9",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.2",
