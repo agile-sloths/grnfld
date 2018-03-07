@@ -25,4 +25,14 @@ angular.module('app')
         callback(err);
     });
   };
+
+  this.logout = function () {
+    $http.post('/logout')
+      .then(function (data) {
+        callback(data);
+      })
+      .catch(function (err) {
+        callback(err);
+    });
+  };
 });

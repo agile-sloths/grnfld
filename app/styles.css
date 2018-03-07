@@ -6,3 +6,19 @@
 .btn-space {
     margin-right: 10px;
 }
+
+input[type=search] {
+  width: 15%;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=search]:focus  {
+   width: 100%;
+}
+
+.search {
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
