@@ -27,7 +27,6 @@ angular.module('app')
   };
 
   this.logout = function () {
-    console.log('hi')
     $http.post('/logout')
       .then(function (data) {
         callback(data);

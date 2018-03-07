@@ -16,9 +16,9 @@ angular.module('app')
           console.log('registration error');
           $('#registration-error').show();
         } else {
-          console.log('userid', res.data.user_id);
           $rootScope.userId = res.data.user_id;
           $rootScope.hackcoin = res.data.hackcoin;
+          $rootScope.sessionId = res.data.session_id;
           window.localStorage.sessionID = res.data.session_id;
           $scope.register = {
             username: '',
