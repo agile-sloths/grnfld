@@ -6,14 +6,12 @@ angular.module('app')
 
     // })
     $scope.getUsers = function(val) {
-        console.log(val)
         return $http.get('/users', {
           params: {
             username: val,
             sensor: false
           }
         }).then(function(response){
-            console.log(response)
           return response.data.results.map(function(item){
             console.log("SEARCH", item.username)
             return item.username;
