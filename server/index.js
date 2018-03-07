@@ -65,7 +65,7 @@ app.get('/comments', async (req, res) => {
   res.json(comments);
 });
 
-app.post('/createPost', async (req, res) => {
+app.post('/createPost', isLoggedIn, async (req, res) => {
   try {
     await db.createPost(req.body);
   } catch (err) {
@@ -74,7 +74,7 @@ app.post('/createPost', async (req, res) => {
   res.end();
 });
 
-app.post('/createComment', async (req, res) => {
+app.post('/createComment', isLoggedIn, async (req, res) => {
   let comment = req.body;
   try {
     await db.createComment(comment);
@@ -106,7 +106,7 @@ app.post('/register', passport.authenticate('local-signup'), (req, res) => {
   }
 });
 
-app.post('/logout', (req, res) => {
+app.post('/logout', isLoggedIn, (req, res) => {
   req.logout();
   res.clearCookie('connect.sid').status(200);
 });
@@ -116,7 +116,7 @@ const getCurrentHackCoins = async userId => {
   return currentHackCoins = currentHackCoins.pop().hackcoin;
 }
 
-app.post('/coin', async (req, res) => {
+app.post('/coin', isLoggedIn, async (req, res) => {
   let currentHackCoins = await getCurrentHackCoins(req.body.userId);
   if (currentHackCoins > 0 && req.body.hackCoins <= currentHackCoins) { //user has usable coins and asking to use a number of some available -- good update db
     await db.subtractCoins(currentHackCoins, req.body.hackCoins, req.body.userId, req.body.commentId);
@@ -132,7 +132,7 @@ app.post('/coin', async (req, res) => {
   }
 });
 
-app.delete('/coin*', async (req, res) => { // this feels a little backwards, but they had it set up where a post takes away your coin which means a delete gives one back
+app.delete('/coin*', isLoggedIn, async (req, res) => { // this feels a little backwards, but they had it set up where a post takes away your coin which means a delete gives one back
   let query = url.parse(req.url).query.split('?');
   let currentHackCoins = await getCurrentHackCoins(+query[0]);
   await db.addCoin(+query[0], +query[1]); // give back coin to logged in user
@@ -140,7 +140,7 @@ app.delete('/coin*', async (req, res) => { // this feels a little backwards, but
   res.status(204).end();
 });
 
-app.post('/solution', async (req, res) => {
+app.post('/solution', isLoggedIn, async (req, res) => {
   const data = await db.markSolution(req.body.commentId, req.body.postId);
   res.status(200).end();
 });
