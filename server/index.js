@@ -106,6 +106,7 @@ app.post('/coin', async (req, res) => {
 
   if (currentHackCoins > 0 && req.body.hackCoins <= currentHackCoins) { //user has usable coins and asking to use a number of some available -- good update db
     await db.subtractCoins(currentHackCoins, req.body.hackCoins, req.body.userId, req.body.commentId);
+    await db.addCoin(req.body.postUser, req.body.commentId);
     res.status(200).end();
   } else if(currentHackCoins > 0 && req.body.hackCoins > currentHackCoins) { //if usable coins but asking to use more than available
     console.log('tried to use too many hack coins');

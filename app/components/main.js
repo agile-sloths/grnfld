@@ -92,7 +92,7 @@ angular.module('app')
     }
   };
 
-  $scope.likeComment = async (commentId, index) => {
+  $scope.likeComment = async (commentId, userId, index) => {
     //need commmentId, usernameId(rootscope), how many coins to use (ng-click to send one and ng-double click to send more?)
     //TODO add modal for ng-doubleclick
     if ($rootScope.hackcoin <= 0) {
@@ -100,6 +100,7 @@ angular.module('app')
     } else {
       let res = await commentsService.likeComment({
         commentId: commentId,
+        postUser: userId,
         userId: $rootScope.userId,
         hackCoins: 1
       });

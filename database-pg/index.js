@@ -114,6 +114,7 @@ const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, comme
 };
 
 const addCoin = async (userId, commentId) => {
+  console.log(userId, commentId, typeof userId, typeof commentId);
   await knex('users').where('user_id', userId).increment('hackcoin', 1);
   await knex('comments').where('comment_id', commentId).decrement('votes', 1);  //update votes by amount of hackcoins subtracted
   await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).decrement('votes', 1);
