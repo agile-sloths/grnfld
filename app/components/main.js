@@ -28,6 +28,7 @@ angular.module('app')
   $scope.init();
 
   $scope.handlePostClick = (clickedValue) => {
+    $('#like-alert').hide();
     $scope.currentPost = $scope.filteredPosts[clickedValue];
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
@@ -85,8 +86,12 @@ angular.module('app')
       if (res.status === 200) {
         $scope.$apply(() => {
           --$rootScope.hackcoin;
+          if (!$scope.comments[index].hasOwnProperty($rootScope.userId)) {
+            $scope.comments[index].voters[$rootScope.userId] = 1;
+          } else {
+            $scope.comments[index].voters[$rootScope.userId]++;
+          }
           $scope.comments[index].votes++;
-          $scope.comments[index].voters[$rootScope.userId]++;
         });
       }
     }
@@ -104,7 +109,18 @@ angular.module('app')
           $scope.comments[index].votes--;
           $scope.comments[index].voters[$rootScope.userId]--;
         });
+        $('#like-alert').show();
       }
     }
   };
+
+    $scope.multipleLike = async (commentId, index) => {
+    if ($rootScope.hackcoin <= 0) {
+      $('#like-error').show();
+    }
+    console.log('like has been double clicked!');
+    $('#like-modal').modal('toggle');
+
+  };
+
 });
