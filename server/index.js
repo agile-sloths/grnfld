@@ -3,12 +3,29 @@ const bodyParser = require('body-parser');
 const url = require('url');
 const bcrypt = require('bcrypt-nodejs');
 const db = require('../database-pg/index');
+const passport = require('passport');
+const session = require('express-session');
 
 const app = express();
+require('../server/config/passport')(passport);
+app.use(session({
+  secret: process.env.SESSION_PASSWORD || 'supersecretsecret',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(__dirname + '/../app'));
 app.use(express.static(__dirname + '/../node_modules'));
 
 app.use(bodyParser.json());
+
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).end('You must log in to do that!');
+}
 
 const timer =  24 * 60 * 1000; //hours minutes seconds  //15 * 1000
 let refreshCoins = setInterval( () => {
@@ -66,23 +83,12 @@ app.post('/createComment', async (req, res) => {
   res.end();
 });
 
-app.post('/login', async (req, res) => {
-  const userInfo = await db.checkCredentials(req.body.username);
-
-  if (userInfo.length) {
-    const user = userInfo[0];
-    if (bcrypt.compareSync(req.body.password, user.password)) {
-      res.status(200).json({
-        user_id: user.user_id,
-        username: user.username,
-        hackcoin: user.hackcoin
-      });
-    } else {
-      res.status(401).send('false password');
-    }
-  } else {
-    res.status(401).send('username doesn\'t exist');
-  }
+app.post('/login', passport.authenticate('local-login'), (req, res) => {
+  res.status(200).json({
+    user_id: req.user.user_id,
+    username: req.user.username,
+    hackcoin: req.user.hackcoin
+  });
 });
 
 app.post('/register', async (req, res) => {
