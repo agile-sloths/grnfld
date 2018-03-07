@@ -32,7 +32,7 @@ angular.module('app')
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
       console.log('comments', data);
-      $scope.comments = data.comments;
+      $scope.comments = data;
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
     });
@@ -86,22 +86,26 @@ angular.module('app')
         $scope.$apply(() => {
           --$rootScope.hackcoin;
           $scope.comments[index].votes++;
+          $scope.comments[index].voters[$rootScope.userId]++;
+
         });
       }
     }
   };
 
   $scope.unlikeComment = async (commentId, index) => {
-    let res = await commentsService.likeComment({
-      commentId: commentId,
-      userId: $rootScope.userId
-    });
+    if ($scope.comments[index].voters[$rootScope.userId] > 0) {
+      console.log($scope.comments[index].voters[$rootScope.userId] > 0);
+      let res = await commentsService.unlikeComment($rootScope.userId, commentId);
 
-    if (res.status === 204) {
-      $scope.$apply(() => {
-        --$rootScope.hackcoin;
-        $scope.comments[index].votes++;
-      });
+      if (res.status === 204) {
+        $scope.$apply(() => {
+          console.log($scope.comments[index].voters[$rootScope.userId])
+          ++$rootScope.hackcoin;
+          $scope.comments[index].votes--;
+          $scope.comments[index].voters[$rootScope.userId]--;
+        });
+      }
     }
   };
 });

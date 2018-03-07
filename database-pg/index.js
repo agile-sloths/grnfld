@@ -28,7 +28,7 @@ const getComments = (postId) => {
 };
 
 const getVoters = (commentId) => {
-  return knex.column(knex.raw('userscomments.user_id')).select().from('userscomments')
+  return knex.column(knex.raw('userscomments.user_id, userscomments.votes')).select().from('userscomments')
     .where(knex.raw(`comment_id = ${commentId}`));
 };
 
@@ -94,7 +94,7 @@ const checkCoin = (userId) => {
 const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, commentId) => {
   await knex('users').where('user_id', userId).update('hackcoin', currenthackcoin - subtractinghackcoin);
   await knex('comments').where('comment_id', commentId).increment('votes', subtractinghackcoin);  //update votes by amount of hackcoins subtracted
-  let currentCount = await knex('userscomments').select('votes').where('user_id', userId).andWhere('comment_id', commentId);
+  let currentCount = await knex.select('votes').from('userscomments').where('user_id', userId).andWhere('comment_id', commentId);
   if (!currentCount.length) {
     await knex('userscomments').insert({
       user_id: userId,
@@ -109,12 +109,7 @@ const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, comme
 const addCoin = async (userId, commentId) => {
   await knex('users').where('user_id', userId).increment('hackcoin', 1);
   await knex('comments').where('comment_id', commentId).decrement('votes', 1);  //update votes by amount of hackcoins subtracted
-  let currentCount = await knex('userscomments').select('votes').where('user_id', userId).andWhere('comment_id', commentId);
-  if (!currentCount) {
-    return 'you do not like this comment, you can\'t unlike it'
-  } else {
-    await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).decrement('votes', 1);
-  }
+  await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).decrement('votes', 1);
 };
 
 const refreshCoins = () => {
@@ -133,5 +128,6 @@ module.exports = {
   markSolution,
   checkCoin,
   subtractCoins,
+  addCoin,
   refreshCoins
 };
