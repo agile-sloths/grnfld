@@ -38,7 +38,7 @@ input[type=search]:focus  {
 .nav-item {
 	font-family: 'Quicksand', sans-serif;
 	font-size: 18px;
-	letter-spacing: -1px;
+	letter-spacing: -.05px;
 }
 
 .nav-item:hover {
@@ -53,8 +53,6 @@ input[type=search]:focus  {
   transition: all 0.5s ease-in-out; 
   cursor: pointer
 }
-
-
 
 #logo-x {
 	font-family: 'Rammetto One', cursive;
