@@ -49,38 +49,6 @@
                                 You have {{$root.hackcoin}} hackcoins left!
                             </div>
 
-<!-- Like Modal -->
-<div class="modal fade" id="like-modal" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">TEST</h4>
-      </div>
-    <div id="likemultiple-error" class="alert alert-danger alert-dismissible fade in" style="display:none;">
-        <a href="#" class="close" aria-label="close">&times;</a>
-        <strong>Invalid!</strong> Please specify a number
-      </div>
-      <form name="likeForm" ng-submit="submit(likeForm.$valid)" novalidate>
-      <div class="modal-body">
-        <p>TEST</p>
-          <div class="form-group">
-            <label>Number</label>
-            <input type="number" name="count" ng-model="like.count" >
-            <p ng-show="likeForm.count.$error.min && likeForm.count.$error.max" class="help-block"># Hackcoins is out of bounds.</p>
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success" ng-click="submitlikeForm(comment.comment_id, $index)" ng-disabled="likeForm.$invalid">Submit Likes</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </form>
-    </div>
-  </div>
-</div>
-
-
-
 
                         <div ng-repeat="comment in comments track by $index" class="comments-list" ng-class="{'solution': comment.solution}">
 
@@ -102,6 +70,40 @@
                                         <div class="panel-body">
                                             <p ng-bind-html="comment.message"></p>
                                         </div>
+
+
+                                        <!-- Multiple Like Modal -->
+<div class="modal fade" id="like-modal" role="dialog" ng-controller="MainCtrl">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" >Please choose the number of hackcoins you want to submit: </h4>
+      </div>
+    <div id="likemultiple-error" class="alert alert-danger alert-dismissible fade in" style="display:none;">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong>Error!</strong> Please specify a valid number and try again.
+      </div>
+      <form name="likeForm" ng-submit="submit(likeForm.$valid, comment.comment_id, comment.user_id, $index)" novalidate>
+      <div class="modal-body">
+          <div class="form-group">
+            <label for="input">Number of hackcoins to use:    </label>
+            <input type="number" name="input" ng-model="like.input" required step="1" min="0" max="{{$root.hackcoin}}" required>
+            <p ng-show="likeForm.input.$error.min || likeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 0 and {{$root.hackcoin}}.</p>
+            <p ng-show="likeForm.input.$error.required" class="help-block">A number is required.</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" ng-click="likeForm.$setPristine()" ng-disabled="likeForm.$invalid">Submit Likes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
                                         <!-- /panel-body -->
                                         <p style="margin-right: 2px;">
                                             <small>
@@ -109,7 +111,8 @@
                                                     href="">Like</a> -
 
                                                 <a ng-class="{'disabled': !comment.voters.hasOwnProperty($root.userId) || comment.voters[$root.userId] < 1 || !$root.userId}" ng-click="unlikeComment(comment.comment_id, comment.user_id, $index)"
-                                                    href="">Unlike</a>
+                                                    href="">Unlike</a> -
+
                                                 <a ng-show="currentPost.user_id === $root.userId && currentPost.solution_id !== comment.comment_id" ng-click="selectSolution(comment)"
                                                     href="">Mark as Solution</a>
                                                 <a ng-show="currentPost.user_id === $root.userId
