@@ -4,11 +4,15 @@
 }
 
 .btn-space {
-    margin-right: 10px;
+   margin-right: 10px;
+}
+
+* {
+	font-family: 'Quicksand', sans-serif;
 }
 
 input[type=search] {
-  width: 15%;
+  width: 170px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
 }
@@ -22,3 +26,66 @@ input[type=search]:focus  {
 	margin-bottom: 20px;
 	margin-top: 20px;
 }
+
+.nav-item {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease; 
+  cursor: pointer
+}
+
+.nav-item {
+	font-family: 'Quicksand', sans-serif;
+	font-size: 18px;
+	letter-spacing: -.05px;
+}
+
+.nav-item:hover {
+	font-size: 19px;
+	letter-spacing: 1px;
+}
+
+#logo {
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out; 
+  cursor: pointer
+}
+
+#logo-x {
+	font-family: 'Rammetto One', cursive;
+	font-size: 30px;
+	padding-bottom: 20px;
+	letter-spacing: -2px;
+}
+
+#logo {
+	font-family: 'Quicksand', sans-serif;
+	font-size: 34px;
+	padding-bottom: 20px;
+	letter-spacing: -2px;
+}
+
+#logo:hover #logo-x {
+	/*font-size: 36px;*/
+	letter-spacing: 1px
+}
+
+#logo:hover {
+	/*font-size: 36px;*/
+	letter-spacing: 1px;
+}
+
+
+/* hacky spacing fix */
+.navbar-brand {
+   margin-bottom: 10px;
+}
+
+.navbar-inner {
+	margin-top: 10px;
+	padding-bottom: 20px;
+}
+/*  */
