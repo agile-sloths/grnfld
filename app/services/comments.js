@@ -32,4 +32,10 @@
       postId: postId, commentId: commentId
     });
   };
+
+  this.unselectSolution = async (commentId, postId) => {
+    await $http.post('/solution/remove', {
+      postId: postId, commentId: commentId
+    });
+  };
 });
