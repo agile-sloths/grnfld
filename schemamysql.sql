@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS grnfld;
+DROP DATABASE IF EXISTS hackXchange;
 
-CREATE DATABASE grnfld;
+CREATE DATABASE hackXchange;
 
-USE grnfld;
+USE hackXchange;
 
 
 DROP TABLE IF EXISTS comments;
@@ -33,6 +33,7 @@ CREATE TABLE posts
   summary VARCHAR(8000) DEFAULT NULL,
   anon BOOLEAN DEFAULT FALSE,
   closed BOOLEAN DEFAULT FALSE,
+  language VARCHAR(120) DEFAULT NULL,
   solution_id INT DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (post_id),
