@@ -107,12 +107,13 @@ angular.module('app')
       if (res.status === 200) {
         $scope.$apply(() => {
           --$rootScope.hackcoin;
-          if (!$scope.comments[index].hasOwnProperty($rootScope.userId)) {
+          $scope.comments[index].votes++;
+          if (!$scope.comments[index].voters.hasOwnProperty($rootScope.userId)) {
             $scope.comments[index].voters[$rootScope.userId] = 1;
           } else {
             $scope.comments[index].voters[$rootScope.userId]++;
           }
-          $scope.comments[index].votes++;
+          $('#like-alert').show();
         });
       }
     }
