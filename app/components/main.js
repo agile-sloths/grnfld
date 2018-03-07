@@ -135,13 +135,49 @@ angular.module('app')
     }
   };
 
-  $scope.multipleLike = async (commentId, index) => {
+  $scope.multipleLike = async (commentId, postUserId, index) => {
     if ($rootScope.hackcoin <= 0) {
       $('#like-error').show();
+    } else {
+      console.log('like has been double clicked!-->',commentId, postUserId, index);
+      $('#like-modal').modal('toggle');
     }
-    console.log('like has been double clicked!');
-    $('#like-modal').modal('toggle');
+  };
 
+  $scope.like = {
+    input: 0
+  };
+
+  $scope.submit = function(isValid, commentId, postUserId, index) {
+    if (isValid) {
+      console.log('form is valid! heres scope:', $scope.like.input);
+      console.log('hers submit-->',commentId, postUserId, index);
+      // let res = await commentsService.likeComment({
+      //   commentId: commentId,
+      //   postUserId: postUserId,
+      //   userId: $rootScope.userId,
+      //   hackCoins: $scope.like.input
+      // });
+
+      // if (res.status === 200) {
+      //   $scope.$apply(() => {
+      //     --$rootScope.hackcoin;
+      //     $scope.comments[index].votes++;
+      //     if (!$scope.comments[index].voters.hasOwnProperty($rootScope.userId)) {
+      //       $scope.comments[index].voters[$rootScope.userId] = 1;
+      //     } else {
+      //       $scope.comments[index].voters[$rootScope.userId]++;
+      //     }
+      //   });
+      //   console.log('result of multiplelike->',$rootScope.hackcoin);
+      //   $('#like-alert').show();
+      // }
+
+      $('#like-modal').modal('toggle');
+
+    } else {
+      $('#likemultiple-error').show();
+    }
   };
 
 });
