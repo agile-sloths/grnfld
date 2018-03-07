@@ -17,6 +17,8 @@ angular.module('app')
         } else {
           $rootScope.userId = res.data.user_id;
           $rootScope.hackcoin = res.data.hackcoin;
+          $rootScope.sessionId = res.data.session_id;
+          window.localStorage.sessionID = res.data.session_id;
           $scope.login = {
             username: '',
             password: ''
