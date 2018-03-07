@@ -85,7 +85,7 @@ angular.module('app')
   };
 
   $scope.unselectSolution = (comment) => {
-    if ($rootScope.userId === $scope.currentPost.user_id && $scope.currentPost.solution_id === comment.comment_id) {
+    if (($rootScope.userId === $scope.currentPost.user_id) && ($scope.currentPost.solution_id === comment.comment_id)) {
       $scope.currentPost.solution_id = null;
       commentsService.unselectSolution(comment.comment_id, $scope.currentPost.post_id);
       console.log('Unselect Solution completed');
@@ -114,8 +114,8 @@ angular.module('app')
           } else {
             $scope.comments[index].voters[$rootScope.userId]++;
           }
-          $('#like-alert').show();
         });
+        $('#like-alert').show();
       }
     }
   };
@@ -130,17 +130,52 @@ angular.module('app')
           $scope.comments[index].votes--;
           $scope.comments[index].voters[$rootScope.userId]--;
         });
+        $('#like-alert').show();
       }
     }
   };
 
-  $scope.multipleLike = async (commentId, index) => {
+  $scope.multipleLike = async (commentId, postUserId, index) => {
     if ($rootScope.hackcoin <= 0) {
       $('#like-error').show();
+    } else {
+      console.log('like has been double clicked!-->',commentId, postUserId, index);
+      $('#like-modal').modal('toggle');
     }
-    console.log('like has been double clicked!');
-    $('#like-modal').modal('toggle');
+  };
 
+  $scope.like = {
+    input: 0
+  };
+
+  $scope.submit = async (isValid, commentId, postUserId, index) => {
+    if (isValid) {
+      console.log('form is valid! heres scope:', $scope.like.input);
+      console.log('hers submit-->',commentId, postUserId, index);
+      let res = await commentsService.likeComment({
+        commentId: commentId,
+        postUserId: postUserId,
+        userId: $rootScope.userId,
+        hackCoins: $scope.like.input
+      });
+
+      if (res.status === 200) {
+        $scope.$apply(() => {
+          $rootScope.hackcoin -= $scope.like.input;
+          $scope.comments[index].votes += $scope.like.input;
+          if (!$scope.comments[index].voters.hasOwnProperty($rootScope.userId)) {
+            $scope.comments[index].voters[$rootScope.userId] = $scope.like.input;
+          } else {
+            $scope.comments[index].voters[$rootScope.userId] += $scope.like.input;
+          }
+        });
+        $('#like-modal').modal('toggle');
+        $('#like-alert').show();
+      }
+
+    } else {
+      $('#likemultiple-error').show();
+    }
   };
 
 });
