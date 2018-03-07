@@ -12,6 +12,37 @@ angular.module('app')
     postsService.getAll(data => {
       console.log('got posts', data);
       $scope.posts = data;
+      $scope.selectedLanguage = 'JavaScript';
+
+      $scope.languages = [{
+        id: 1,
+        label: 'HTML',
+        subItem: { name: 'HTML' }
+      }, {
+        id: 2,
+        label: 'CSS',
+        subItem: { name: 'CSS' }
+      }, {
+        id: 3,
+        label: 'JavaScript',
+        subItem: { name: 'JavaScript' }
+      }, {
+        id: 4,
+        label: 'Python',
+        subItem: { name: 'Python' }
+      }, {
+        id: 5,
+        label: 'C++',
+        subItem: { name: 'C++' }
+      }, {
+        id: 6,
+        label: 'C#',
+        subItem: { name: 'C#' }
+      }, {
+        id: 7,
+        label: 'Ruby',
+        subItem: { name: 'Ruby' }
+      }];
 
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
@@ -19,7 +50,10 @@ angular.module('app')
         let begin = (($scope.currentPage - 1) * $scope.numPerPage);
         let end = begin + $scope.numPerPage;
 
-        $scope.filteredPosts = $scope.posts.slice(begin, end);
+        $scope.filteredPosts = $scope.posts.slice(begin, end).filter(post => {
+          console.log(post.language)
+          return post.language === $scope.selectedLanguage;
+        });
       });
     });
   };
