@@ -137,7 +137,7 @@ u<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 </div>
 
 <!-- Hackercoin Modal -->
-<div class="modal fade" id="hackcoins" role="dialog" ng-controller="RegisterCtrl">
+<div class="modal fade" id="hackcoins" role="dialog" >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -146,9 +146,21 @@ u<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         </div>
         <div class="modal-body">
           <h4>Total Hackcoins: {{ $root.hackcoin }}</h4>
-          <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Gift Hackcoins to another user">
-              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Gift</button>
+          <br>
+          <form class="form-inline my-6 my-lg-0">
+            <div class="form-group" ng-controller="TypeaheadCtrl">
+              <label for="giftUser">Gift Hackcoins to another user:</label>
+              <br>
+              <pre>User: {{asyncSelected | json}}</pre>
+              <br>
+              <input id="giftUser" ng-model="asyncSelected" class="form-control" type="text" placeholder="Search Users" uib-typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
+                <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
+                <div ng-show="noResults">
+                  <i class="glyphicon glyphicon-remove"></i> No Results Found
+                </div>
+              <input class="form-control" type="text" placeholder="Amount">
+              <button class="btn btn-primary" type="submit">Gift</button>
+            </div>
             </form>
         </div>
         <div class="modal-footer">
