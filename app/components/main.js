@@ -85,7 +85,7 @@ angular.module('app')
   };
 
   $scope.unselectSolution = (comment) => {
-    if ($rootScope.userId === $scope.currentPost.user_id && $scope.currentPost.solution_id === comment.comment_id) {
+    if (($rootScope.userId === $scope.currentPost.user_id) && ($scope.currentPost.solution_id === comment.comment_id)) {
       $scope.currentPost.solution_id = null;
       commentsService.unselectSolution(comment.comment_id, $scope.currentPost.post_id);
       console.log('UNselect Solution completed');
@@ -107,13 +107,14 @@ angular.module('app')
       if (res.status === 200) {
         $scope.$apply(() => {
           --$rootScope.hackcoin;
-          if (!$scope.comments[index].hasOwnProperty($rootScope.userId)) {
+          $scope.comments[index].votes++;
+          if (!$scope.comments[index].voters.hasOwnProperty($rootScope.userId)) {
             $scope.comments[index].voters[$rootScope.userId] = 1;
           } else {
             $scope.comments[index].voters[$rootScope.userId]++;
           }
-          $scope.comments[index].votes++;
         });
+        $('#like-alert').show();
       }
     }
   };
@@ -128,6 +129,7 @@ angular.module('app')
           $scope.comments[index].votes--;
           $scope.comments[index].voters[$rootScope.userId]--;
         });
+        $('#like-alert').show();
       }
     }
   };

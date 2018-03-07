@@ -128,8 +128,13 @@ app.post('/solution', async (req, res) => {
   res.status(200).end();
 });
 
+app.post('/solution/remove', async (req, res) => {
+  const data = await db.unmarkSolution(req.body.commentId, req.body.postId);
+  res.status(200).end();
+});
+
 app.get('*', (req, res) => res.redirect('/'));
 
 app.listen(process.env.PORT || 3000, function () {
-  console.log('listening on port 3000!');
+  console.log('listening on portttt 3000!');
 });
