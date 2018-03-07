@@ -103,26 +103,29 @@ const checkCoin = (userId) => {
   return knex.select('hackcoin').from('users').where('user_id', userId);
 };
 
-const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, commentId) => {
-  console.log(currenthackcoin, subtractinghackcoin, userId, commentId);
+const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, commentId, flag) => {
   await knex('users').where('user_id', userId).update('hackcoin', currenthackcoin - subtractinghackcoin);
   await knex('comments').where('comment_id', commentId).increment('votes', subtractinghackcoin);  //update votes by amount of hackcoins subtracted
-  let currentCount = await knex.select('votes').from('userscomments').where('user_id', userId).andWhere('comment_id', commentId);
-  if (!currentCount.length) {
-    await knex('userscomments').insert({
-      user_id: userId,
-      comment_id: commentId,
-      votes: 1
-    });
-  } else {
-    await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).increment('votes', 1);
+  if (flag) {
+    let currentCount = await knex.select('votes').from('userscomments').where('user_id', userId).andWhere('comment_id', commentId);
+    if (!currentCount.length) {
+      await knex('userscomments').insert({
+        user_id: userId,
+        comment_id: commentId,
+        votes: 1
+      });
+    } else {
+      await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).increment('votes', 1);
+    }
   }
 };
 
-const addCoin = async (userId, commentId) => {
+const addCoin = async (userId, commentId, flag) => {
   await knex('users').where('user_id', userId).increment('hackcoin', 1);
   await knex('comments').where('comment_id', commentId).decrement('votes', 1);  //update votes by amount of hackcoins subtracted
-  await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).decrement('votes', 1);
+  if (flag) {
+    await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).decrement('votes', 1);
+  }
 };
 
 const refreshCoins = () => {

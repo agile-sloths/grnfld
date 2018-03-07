@@ -9,14 +9,14 @@ u<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     </div>
     <div class="collapse navbar-collapse navbar-expand-md navbar-dark bg-dark">
         <ul class="nav navbar-nav navbar-left">
-          <li class="nav-item" ng-show="$root.userId"><a href="/submit">Ask Question</a></li>
+          <li class="nav-item" ng-show="$root.sessionId"><a href="/submit">Ask Question</a></li>
           <li class="nav-item"><a href="#" data-toggle="modal" data-target="#about-modal">About Us</a></li>
-          <li class="nav-item" ng-show="$root.userId"><a href="#" data-toggle="modal" data-target="#hackcoins">Hackcoin Exchange</a></li>
+          <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#hackcoins">Hackcoin Exchange</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="nav-item" ng-hide="$root.userId"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-          <li class="nav-item" ng-hide="$root.userId"><a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a></li>
-          <li class="nav-item" ng-show="$root.userId"><a href="#" data-toggle="modal" data-target="#logout">Logout</a></li>
+          <li class="nav-item" ng-hide="$root.sessionId"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+          <li class="nav-item" ng-hide="$root.sessionId"><a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a></li>
+          <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#logout">Logout</a></li>
         </ul>
       </div>
     </div>

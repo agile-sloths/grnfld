@@ -88,7 +88,7 @@ angular.module('app')
     if ($rootScope.userId === $scope.currentPost.user_id && $scope.currentPost.solution_id === comment.comment_id) {
       $scope.currentPost.solution_id = null;
       commentsService.unselectSolution(comment.comment_id, $scope.currentPost.post_id);
-      console.log('UNselect Solution completed');
+      console.log('Unselect Solution completed');
     }
   };
 
