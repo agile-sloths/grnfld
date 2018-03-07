@@ -106,6 +106,11 @@ app.post('/register', passport.authenticate('local-signup'), (req, res) => {
   }
 });
 
+app.post('/logout', (req, res) => {
+  req.logout();
+  res.clearCookie('connect.sid').status(200);
+});
+
 const getCurrentHackCoins = async userId => {
   let currentHackCoins = await db.checkCoin(userId);
   return currentHackCoins = currentHackCoins.pop().hackcoin;
