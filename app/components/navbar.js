@@ -2,7 +2,9 @@ angular.module('app')
 .controller('NavbarCtrl', function($scope, $rootScope, $location, usersService) {
   $scope.logout = function() {
     $rootScope.userId = 0;
-    usersService.logout();
+    usersService.logout((err, data) => {
+      err ? console.log(err) : console.log(data);
+    });
     $location.path('/');
     $rootScope.sessionId = null;
     window.localStorage.clear();
