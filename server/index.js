@@ -124,7 +124,6 @@ app.post('/coin', async (req, res) => {
 app.delete('/coin*', async (req, res) => { // this feels a little backwards, but they had it set up where a post takes away your coin which means a delete gives one back
   let query = url.parse(req.url).query.split('?');
   let currentHackCoins = await getCurrentHackCoins(+query[0]);
-  console.log(query, currentHackCoins)
   await db.addCoin(+query[0], +query[1]); // give back coin to logged in user
   await db.subtractCoins(currentHackCoins, 1, +query[2], +query[1]); // revoke coin from poster
   res.status(204).end();
