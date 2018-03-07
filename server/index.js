@@ -100,13 +100,16 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.post('/coin', async (req, res) => {
-  let currentHackCoins = await db.checkCoin(req.body.userId);
-  currentHackCoins = currentHackCoins.pop().hackcoin;
+const getCurrentHackCoins = async userId => {
+  let currentHackCoins = await db.checkCoin(userId);
+  return currentHackCoins = currentHackCoins.pop().hackcoin;
+}
 
+app.post('/coin', async (req, res) => {
+  let currentHackCoins = await getCurrentHackCoins(req.body.userId);
   if (currentHackCoins > 0 && req.body.hackCoins <= currentHackCoins) { //user has usable coins and asking to use a number of some available -- good update db
     await db.subtractCoins(currentHackCoins, req.body.hackCoins, req.body.userId, req.body.commentId);
-    await db.addCoin(req.body.postUser, req.body.commentId);
+    await db.addCoin(req.body.postUserId, req.body.commentId);
     res.status(200).end();
   } else if(currentHackCoins > 0 && req.body.hackCoins > currentHackCoins) { //if usable coins but asking to use more than available
     console.log('tried to use too many hack coins');
@@ -120,7 +123,10 @@ app.post('/coin', async (req, res) => {
 
 app.delete('/coin*', async (req, res) => { // this feels a little backwards, but they had it set up where a post takes away your coin which means a delete gives one back
   let query = url.parse(req.url).query.split('?');
-  await db.addCoin(+query[0], +query[1]);
+  let currentHackCoins = await getCurrentHackCoins(+query[0]);
+  console.log(query, currentHackCoins)
+  await db.addCoin(+query[0], +query[1]); // give back coin to logged in user
+  await db.subtractCoins(currentHackCoins, 1, +query[2], +query[1]); // revoke coin from poster
   res.status(204).end();
 });
 

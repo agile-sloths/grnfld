@@ -92,7 +92,7 @@ angular.module('app')
     }
   };
 
-  $scope.likeComment = async (commentId, userId, index) => {
+  $scope.likeComment = async (commentId, postUserId, index) => {
     //need commmentId, usernameId(rootscope), how many coins to use (ng-click to send one and ng-double click to send more?)
     //TODO add modal for ng-doubleclick
     if ($rootScope.hackcoin <= 0) {
@@ -100,7 +100,7 @@ angular.module('app')
     } else {
       let res = await commentsService.likeComment({
         commentId: commentId,
-        postUser: userId,
+        postUserId: postUserId,
         userId: $rootScope.userId,
         hackCoins: 1
       });
@@ -120,9 +120,9 @@ angular.module('app')
     }
   };
 
-  $scope.unlikeComment = async (commentId, index) => {
+  $scope.unlikeComment = async (commentId, postUserId, index) => {
     if ($scope.comments[index].voters[$rootScope.userId] > 0) {
-      let res = await commentsService.unlikeComment($rootScope.userId, commentId);
+      let res = await commentsService.unlikeComment($rootScope.userId, commentId, postUserId);
 
       if (res.status === 204) {
         $scope.$apply(() => {
@@ -134,7 +134,7 @@ angular.module('app')
     }
   };
 
-    $scope.multipleLike = async (commentId, index) => {
+  $scope.multipleLike = async (commentId, index) => {
     if ($rootScope.hackcoin <= 0) {
       $('#like-error').show();
     }

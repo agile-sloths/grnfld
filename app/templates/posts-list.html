@@ -97,10 +97,10 @@
                                         <!-- /panel-body -->
                                         <p style="margin-right: 2px;">
                                             <small>
-                                                <a ng-class="{'disabled': $root.hackcoin <= 0 || !$root.userId}" ng-click="likeComment(comment.comment_id, comment.user_id, $index)" ng-dblclick="multipleLike(comment.comment_id, $index)"
+                                                <a ng-class="{'disabled': $root.hackcoin <= 0 || !$root.userId}" ng-click="likeComment(comment.comment_id, comment.user_id, $index)" ng-dblclick="multipleLike(comment.comment_id, comment.user_id, $index)"
                                                     href="">Like</a> -
 
-                                                <a ng-class="{'disabled': !comment.voters.hasOwnProperty($root.userId) || comment.voters[$root.userId] < 1 || !$root.userId}" ng-click="unlikeComment(comment.comment_id, $index)"
+                                                <a ng-class="{'disabled': !comment.voters.hasOwnProperty($root.userId) || comment.voters[$root.userId] < 1 || !$root.userId}" ng-click="unlikeComment(comment.comment_id, comment.user_id, $index)"
                                                     href="">Unlike</a>
                                                 <a ng-show="currentPost.user_id === $root.userId && currentPost.solution_id !== comment.comment_id" ng-click="selectSolution(comment)"
                                                     href="">Mark as Solution</a>
