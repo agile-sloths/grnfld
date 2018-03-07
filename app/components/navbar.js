@@ -3,6 +3,7 @@ angular.module('app')
   $scope.logout = function() {
     $rootScope.userId = 0;
     $location.path('/');
+    $('#like-error').hide();
   };
 })
 .directive('navbar', function() {
