@@ -28,6 +28,7 @@ angular.module('app')
   $scope.init();
 
   $scope.handlePostClick = (clickedValue) => {
+    $('#like-alert').hide();
     $scope.currentPost = $scope.filteredPosts[clickedValue];
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
@@ -88,7 +89,7 @@ angular.module('app')
       commentsService.unselectSolution(comment.comment_id, $scope.currentPost.post_id);
       console.log('UNselect Solution completed');
     }
-  }
+  };
 
   $scope.likeComment = async (commentId, index) => {
     //need commmentId, usernameId(rootscope), how many coins to use (ng-click to send one and ng-double click to send more?)
@@ -107,7 +108,18 @@ angular.module('app')
           --$rootScope.hackcoin;
           $scope.comments[index].votes++;
         });
+        $('#like-alert').show();
       }
     }
   };
+
+    $scope.multipleLike = async (commentId, index) => {
+    if ($rootScope.hackcoin <= 0) {
+      $('#like-error').show();
+    }
+    console.log('like has been double clicked!');
+    $('#like-modal').modal('toggle');
+      
+  };
+
 });
