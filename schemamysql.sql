@@ -59,6 +59,21 @@ CREATE TABLE comments
   FOREIGN KEY (post_id) REFERENCES posts (post_id)
 );
 
+-- ---
+-- Table 'usercomment'
+--
+-- ---
+
+CREATE TABLE userscomments
+( id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  comment_id INT NOT NULL,
+  votes INTEGER DEFAULT 0,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users (user_id),
+  FOREIGN KEY (comment_id) REFERENCES comments (comment_id)
+);
+
 
 -- ---
 -- Test Data

@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const url = require('url');
 const bcrypt = require('bcrypt-nodejs');
 const db = require('../database-pg/index');
 
@@ -35,6 +36,14 @@ app.get('/posts', async (req, res) => {
 app.get('/comments', async (req, res) => {
   let postId = req.query.postId;
   let comments = await db.getComments(postId);
+  for (let comment of comments) {
+    let voters = {};
+    let results = await db.getVoters(comment.comment_id);
+    results.forEach(result => {
+      voters[result.user_id] = result.votes;
+    })
+    comment.voters = voters;
+  }
   res.json(comments);
 });
 
@@ -108,15 +117,14 @@ app.post('/coin', async (req, res) => {
   }
 });
 
-app.post('/solution', async (req, res) => {
-  console.log(req.body);
-  const data = await db.markSolution(req.body.commentId, req.body.postId);
-  res.status(200).end();
+app.delete('/coin*', async (req, res) => { // this feels a little backwards, but they had it set up where a post takes away your coin which means a delete gives one back
+  let query = url.parse(req.url).query.split('?');
+  await db.addCoin(+query[0], +query[1]);
+  res.status(204).end();
 });
 
-app.post('/solution/remove', async (req, res) => {
-  console.log(req.body);
-  const data = await db.unmarkSolution(req.body.commentId, req.body.postId);
+app.post('/solution', async (req, res) => {
+  const data = await db.markSolution(req.body.commentId, req.body.postId);
   res.status(200).end();
 });
 

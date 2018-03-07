@@ -14,6 +14,10 @@
     return await $http.post('/coin', newLikeObj)
   };
 
+  this.unlikeComment = async (userId, commentId) => {
+    return await $http.delete(`/coin?${userId}?${commentId}`);
+  };
+
   //grab comments
   this.getComments = function (postId, callback) {
     $http.get('/comments', {

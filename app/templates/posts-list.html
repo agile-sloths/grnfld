@@ -30,7 +30,7 @@
                         <h4 class="modal-title">{{currentPost.title}}</h4>
                     </div>
                     <div class="modal-body">
-                        <pre>{{currentPost.code}}</pre>
+                        <div hljs hljs-source="currentPost.code"></div>
                     </div>
                     <div class="modal-body">
                         <p>{{currentPost.summary}}</p>
@@ -76,7 +76,6 @@
 
                         <div ng-repeat="comment in comments track by $index" class="comments-list" ng-class="{'solution': comment.solution}">
 
-
                             <div id="like-error" class="alert alert-danger alert-dismissible fade in" style="display:none">
 
                                 <strong>No more Hackcoins!</strong> Please wait for your coins to refresh
@@ -100,11 +99,15 @@
                                             <small>
                                                 <a ng-class="{'disabled': $root.hackcoin <= 0 || !$root.userId}" ng-click="likeComment(comment.comment_id, $index)" ng-dblclick="multipleLike(comment.comment_id, $index)"
                                                     href="">Like</a> -
+
+                                                <a ng-class="{'disabled': !comment.voters.hasOwnProperty($root.userId) || comment.voters[$root.userId] < 1 || !$root.userId}" ng-click="unlikeComment(comment.comment_id, $index)"
+                                                    href="">Unlike</a>
                                                 <a ng-show="currentPost.user_id === $root.userId && currentPost.solution_id !== comment.comment_id" ng-click="selectSolution(comment)"
-                                                    href="">Mark as Solution</a> 
+                                                    href="">Mark as Solution</a>
                                                 <a ng-show="currentPost.user_id === $root.userId
                                                 && currentPost.solution_id === comment.comment_id" ng-click="unselectSolution(comment)"
                                                     href="">Not correct? Unmark as Solution</a> - Votes: {{comment.votes}}
+
                                             </small>
                                         </p>
                                     </div>
