@@ -4,7 +4,7 @@
 }
 
 .btn-space {
-    margin-right: 10px;
+   margin-right: 10px;
 }
 
 * {
@@ -12,7 +12,7 @@
 }
 
 input[type=search] {
-  width: 15%;
+  width: 170px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
 }
@@ -78,10 +78,6 @@ input[type=search]:focus  {
 	letter-spacing: 1px;
 }
 
-.navba-inner {
-	
-}
-
 
 /* hacky spacing fix */
 .navbar-brand {
@@ -90,5 +86,6 @@ input[type=search]:focus  {
 
 .navbar-inner {
 	margin-top: 10px;
+	padding-bottom: 20px;
 }
 /*  */
