@@ -37,6 +37,7 @@ angular.module('app')
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
     });
+
   };
 
   //hacky way of refreshing the current view to get new posts
@@ -53,7 +54,7 @@ angular.module('app')
         console.log(el)
     }
     else {
-        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css";  
+        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css";
         buttonText.innerHTML = 'Light Mode'
         console.log(el)
     }
@@ -106,7 +107,28 @@ angular.module('app')
       if (res.status === 200) {
         $scope.$apply(() => {
           --$rootScope.hackcoin;
+          if (!$scope.comments[index].hasOwnProperty($rootScope.userId)) {
+            $scope.comments[index].voters[$rootScope.userId] = 1;
+          } else {
+            $scope.comments[index].voters[$rootScope.userId]++;
+          }
           $scope.comments[index].votes++;
+        });
+      }
+    }
+  };
+
+  $scope.unlikeComment = async (commentId, index) => {
+    if ($scope.comments[index].voters[$rootScope.userId] > 0) {
+      console.log($scope.comments[index].voters[$rootScope.userId] > 0);
+      let res = await commentsService.unlikeComment($rootScope.userId, commentId);
+
+      if (res.status === 204) {
+        $scope.$apply(() => {
+          console.log($scope.comments[index].voters[$rootScope.userId])
+          ++$rootScope.hackcoin;
+          $scope.comments[index].votes--;
+          $scope.comments[index].voters[$rootScope.userId]--;
         });
         $('#like-alert').show();
       }
@@ -119,7 +141,7 @@ angular.module('app')
     }
     console.log('like has been double clicked!');
     $('#like-modal').modal('toggle');
-      
+
   };
 
 });
