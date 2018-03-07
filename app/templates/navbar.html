@@ -10,8 +10,8 @@ u<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="collapse navbar-collapse navbar-expand-md navbar-dark bg-dark">
         <ul class="nav navbar-nav navbar-left">
           <li class="nav-item" ng-show="$root.userId"><a href="/submit">Ask Question</a></li>
-          <li class="nav-item"><a href="#" data-toggle="modal" data-target="#about-modal">About us</a></li>
-          <li class="nav-item" ng-show="$root.userId"><a href="#" data-toggle="modal" data-target="#hackcoins">Current Hackcoins: {{$root.hackcoin}}</a></li>
+          <li class="nav-item"><a href="#" data-toggle="modal" data-target="#about-modal">About Us</a></li>
+          <li class="nav-item" ng-show="$root.userId"><a href="#" data-toggle="modal" data-target="#hackcoins">Hackcoin Exchange</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="nav-item" ng-hide="$root.userId"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
@@ -142,11 +142,14 @@ u<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Welcome to grnfld.</h4>
+          <h4 class="modal-title">Hackcoin Exchange</h4>
         </div>
         <div class="modal-body">
-          <em>A Hack Reactor forum for code review and troubleshooting, built with Stack Overflow in mind. Register to post your questions, comment, mark solutions, and assign HackCoins to quality responses.<br><br>
-           Brought to you by Da Brain Trust LLC/LTD/GmbH.</em>
+          <h4>Total Hackcoins: {{ $root.hackcoin }}</h4>
+          <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Gift Hackcoins to another user">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Gift</button>
+            </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
