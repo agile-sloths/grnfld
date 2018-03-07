@@ -9,12 +9,14 @@
                 <h5 class="mb-1">
                     <strong>{{post.title}}</strong>
                 </h5>
+
                 <small>
                     <strong>{{post.username}}</strong>
                 </small>
             </div>
             <p class="mb-1">{{post.summary}}</p>
             <small>{{post.created_at | date:'medium'}}</small>
+            <h5 class="text-danger"><strong ng-show="post.solution_id !== null">Solved!</strong></h5>
         </a>
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -41,12 +43,19 @@
 
                                 <strong>No more Hackcoins!</strong> Please wait for your coins to refresh
                             </div>
+
+<!--                             <div id="like-error" class="alert alert-danger alert-dismissible fade in" style="display:none">
+                                <strong>No more Hackcoins!</strong> Please wait for your coins to refresh
+                            </div> -->
+
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <strong>{{comment.username}}</strong>
-                                            <span class="text-muted">commented at {{comment.created_at | date:'short'}}</span>
+                                            <span class="text-muted">commented at {{comment.created_at | date:'short'}} </span>
+                                            <span ng-show="currentPost.solution_id === comment.comment_id">  Best solution!</span>
                                             <span ng-class="{'glyphicon glyphicon-star': currentPost.solution_id === comment.comment_id}" aria-hidden="true"></span>
                                         </div>
                                         <div class="panel-body">
@@ -61,7 +70,7 @@
                                                     href="">Mark as Solution</a> 
                                                 <a ng-show="currentPost.user_id === $root.userId
                                                 && currentPost.solution_id === comment.comment_id" ng-click="unselectSolution(comment)"
-                                                    href="">Unmark as Solution</a> - Votes: {{comment.votes}}
+                                                    href="">Not correct? Unmark as Solution</a> - Votes: {{comment.votes}}
                                             </small>
                                         </p>
                                     </div>
