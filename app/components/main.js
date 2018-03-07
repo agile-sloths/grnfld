@@ -87,7 +87,6 @@ angular.module('app')
           --$rootScope.hackcoin;
           $scope.comments[index].votes++;
           $scope.comments[index].voters[$rootScope.userId]++;
-
         });
       }
     }

@@ -24,7 +24,8 @@ const getAllPosts = () => {
 const getComments = (postId) => {
   return knex.column(knex.raw('comments.*, users.username')).select()
     .from(knex.raw('comments, users'))
-    .where(knex.raw(`comments.post_id = ${postId} and comments.user_id = users.user_id`));
+    .where(knex.raw(`comments.post_id = ${postId} and comments.user_id = users.user_id`))
+    .orderBy('votes', 'desc');
 };
 
 const getVoters = (commentId) => {
@@ -83,8 +84,14 @@ const createUser = async (username, password) => {
   }
 };
 
-const markSolution = (commentId, postId) => {
-  knex('posts').where('post_id', postId).update('solution_id', commentId);
+const markSolution = async (commentId, postId) => {
+  await knex('posts').where('post_id', postId).update('solution_id', commentId);
+  await knex('comments').where('comment_id', commentId).update('solution', true);
+};
+
+const unmarkSolution = async (commentId, postId) => {
+  await knex('posts').where('post_id', postId).update('solution_id', null);
+  await knex('comments').where('comment_id', commentId).update('solution', false);
 };
 
 const checkCoin = (userId) => {
@@ -126,6 +133,7 @@ module.exports = {
   createUser,
   createComment,
   markSolution,
+  unmarkSolution,
   checkCoin,
   subtractCoins,
   addCoin,

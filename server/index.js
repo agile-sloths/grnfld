@@ -117,7 +117,7 @@ app.post('/coin', async (req, res) => {
   }
 });
 
-app.delete('/coin*', async (req, res ) => { // this feels a little backwards, but they had it set up where a post takes away your coin which means a delete gives one back
+app.delete('/coin*', async (req, res) => { // this feels a little backwards, but they had it set up where a post takes away your coin which means a delete gives one back
   let query = url.parse(req.url).query.split('?');
   await db.addCoin(+query[0], +query[1]);
   res.status(204).end();
