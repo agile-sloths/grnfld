@@ -19,6 +19,7 @@ angular.module('app')
           console.log('userid', res.data.user_id);
           $rootScope.userId = res.data.user_id;
           $rootScope.hackcoin = res.data.hackcoin;
+          window.localStorage.sessionID = res.data.session_id;
           $scope.register = {
             username: '',
             password: ''

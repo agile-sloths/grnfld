@@ -21,6 +21,7 @@ app.use(express.static(__dirname + '/../node_modules'));
 app.use(bodyParser.json());
 
 const isLoggedIn = (req, res, next) => {
+  req.isAuthenticated() ? console.log('yes, logged in!') : console.log('no, not logged in!');
   if (req.isAuthenticated()) {
     return next();
   }
@@ -87,22 +88,21 @@ app.post('/login', passport.authenticate('local-login'), (req, res) => {
   res.status(200).json({
     user_id: req.user.user_id,
     username: req.user.username,
-    hackcoin: req.user.hackcoin
+    hackcoin: req.user.hackcoin,
+    session_id: req.sessionID
   });
 });
 
-app.post('/register', async (req, res) => {
-  const shasum = bcrypt.hashSync(req.body.password);
-  const data = await db.createUser(req.body.username, shasum);
-  if (data === 'already exists') {
+app.post('/register', passport.authenticate('local-signup'), (req, res) => {
+  if (req.user === 'already exists') {
     res.status(409).end();
   } else {
-    const userInfo = await db.checkCredentials(req.body.username);
     res.status(200).json({
-      user_id: userInfo[0].user_id,
-      username: userInfo[0].username,
-      hackcoin: userInfo[0].hackcoin
-    });
+      user_id: req.user[0].user_id,
+      username: req.user[0].username,
+      hackcoin: req.user[0].hackcoin,
+      session_id: req.sessionID
+    })
   }
 });
 
