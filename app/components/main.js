@@ -45,9 +45,22 @@ angular.module('app')
     $scope.init();
   };
 
-  $scope.message = '';
+  $scope.toggleStyle = () => {
+    let el = document.getElementById("styledark");
+    let buttonText = document.getElementById("styletoggle");
+    if (el.href.match("https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css")) {
+        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css";
+        buttonText.innerHTML = 'Dark Mode'
+        console.log(el)
+    }
+    else {
+        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css";
+        buttonText.innerHTML = 'Light Mode'
+        console.log(el)
+    }
+  };
 
-  $
+  $scope.message = '';
 
   $scope.submitComment = (isValid) => {
     if (isValid) {
@@ -68,6 +81,14 @@ angular.module('app')
       $scope.currentPost.solution_id = comment.comment_id; //changes local solution_id so that star moves without refresh
       commentsService.selectSolution(comment.comment_id, $scope.currentPost.post_id);
       console.log('select Solution completed');
+    }
+  };
+
+  $scope.unselectSolution = (comment) => {
+    if ($rootScope.userId === $scope.currentPost.user_id && $scope.currentPost.solution_id === comment.comment_id) {
+      $scope.currentPost.solution_id = null;
+      commentsService.unselectSolution(comment.comment_id, $scope.currentPost.post_id);
+      console.log('UNselect Solution completed');
     }
   };
 
