@@ -12,7 +12,7 @@ angular.module('app')
     postsService.getAll(data => {
       console.log('got posts', data);
       $scope.posts = data;
-      $scope.selectedLanguage = 'JavaScript';
+      $scope.selectedLanguage = '';
 
       $scope.languages = [{
         id: 1,
@@ -51,8 +51,12 @@ angular.module('app')
         let end = begin + $scope.numPerPage;
 
         $scope.filteredPosts = $scope.posts.slice(begin, end).filter(post => {
-          console.log(post.language)
-          return post.language === $scope.selectedLanguage;
+          if ($scope.selectedLanguage) {
+            console.log($scope.selectedLanguage)
+            return post.language === $scope.selectedLanguage;
+          } else {
+            return post;
+          }
         });
       });
     });

@@ -1,4 +1,5 @@
 <div>
+    <h4>Select Language:</h4><select ng-options="language.label for language in languages" default="JavaScript" ng-model="$scope.selectedLanguage"></select>
     <button ng-click="refresh()" type="button" class="btn btn-primary btn-sm pull-right">Refresh</button>
     <button ng-click="toggleStyle()" type="button" id="styletoggle" class="btn btn-space btn-primary btn-sm pull-right">Light Mode</button>
     <div ng-if="searchInput.length === 0 || searchInput.length === undefined">
@@ -15,7 +16,7 @@
                 </h5>
 
                 <small>
-                    <strong>{{post.username}}</strong>
+                    <strong>{{post.username}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{post.language}}</strong>
                 </small>
             </div>
             <p class="mb-1">{{post.summary}}</p>
