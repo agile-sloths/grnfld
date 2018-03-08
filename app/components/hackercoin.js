@@ -22,9 +22,7 @@ angular.module('app')
 
     $scope.submitGift = function() {
       return coinsService.submitNewGift($scope.gift.username, $scope.gift.amount, $rootScope.userId)
-        .then(function(res) {
-          $scope.username = '';
-          $scope.amount = '';
-        })
     }
+    $scope.gift.username = '';
+    $scope.gift.amount = '';
 });
