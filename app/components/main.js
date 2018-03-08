@@ -72,13 +72,13 @@ angular.module('app')
   $scope.toggleStyle = () => {
     let el = document.getElementById("styledark");
     let buttonText = document.getElementById("styletoggle");
-    if (el.href.match("https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css")) {
-        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css";
+    if (el.href.match("https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/solar/bootstrap.min.css")) {
+        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/materia/bootstrap.min.css";
         buttonText.innerHTML = 'Dark Mode'
         console.log(el)
     }
     else {
-        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css";
+        el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/solar/bootstrap.min.css";
         buttonText.innerHTML = 'Light Mode'
         console.log(el)
     }
