@@ -31,7 +31,7 @@ CREATE TABLE posts
   user_id INT NOT NULL,
   title VARCHAR(50) NOT NULL,
   code VARCHAR(8000) DEFAULT NULL,
-  votes INT DEFAULT NULL,
+  votes INT DEFAULT 0,
   summary VARCHAR(8000) DEFAULT NULL,
   anon BOOLEAN DEFAULT FALSE,
   closed BOOLEAN DEFAULT FALSE,
@@ -82,7 +82,7 @@ CREATE TABLE userscomments
 --
 -- ---
 
-CREATE TABLE ustsposts
+CREATE TABLE usersposts
 ( id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   post_id INT NOT NULL,

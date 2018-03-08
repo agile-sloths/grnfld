@@ -175,6 +175,14 @@ angular.module('app')
     }
   };
 
+  $scope.upvoteSolution = async (userId, postId, postUserId) => {
+    
+  }
+
+  $scope.downvoteSolution = async (userId, postId, postUserId) => {
+
+  }
+
   $scope.multipleLike = (commentId, postUserId, index) => {
     if ($rootScope.hackcoin <= 0) {
       $('#like-error').show();

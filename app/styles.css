@@ -37,6 +37,19 @@ input[type=search]:focus  {
 }
 /**** SEARCH BAR ****/
 
+/**** UPVOTE/DOWNVOTE ****/
+i:hover {
+	cursor: pointer;
+}
+
+i.upvote {
+	color: #cb4b16
+}
+
+i.downvote {
+	color: #cb1616
+}
+/**** UPVOTE/DOWNVOTE ****/
 
 /**** NAVBAR ****/
 .nav-item {
