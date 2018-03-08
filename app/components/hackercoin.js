@@ -12,7 +12,7 @@ angular.module('app')
             sensor: false
           }
         }).then(function(response){
-          return response.data.results.map(function(item){
+          return response.data.map(function(item){
             console.log("SEARCH", item.username)
             return item.username;
           });

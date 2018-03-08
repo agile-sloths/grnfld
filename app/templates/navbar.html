@@ -153,7 +153,7 @@
               <br>
               <pre>User: {{asyncSelected | json}}</pre>
               <br>
-              <input id="giftUser" ng-model="asyncSelected" class="form-control" type="text" placeholder="Search Users" typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
+              <input id="giftUser" ng-model="asyncSelected" class="form-control" type="text" autocomplete="off" placeholder="Search Users" uib-typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
                 <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
                 <div ng-show="noResults">
                   <i class="glyphicon glyphicon-remove"></i> No Results Found
