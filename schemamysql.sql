@@ -1,8 +1,8 @@
-cDROP DATABASE IF EXISTS grnfld;
+DROP DATABASE IF EXISTS hackXchange;
 
-CREATE DATABASE grnfld;
+CREATE DATABASE hackXchange;
 
-USE grnfld;
+USE hackXchange;
 
 
 DROP TABLE IF EXISTS comments;
@@ -33,6 +33,7 @@ CREATE TABLE posts
   summary VARCHAR(8000) DEFAULT NULL,
   anon BOOLEAN DEFAULT FALSE,
   closed BOOLEAN DEFAULT FALSE,
+  language VARCHAR(120) DEFAULT NULL,
   solution_id INT DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (post_id),
@@ -90,13 +91,13 @@ VALUES
   ('Hipster', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou');
 
 insert into posts
-  (user_id, title, code, summary, solution_id)
+  (user_id, title, code, summary, language, solution_id)
 VALUES
-  (1, 'Get to the Choppa', 'aslkdjfleaf', 'Get to the choppa or die', 123456),
-  (2, 'He is a real boy', 'hello world', 'Turn puppet into real boy', null),
-  (3, 'A really big sword', 'chop chop its all in the mind', 'the ultimate onion chopper', null),
-  (4, 'How do you pronounce my name?', 'some military guy', 'Did not know how to say this till I was 25', null),
-  (5, 'I hate everything', 'Your music sucks', 'Going to drink some IPAs', 234567);
+  (1, 'Get to the Choppa', 'aslkdjfleaf', 'Get to the choppa or die', 'JavaScript', 123456),
+  (2, 'He is a real boy', 'hello world', 'Turn puppet into real boy', 'HTML', null),
+  (3, 'A really big sword', 'chop chop its all in the mind', 'the ultimate onion chopper', 'Python', null),
+  (4, 'How do you pronounce my name?', 'some military guy', 'Did not know how to say this till I was 25', 'JavaScript', null),
+  (5, 'I hate everything', 'Your music sucks', 'Going to drink some IPAs', 'JavaScript', 234567);
 
 insert into comments
   (user_id, post_id, message, votes)
