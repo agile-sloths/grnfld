@@ -1,9 +1,18 @@
 angular.module('app')
-.service('coinsService', function ($http) {
-    this.submitGift = function(username, amount) {
-        $http.post('/coin')
-        .then(function(data) {
+.service('coinsService', function ($http, $rootScope) {
+    this.submitNewGift = function(username, amount, currentUserId) {
+        $http.post('/gift', {
+            params: {
+                username: username,
+                amount: amount
+            }
+        }).then(function(response) {
+            console.log('coin service delete', response)
+            currentUserId = $rootScope.userId;
+            return $http.delete(`/gift?${currentUserId}?${amount}`)
 
+        }).catch(function(err) {
+            console.log(err)
         })
     }
 });
