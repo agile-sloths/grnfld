@@ -175,12 +175,10 @@ angular.module('app')
     }
   };
 
-  $scope.upvoteSolution = async (userId, postId, postUserId) => {
-    
+  $scope.upvotePost = async (userId, postId, postUserId) => {
   }
 
-  $scope.downvoteSolution = async (userId, postId, postUserId) => {
-
+  $scope.downvotePost = async (userId, postId, postUserId) => {
   }
 
   $scope.multipleLike = (commentId, postUserId, index) => {

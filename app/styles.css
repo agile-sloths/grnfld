@@ -42,6 +42,14 @@ i:hover {
 	cursor: pointer;
 }
 
+i:focus {
+	color: ##a0b3b6
+}
+
+i:active {
+	color: #616c6e;
+}
+
 i.upvote {
 	color: #cb4b16
 }
