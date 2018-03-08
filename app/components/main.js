@@ -156,8 +156,7 @@ angular.module('app')
 
   $scope.unlikeComment = async (commentId, postUserId, index) => {
     if ($scope.comments[index].voters[$rootScope.userId] > 0) {
-      let res = await commentsService.unlikeComment($rootScope.userId, commentId, postUserId);
-
+      let res = await commentsService.unlikeComment($rootScope.userId, commentId, postUserId, 1);
       if (res.status === 204) {
         $scope.$apply(() => {
           ++$rootScope.hackcoin;
@@ -170,11 +169,46 @@ angular.module('app')
     }
   };
 
+
+  $scope.submitUnlikes = async (isValid) => {
+    if (isValid) {
+      let res = await commentsService.unlikeComment($rootScope.userId, $scope.unlikeCommentId, $scope.unlikePostUserId, $scope.unlike.input);
+        if (res.status === 204) {
+          $scope.$apply(() => {
+            $rootScope.hackcoin += $scope.unlike.input;
+            $scope.comments[$scope.unlikeIndex].votes -= $scope.unlike.input;
+            $scope.comments[$scope.unlikeIndex].voters[$rootScope.userId] -= $scope.unlike.input;
+          });
+          $('#unlike-modal').modal('toggle');
+          $('#like-alert').show();
+        }
+    } else {
+      $('#unlikemultiple-error').show();
+    }
+  };
+
+
+  $scope.multipleUnlike = (commentId, postUserId, index) => {
+    if ($scope.comments[index].voters[$rootScope.userId] > 0) {
+      $scope.max = $scope.comments[index].voters[$rootScope.userId];
+      $scope.unlikeCommentId = commentId;
+      $scope.unlikePostUserId = postUserId;
+      $scope.unlikeIndex = index;
+      $('#unlike-modal').modal('toggle');
+    }
+  };
+
+  $scope.unlike = {
+    input: 1
+  };
+
   $scope.multipleLike = (commentId, postUserId, index) => {
     if ($rootScope.hackcoin <= 0) {
       $('#like-error').show();
     } else {
-      console.log('like has been double clicked!-->',commentId, postUserId, index);
+      $scope.commentId = commentId;
+      $scope.postUserId = postUserId;
+      $scope.index = index;
       $('#like-modal').modal('toggle');
     }
   };
@@ -183,34 +217,28 @@ angular.module('app')
     input: 1
   };
 
-  $scope.submit = async (isValid, commentId, postUserId, index) => {
+
+  $scope.submit = async (isValid) => {
     if (isValid) {
-      console.log('form is valid! heres scope:', $scope.like.input);
-      console.log('hers submit-->',commentId, postUserId, index);
-      if($scope.like.input === 0) {
-        $('#likemultiple-error').show();
-      } else {
-        $('#likemultiple-error').hide();
         let res = await commentsService.likeComment({
-          commentId: commentId,
-          postUserId: postUserId,
+          commentId: $scope.commentId,
+          postUserId: $scope.postUserId,
           userId: $rootScope.userId,
           hackCoins: $scope.like.input
         });
         if (res.status === 200) {
           $scope.$apply(() => {
             $rootScope.hackcoin -= $scope.like.input;
-            $scope.comments[index].votes += $scope.like.input;
-            if (!$scope.comments[index].voters.hasOwnProperty($rootScope.userId)) {
-              $scope.comments[index].voters[$rootScope.userId] = $scope.like.input;
+            $scope.comments[$scope.index].votes += $scope.like.input;
+            if (!$scope.comments[$scope.index].voters.hasOwnProperty($rootScope.userId)) {
+              $scope.comments[$scope.index].voters[$rootScope.userId] = $scope.like.input;
             } else {
-              $scope.comments[index].voters[$rootScope.userId] += $scope.like.input;
+              $scope.comments[$scope.index].voters[$rootScope.userId] += $scope.like.input;
             }
           });
           $('#like-modal').modal('toggle');
           $('#like-alert').show();
         }
-      }
     } else {
       $('#likemultiple-error').show();
     }
