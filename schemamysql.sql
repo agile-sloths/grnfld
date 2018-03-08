@@ -86,6 +86,7 @@ CREATE TABLE usersposts
 ( id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   post_id INT NOT NULL,
+  vote boolean DEFAULT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users (user_id),
   FOREIGN KEY (post_id) REFERENCES posts (post_id)

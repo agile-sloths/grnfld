@@ -176,9 +176,29 @@ angular.module('app')
   };
 
   $scope.upvotePost = async (userId, postId, postUserId) => {
+    let voted = await postsService.upvotePost({
+      userId: userId,
+      postId: postId,
+      postUserId: postUserId
+    });
+    return voted;
   }
 
   $scope.downvotePost = async (userId, postId, postUserId) => {
+    let voted = await postsService.downvotePost(userId, postId, postUserId);
+    return voted;
+  }
+
+  $scope.handleVote = (userId, postId, postUserId, flag) => {
+    if (flag === 'up') {
+      $scope.upvotePost(userId, postId, postUserId, (res) => {
+        console.log(res)
+      })
+    } else {
+      $scope.downvotePost(userId, postId, postUserId, (res) => {
+        console.log(res);
+      });
+    }
   }
 
   $scope.multipleLike = (commentId, postUserId, index) => {

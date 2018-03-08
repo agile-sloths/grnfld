@@ -21,6 +21,10 @@ const getAllPosts = () => {
     .orderBy('post_id', 'desc');
 };
 
+const getPostVotes = () => {
+  return knex.select().from('userscomments');
+};
+
 const getComments = (postId) => {
   return knex.column(knex.raw('comments.*, users.username')).select()
     .from(knex.raw('comments, users'))
@@ -64,6 +68,40 @@ const createPost = (post) => {
     anon: false //hard coded to false until functionality implemented
   });
 };
+
+const upvotePost = async (post) => {
+  let voted = await knex('usersposts').select('vote').where('user_id', post.userId).andWhere('post_id', post.postId);
+  if (!voted.length) {
+    await knex('posts').where('post_id', post.postId).increment('votes', 1); // increase post votes
+    await knex('users').where('user_id', post.postUserId).increment('hackcoin', 1); // give owner of post hackcoin
+    await knex('usersposts').insert({user_id: post.userId, post_id: post.postId, vote: true}); // create record of post
+  } else if (voted[0].vote === 0) {
+    await knex('posts').where('post_id', post.postId).increment('votes', 1); // increase post votes
+    await knex('users').where('user_id', post.postUserId).increment('hackcoin', 1); // give owner of post hackcoin
+    await knex('usersposts').where('user_id', post.userId).update('vote', null);
+  } else if (voted[0].vote === null) {
+    await knex('posts').where('post_id', post.postId).increment('votes', 1); // increase post votes
+    await knex('users').where('user_id', post.postUserId).increment('hackcoin', 1); // give owner of post hackcoin
+    await knex('usersposts').where('user_id', post.userId).update('vote', true);
+  }
+}
+
+const downvotePost = async (userId, postId, postUserId) => {
+  let voted = await knex('usersposts').select('vote').where('user_id', userId).andWhere('post_id', postId);
+  if (!voted.length) {
+    await knex('posts').where('post_id', postId).decrement('votes', 1);
+    await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin
+    await knex('usersposts').insert({user_id: userId, post_id: postId, vote: false});
+  } else if (voted[0].vote === 1) {
+    await knex('posts').where('post_id', postId).decrement('votes', 1);
+    await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin
+    await knex('usersposts').where('user_id', userId).update('vote', null);
+  } else if (voted[0].vote === null) {
+    await knex('posts').where('post_id', postId).decrement('votes', 1);
+    await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin
+    await knex('usersposts').where('user_id', userId).update('vote', 0);
+  }
+}
 
 const createComment = (comment) => {
   return knex('comments').insert({
@@ -126,7 +164,7 @@ const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, comme
 const addCoin = async (userId, commentId, flag, addinghackcoin) => {
   let currentCoins = await knex.select('hackcoin').from('users').where('user_id', userId);
   await knex('users').where('user_id', userId).update('hackcoin', currentCoins[0].hackcoin + addinghackcoin);
-  
+
   if (flag) {
     let currentVotes = await knex.select('votes').from('comments').where('comment_id', commentId);
     let userVotes = await knex.select('votes').from('userscomments').where('comment_id', commentId).andWhere('user_id', userId);
@@ -141,7 +179,10 @@ const refreshCoins = () => {
 
 module.exports = {
   getAllPosts,
+  getPostVotes,
   createPost,
+  upvotePost,
+  downvotePost,
   getComments,
   getVoters,
   // getPostsWithCommentsAsync,

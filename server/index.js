@@ -36,6 +36,9 @@ let refreshCoins = setInterval( () => {
 
 app.get('/posts', async (req, res) => {
   let posts = await db.getAllPosts();
+  let postVotes = await db.getPostVotes();
+  console.log(postVotes);
+  // loop over posts and posts votes and insert post votes
   res.json(posts);
 });
 
@@ -78,6 +81,27 @@ app.post('/createPost', isLoggedIn, async (req, res) => {
   }
   res.end();
 });
+
+app.post('/upvotePost', isLoggedIn, async (req, res) => {
+  try {
+    await db.upvotePost(req.body);
+  } catch (err) {
+    console.log(err);
+    res.end(err);
+  }
+  res.end('success');
+})
+
+app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
+  let query = url.parse(req.url).query.split('/');
+  try {
+    await db.downvotePost(query[0], query[1], query[2]);
+  } catch (err) {
+    console.log(err);
+    res.end(err);
+  }
+  res.end('success');
+})
 
 app.post('/createComment', isLoggedIn, async (req, res) => {
   let comment = req.body;
