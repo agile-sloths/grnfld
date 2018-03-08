@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('TypeaheadCtrl', function($scope, $http, limitToFilter, coinsService) {
+.controller('TypeaheadCtrl', function($scope, $http, coinsService, $rootScope) {
     $scope.gift = {
       username: '',
       amount: ''
@@ -13,14 +13,14 @@ angular.module('app')
           }
         }).then(function(response){
           return response.data.map(function(item){
-            return limitToFilter(item.username, 5);
+            return item.username;
           });
+        }).catch(function(err) {
+          console.log(err)
         });
       };
 
     $scope.submitGift = function() {
-      console.log($scope.gift.username)
-      // console.log('controller test')
-      return coinsService.submitNewGift($scope.gift.username, $scope.gift.amount)
+      return coinsService.submitNewGift($scope.gift.username, $scope.gift.amount, $rootScope.userId)
     }
 });
