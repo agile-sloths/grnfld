@@ -89,8 +89,8 @@
       <div class="modal-body">
           <div class="form-group">
             <label for="input">Number of hackcoins to use:    </label>
-            <input type="number" name="input" ng-model="like.input" required step="1" min="0" max="{{$root.hackcoin}}" required>
-            <p ng-show="likeForm.input.$error.min || likeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 0 and {{$root.hackcoin}}.</p>
+            <input type="number" name="input" ng-model="like.input" required step="1" min="1" max="{{$root.hackcoin}}" required>
+            <p ng-show="likeForm.input.$error.min || likeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1 and {{$root.hackcoin}}.</p>
             <p ng-show="likeForm.input.$error.required" class="help-block">A number is required.</p>
           </div>
       </div>

@@ -180,7 +180,7 @@ angular.module('app')
   };
 
   $scope.like = {
-    input: 0
+    input: 1
   };
 
   $scope.submit = async (isValid, commentId, postUserId, index) => {
@@ -189,8 +189,8 @@ angular.module('app')
       console.log('hers submit-->',commentId, postUserId, index);
       if($scope.like.input === 0) {
         $('#likemultiple-error').show();
-        $('#likemultiple-error').hide();
       } else {
+        $('#likemultiple-error').hide();
         let res = await commentsService.likeComment({
           commentId: commentId,
           postUserId: postUserId,
