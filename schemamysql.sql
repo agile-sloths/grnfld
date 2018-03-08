@@ -31,6 +31,7 @@ CREATE TABLE posts
   user_id INT NOT NULL,
   title VARCHAR(50) NOT NULL,
   code VARCHAR(8000) DEFAULT NULL,
+  votes INT DEFAULT NULL,
   summary VARCHAR(8000) DEFAULT NULL,
   anon BOOLEAN DEFAULT FALSE,
   closed BOOLEAN DEFAULT FALSE,
@@ -62,7 +63,7 @@ CREATE TABLE comments
 );
 
 -- ---
--- Table 'usercomment'
+-- Table 'userscomments'
 --
 -- ---
 
@@ -74,6 +75,20 @@ CREATE TABLE userscomments
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users (user_id),
   FOREIGN KEY (comment_id) REFERENCES comments (comment_id)
+);
+
+-- ---
+-- Table 'usersposts'
+--
+-- ---
+
+CREATE TABLE ustsposts
+( id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  post_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users (user_id),
+  FOREIGN KEY (post_id) REFERENCES posts (post_id)
 );
 
 -- ---
