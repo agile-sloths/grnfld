@@ -21,7 +21,6 @@ app.use(express.static(__dirname + '/../node_modules'));
 app.use(bodyParser.json());
 
 const isLoggedIn = (req, res, next) => {
-  req.isAuthenticated() ? console.log('yes, logged in!') : console.log('no, not logged in!');
   if (req.isAuthenticated()) {
     return next();
   }
@@ -36,7 +35,8 @@ let refreshCoins = setInterval( () => {
 
 app.get('/posts', async (req, res) => {
   let posts = await db.getAllPosts();
-  res.json(posts);
+  let postVotes = await db.getPostVotes();
+  res.json({posts: posts, postVotes: postVotes});
 });
 
 // app.get('/test', (req, res) => {
@@ -74,10 +74,29 @@ app.post('/createPost', isLoggedIn, async (req, res) => {
   try {
     await db.createPost(req.body);
   } catch (err) {
+    res.end();
     console.log(err);
   }
-  res.end();
 });
+
+app.post('/upvotePost', isLoggedIn, async (req, res) => {
+  try {
+    let upvote = await db.upvotePost(req.body);
+    upvote ? res.status(201).end() : null;
+  } catch (err) {
+    console.log(err);
+  }
+})
+
+app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
+  let query = url.parse(req.url).query.split('/');
+  try {
+    let downvote = await db.downvotePost(query[0], query[1], query[2]);
+    downvote ? res.status(204).end() : null;
+  } catch (err) {
+    console.log(err);
+  }
+})
 
 app.post('/createComment', isLoggedIn, async (req, res) => {
   let comment = req.body;
