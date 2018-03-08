@@ -107,17 +107,17 @@ const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, comme
       await knex('userscomments').insert({
         user_id: userId,
         comment_id: commentId,
-        votes: 1
+        votes: subtractinghackcoin
       });
     } else {
-      await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).increment('votes', 1);
+      await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).increment('votes', subtractinghackcoin);
     }
   }
 };
 
-const addCoin = async (userId, commentId, flag) => {
-  await knex('users').where('user_id', userId).increment('hackcoin', 1);
-  await knex('comments').where('comment_id', commentId).decrement('votes', 1);  //update votes by amount of hackcoins subtracted
+const addCoin = async (userId, commentId, flag, addinghackcoin) => {
+  await knex('users').where('user_id', userId).increment('hackcoin', addinghackcoin);
+  await knex('comments').where('comment_id', commentId).decrement('votes', addinghackcoin);  //update votes by amount of hackcoins subtracted
   if (flag) {
     await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).decrement('votes', 1);
   }
