@@ -107,3 +107,6 @@ VALUES
   (3, 1, 'sword = shield', 525),
   (4, 1, 'Pulls out rocket launcher', 15),
   (5, 1, 'I used those before they were cool', 0);
+
+
+-- mysql -u root < schemamysql.sql
