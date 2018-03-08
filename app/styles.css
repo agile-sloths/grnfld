@@ -121,3 +121,16 @@ i.downvote {
 /* hacky spacing fix */
 /**** NAVBAR ****/
 /*  */
+
+.hackcoins {
+	
+    border-radius: 100%;
+    border-color:black;
+    background-color:black;
+    color:white;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:8px;
+    padding-bottom:8px;
+    font-size:1.3em;
+}
