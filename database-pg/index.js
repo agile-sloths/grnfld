@@ -100,8 +100,10 @@ const checkCoin = (userId) => {
 
 const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, commentId, flag) => {
   await knex('users').where('user_id', userId).update('hackcoin', currenthackcoin - subtractinghackcoin);
-  await knex('comments').where('comment_id', commentId).increment('votes', subtractinghackcoin);  //update votes by amount of hackcoins subtracted
+
   if (flag) {
+    let currentVotes = await knex.select('votes').from('comments').where('comment_id', commentId);
+    await knex('comments').where('comment_id', commentId).update('votes', currentVotes[0].votes + subtractinghackcoin);  //update votes by amount of hackcoins subtracted
     let currentCount = await knex.select('votes').from('userscomments').where('user_id', userId).andWhere('comment_id', commentId);
     if (!currentCount.length) {
       await knex('userscomments').insert({
@@ -110,16 +112,21 @@ const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, comme
         votes: subtractinghackcoin
       });
     } else {
-      await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).increment('votes', subtractinghackcoin);
+      let userVotes = await knex.select('votes').from('userscomments').where('comment_id', commentId).andWhere('user_id', userId);
+      await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).update('votes', userVotes[0].votes + subtractinghackcoin);
     }
   }
 };
 
 const addCoin = async (userId, commentId, flag, addinghackcoin) => {
-  await knex('users').where('user_id', userId).increment('hackcoin', addinghackcoin);
-  await knex('comments').where('comment_id', commentId).decrement('votes', addinghackcoin);  //update votes by amount of hackcoins subtracted
+  let currentCoins = await knex.select('hackcoin').from('users').where('user_id', userId);
+  await knex('users').where('user_id', userId).update('hackcoin', currentCoins[0].hackcoin + addinghackcoin);
+  
   if (flag) {
-    await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).decrement('votes', 1);
+    let currentVotes = await knex.select('votes').from('comments').where('comment_id', commentId);
+    let userVotes = await knex.select('votes').from('userscomments').where('comment_id', commentId).andWhere('user_id', userId);
+    await knex('comments').where('comment_id', commentId).update('votes', currentVotes[0].votes - addinghackcoin);
+    await knex('userscomments').where('comment_id', commentId).andWhere('user_id', userId).update('votes', userVotes[0].votes - addinghackcoin);
   }
 };
 
