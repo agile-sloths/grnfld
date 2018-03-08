@@ -11,6 +11,12 @@
 	font-family: 'Quicksand', sans-serif;
 }
 
+select {
+  color: black;
+  border-radius: 3px;
+  padding: 6px;
+}
+
 input[type=search] {
   width: 170px;
   -webkit-transition: width 0.4s ease-in-out;
