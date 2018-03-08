@@ -1,3 +1,8 @@
+* {
+	font-family: 'Quicksand', sans-serif;
+	font-size: 14px;
+}
+
 .disabled {
     cursor: not-allowed;
     opacity: .5;
@@ -7,9 +12,11 @@
    margin-right: 10px;
 }
 
-* {
-	font-family: 'Quicksand', sans-serif;
-	font-size: 14px;
+
+/**** SEARCH BAR ****/
+.search {
+	margin-bottom: 20px;
+	margin-top: 40px;
 }
 
 input[type=search] {
@@ -22,12 +29,10 @@ input[type=search] {
 input[type=search]:focus  {
    width: 100%;
 }
+/**** SEARCH BAR ****/
 
-.search {
-	margin-bottom: 20px;
-	margin-top: 40px;
-}
 
+/**** NAVBAR ****/
 .nav-item {
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -55,13 +60,6 @@ input[type=search]:focus  {
   cursor: pointer
 }
 
-#logo-x {
-	font-family: 'Rammetto One', cursive;
-	font-size: 30px;
-	padding-bottom: 20px;
-	letter-spacing: -2px;
-}
-
 #logo {
 	font-family: 'Quicksand', sans-serif;
 	font-size: 34px;
@@ -69,16 +67,20 @@ input[type=search]:focus  {
 	letter-spacing: -2px;
 }
 
-#logo:hover #logo-x {
-	/*font-size: 36px;*/
-	letter-spacing: 1px
+#logo-x {
+	font-family: 'Rammetto One', cursive;
+	font-size: 30px;
+	padding-bottom: 20px;
+	letter-spacing: -2px;
 }
 
 #logo:hover {
-	/*font-size: 36px;*/
 	letter-spacing: 1px;
 }
 
+#logo:hover #logo-x {
+	letter-spacing: 1px
+}
 
 /* hacky spacing fix */
 .navbar-brand {
@@ -88,6 +90,6 @@ input[type=search]:focus  {
 
 .navbar-inner {
 	margin-top: 13px;
-	/*padding-bottom: 30px;*/
 }
-/*  */
+/* hacky spacing fix */
+/**** NAVBAR ****/
