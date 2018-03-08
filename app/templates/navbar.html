@@ -154,12 +154,12 @@
               <pre>User: {{asyncSelected | json}} Amount: {{ amountselected | json }}</pre>
               <br>
               
-              <input id="giftUser" ng-model="asyncSelected" class="form-control" type="text" autocomplete="off" placeholder="Search Users" uib-typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
+              <input id="giftUser" ng-model="asyncSelected" ng-change="gift.username" class="form-control" type="text" autocomplete="off" placeholder="Search Users" uib-typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
                 <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
                 <div ng-show="noResults">
                   <i class="glyphicon glyphicon-remove"></i> No Results Found
                 </div>
-              <input class="form-control" type="number" placeholder="Amount" ng-model="amountselected">
+              <input class="form-control" type="number" placeholder="Amount" ng-model="amountselected" ng-change="gift.amount">
               <button class="btn btn-primary" type="submit" ng-submit="submitGift">Gift</button>
             </div>
             </form>

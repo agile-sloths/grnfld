@@ -1,5 +1,10 @@
 angular.module('app')
 .controller('TypeaheadCtrl', function($scope, $http, limitToFilter, coinsService) {
+    $scope.gift = {
+      username: '',
+      amount: ''
+    }
+  
     $scope.getUsers = function(val) {
         return $http.get('/users', {
           params: {
