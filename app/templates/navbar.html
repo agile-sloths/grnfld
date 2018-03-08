@@ -148,11 +148,18 @@
           <h4>Total Hackcoins: {{ $root.hackcoin }}</h4>
           <br>
           <form class="form-inline my-6 my-lg-0">
-            <div class="form-group" >
+            <div class="form-group" id="giftUserForm">
               <label for="giftUser">Gift Hackcoins to another user:</label>
               <br>
-              <input id="giftUser" ng-model="gift.username" class="form-control" type="text" autocomplete="off" placeholder="Search Users" uib-typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
-                <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
+              <input id="giftUser" ng-model="gift.username" 
+                                   class="form-control" 
+                                   type="text" 
+                                   autocomplete="off"
+                                   placeholder="Search Users" 
+                                   uib-typeahead="username for username in getUsers($viewValue)" 
+                                   typeahead-loading="loadingUsers" 
+                                   typeahead-no-results="noResults">
+                <!-- <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i> -->
                 <div ng-show="noResults">
                   <i class="glyphicon glyphicon-remove"></i> No Results Found
                 </div>
