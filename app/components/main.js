@@ -175,30 +175,37 @@ angular.module('app')
     }
   };
 
-  $scope.upvotePost = async (userId, postId, postUserId) => {
-    let voted = await postsService.upvotePost({
+  $scope.upvotePost = async (userId, postId, postUserId, index) => {''
+    await postsService.upvotePost({
       userId: userId,
       postId: postId,
       postUserId: postUserId
+    }, (data) => {
+      if (data.status === 201) {
+        let post = $scope.filteredPosts[index];
+        console.log($scope)
+        post.votes++;
+        if (post.votedOn === null || !post.votedOn) {
+          post.votedOn = 'up';
+        } else if (post.votedOn === 'down') {
+          post.votedOn = null;
+        }
+      }
     });
-    return voted;
   }
 
-  $scope.downvotePost = async (userId, postId, postUserId) => {
-    let voted = await postsService.downvotePost(userId, postId, postUserId);
-    return voted;
-  }
-
-  $scope.handleVote = (userId, postId, postUserId, flag) => {
-    if (flag === 'up') {
-      $scope.upvotePost(userId, postId, postUserId, (res) => {
-        console.log(res)
-      })
-    } else {
-      $scope.downvotePost(userId, postId, postUserId, (res) => {
-        console.log(res);
-      });
-    }
+  $scope.downvotePost = async (userId, postId, postUserId, index) => {
+    await postsService.downvotePost(userId, postId, postUserId, (data) => {
+      if (data.status === 204) {
+        let post = $scope.filteredPosts[index];
+        post.votes--;
+        if (post.votedOn === null || !post.votedOn) {
+          post.votedOn = 'down';
+        } else if (post.votedOn === 'up') {
+          post.votedOn = null;
+        }
+      }
+    });
   }
 
   $scope.multipleLike = (commentId, postUserId, index) => {

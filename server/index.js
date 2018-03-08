@@ -21,7 +21,6 @@ app.use(express.static(__dirname + '/../node_modules'));
 app.use(bodyParser.json());
 
 const isLoggedIn = (req, res, next) => {
-  req.isAuthenticated() ? console.log('yes, logged in!') : console.log('no, not logged in!');
   if (req.isAuthenticated()) {
     return next();
   }
@@ -77,30 +76,28 @@ app.post('/createPost', isLoggedIn, async (req, res) => {
   try {
     await db.createPost(req.body);
   } catch (err) {
+    res.end();
     console.log(err);
   }
-  res.end();
 });
 
 app.post('/upvotePost', isLoggedIn, async (req, res) => {
   try {
-    await db.upvotePost(req.body);
+    let upvote = await db.upvotePost(req.body);
+    upvote ? res.status(201).end() : null;
   } catch (err) {
     console.log(err);
-    res.end(err);
   }
-  res.end('success');
 })
 
 app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
   let query = url.parse(req.url).query.split('/');
   try {
-    await db.downvotePost(query[0], query[1], query[2]);
+    let downvote = await db.downvotePost(query[0], query[1], query[2]);
+    downvote ? res.status(204).end() : null;
   } catch (err) {
     console.log(err);
-    res.end(err);
   }
-  res.end('success');
 })
 
 app.post('/createComment', isLoggedIn, async (req, res) => {

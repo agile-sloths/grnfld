@@ -22,9 +22,9 @@
                     </h5>
                     <small style="display: block; text-align: center;">
                       <div style="float: left;margin: -4px 20px 0 0;">
-                        <i class="glyphicon glyphicon-chevron-up" ng-click="handleVote($root.userId, post.post_id, post.user_id, 'up'); $event.stopPropagation()"></i>
+                        <i class="glyphicon glyphicon-chevron-up" ng-class="{'upvote': post.votedOn === 'up'}" ng-click="upvotePost($root.userId, post.post_id, post.user_id, $index); $event.stopPropagation()"></i>
                         <h4 style="margin: 3px 0 5px -1px">{{post.votes}}</h4>
-                        <i class="glyphicon glyphicon-chevron-down" ng-click="handleVote($root.userId, post.post_id, post.user_id, 'down'); $event.stopPropagation()"></i>
+                        <i class="glyphicon glyphicon-chevron-down" ng-class="{'downvote': post.votedOn === 'down'}" ng-click="downvotePost($root.userId, post.post_id, post.user_id, $index); $event.stopPropagation()"></i>
                       </div>
 
                     </small>

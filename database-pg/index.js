@@ -75,14 +75,12 @@ const upvotePost = async (post) => {
     await knex('posts').where('post_id', post.postId).increment('votes', 1); // increase post votes
     await knex('users').where('user_id', post.postUserId).increment('hackcoin', 1); // give owner of post hackcoin
     await knex('usersposts').insert({user_id: post.userId, post_id: post.postId, vote: true}); // create record of post
+    return 1; // need status code to tell to server to send on success
   } else if (voted[0].vote === 0) {
     await knex('posts').where('post_id', post.postId).increment('votes', 1); // increase post votes
     await knex('users').where('user_id', post.postUserId).increment('hackcoin', 1); // give owner of post hackcoin
-    await knex('usersposts').where('user_id', post.userId).update('vote', null);
-  } else if (voted[0].vote === null) {
-    await knex('posts').where('post_id', post.postId).increment('votes', 1); // increase post votes
-    await knex('users').where('user_id', post.postUserId).increment('hackcoin', 1); // give owner of post hackcoin
-    await knex('usersposts').where('user_id', post.userId).update('vote', true);
+    await knex('usersposts').where('user_id', post.userId).andWhere('post_id', post.postId).del();
+    return 1; // need status code to tell to server to send on success
   }
 }
 
@@ -92,14 +90,12 @@ const downvotePost = async (userId, postId, postUserId) => {
     await knex('posts').where('post_id', postId).decrement('votes', 1);
     await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin
     await knex('usersposts').insert({user_id: userId, post_id: postId, vote: false});
+    return 1; // need status code to tell to server to send on success
   } else if (voted[0].vote === 1) {
     await knex('posts').where('post_id', postId).decrement('votes', 1);
     await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin
-    await knex('usersposts').where('user_id', userId).update('vote', null);
-  } else if (voted[0].vote === null) {
-    await knex('posts').where('post_id', postId).decrement('votes', 1);
-    await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin
-    await knex('usersposts').where('user_id', userId).update('vote', 0);
+    await knex('usersposts').where('user_id', userId).andWhere('post_id', postId).del();
+    return 1; // need status code to tell to server to send on success
   }
 }
 
