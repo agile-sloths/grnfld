@@ -12,6 +12,30 @@ angular.module('app')
     postsService.getAll(data => {
       console.log('got posts', data);
       $scope.posts = data;
+      $scope.selectedLanguage = '';
+
+      $scope.languages = [{
+        id: 1,
+        label: 'HTML',
+      }, {
+        id: 2,
+        label: 'CSS',
+      }, {
+        id: 3,
+        label: 'JavaScript',
+      }, {
+        id: 4,
+        label: 'Python',
+      }, {
+        id: 5,
+        label: 'C++',
+      }, {
+        id: 6,
+        label: 'C#',
+      }, {
+        id: 7,
+        label: 'Ruby',
+      }];
 
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
@@ -75,6 +99,16 @@ angular.module('app')
       });
     }
   };
+
+  $scope.selectLanguage = () => {
+    $scope.filteredPosts = $scope.posts.filter(post => {
+      if ($scope.selectedLanguage) {
+        return post.language === $scope.selectedLanguage.label;
+      } else {
+        return post;
+      }
+    });
+  }
 
   $scope.selectSolution = (comment) => {
     if ($rootScope.userId === $scope.currentPost.user_id) {
