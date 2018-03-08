@@ -145,6 +145,17 @@ app.delete('/coin*', isLoggedIn, async (req, res) => { // this feels a little ba
   res.status(204).end();
 });
 
+app.post('/gift', isLoggedIn, async (req, res) => {
+  console.log(req.body)
+  let currentHackcoins = await getCurrentHackCoins(req.body.userId);
+  console.log(currentHackcoins)
+})
+
+app.delete('/gift', isLoggedIn, async (req, res) => {
+  let currentHackcoins = await getCurrentHackCoins(req.body.userId);
+  console.log(currentHackcoins)
+})
+
 app.post('/solution', isLoggedIn, async (req, res) => {
   const data = await db.markSolution(req.body.commentId, req.body.postId);
   res.status(200).end();

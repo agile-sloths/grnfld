@@ -17,8 +17,10 @@ angular.module('app')
           });
         });
       };
+
     $scope.submitGift = function() {
-      console.log('works')
-      coinsService.submitNewGift(/*user goes here, amount goes here*/)
+      console.log($scope.gift.username)
+      // console.log('controller test')
+      return coinsService.submitNewGift($scope.gift.username, $scope.gift.amount)
     }
 });
