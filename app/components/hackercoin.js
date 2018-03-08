@@ -23,6 +23,7 @@ angular.module('app')
     $scope.submitGift = function() {
       coinsService.submitNewGift($scope.gift.username, $scope.gift.amount, $rootScope.userId)
       $rootScope.hackcoin = $rootScope.hackcoin - $scope.gift.amount;
+      window.localStorage.hackcoin = $rootScope.hackcoin;
       $scope.gift.username = '';
       $scope.gift.amount = '';
     }
