@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('TypeaheadCtrl', function($scope, $http, limitToFilter) {
+.controller('TypeaheadCtrl', function($scope, $http, limitToFilter, coinsService) {
     $scope.getUsers = function(val) {
         return $http.get('/users', {
           params: {
@@ -12,4 +12,8 @@ angular.module('app')
           });
         });
       };
+    $scope.submitGift = function() {
+      console.log('works')
+      coinsService.submitNewGift(/*user goes here, amount goes here*/)
+    }
 });
