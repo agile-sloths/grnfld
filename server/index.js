@@ -140,6 +140,11 @@ const getCurrentHackCoins = async userId => {
   return currentHackCoins = currentHackCoins.pop().hackcoin;
 }
 
+const getCurrentCoinsByUsername = async username => {
+  let currentHackCoins = await db.checkCoinByUsername(username);
+  return currentHackCoins = currentHackCoins.pop().hackcoin;
+}
+
 app.post('/coin', isLoggedIn, async (req, res) => {
   let currentHackCoins = await getCurrentHackCoins(req.body.userId);
   if (currentHackCoins > 0 && req.body.hackCoins <= currentHackCoins) { //user has usable coins and asking to use a number of some available -- good update db
@@ -159,10 +164,23 @@ app.post('/coin', isLoggedIn, async (req, res) => {
 app.delete('/coin*', isLoggedIn, async (req, res) => { // this feels a little backwards, but they had it set up where a post takes away your coin which means a delete gives one back
   let query = url.parse(req.url).query.split('?');
   let currentHackCoins = await getCurrentHackCoins(+query[0]);
-  await db.addCoin(+query[0], +query[1], 'flag', 1); // give back coin to logged in user
-  await db.subtractCoins(currentHackCoins, 1, +query[2], +query[1]); // revoke coin from poster
+  await db.addCoin(+query[0], +query[1], 'flag', +query[3]); // give back coin to logged in user
+  await db.subtractCoins(currentHackCoins, +query[3], +query[2], +query[1]); // revoke coin from poster
   res.status(204).end();
 });
+
+app.post('/gift', isLoggedIn, async (req, res) => {
+  let currentHackcoins = await getCurrentCoinsByUsername(req.body.params.username);
+  db.giftCoin(req.body.params.username, req.body.params.amount)
+  res.status(201).end();
+})
+
+app.delete('/gift', isLoggedIn, async (req, res) => {
+  let query = url.parse(req.url).query.split('?');
+  console.log(query)
+  db.deleteGiftedCoin(query[0], query[1])
+  res.status(204).end();
+})
 
 app.post('/solution', isLoggedIn, async (req, res) => {
   const data = await db.markSolution(req.body.commentId, req.body.postId);
