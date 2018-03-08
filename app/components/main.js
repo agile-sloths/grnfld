@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('MainCtrl', function ($scope, postsService, $rootScope, commentsService) {
+.controller('MainCtrl', function ($scope, usersService, postsService, $rootScope, commentsService) {
   $('.alert .close').on('click', function (e) {
     $(this).parent().hide();
   });
@@ -13,7 +13,6 @@ angular.module('app')
 
     //get all posts on page load
     postsService.getAll((posts, postVotes) => {
-      console.log('got posts', posts);
       $scope.posts = posts;
       $scope.postVotes = {};
       postVotes.forEach(pair => {
@@ -50,6 +49,14 @@ angular.module('app')
         label: 'Ruby',
       }];
       $scope.selectedLanguage = $scope.languages[0]; // default to all languages
+
+      $scope.$watch(function() {
+        return $rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
+      }, function(newValue, oldValue) {
+        if (newValue !== oldValue) {
+          $scope.init();
+        }
+      })
 
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
