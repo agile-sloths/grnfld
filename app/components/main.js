@@ -12,9 +12,12 @@ angular.module('app')
     postsService.getAll(data => {
       console.log('got posts', data);
       $scope.posts = data;
-      $scope.selectedLanguage = '';
-
+      // category selecter
       $scope.languages = [{
+        id: 0,
+        label: 'All'
+      },
+      {
         id: 1,
         label: 'HTML',
       }, {
@@ -36,6 +39,7 @@ angular.module('app')
         id: 7,
         label: 'Ruby',
       }];
+      $scope.selectedLanguage = $scope.languages[0]; // default to all languages
 
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
@@ -44,6 +48,7 @@ angular.module('app')
         let end = begin + $scope.numPerPage;
 
         $scope.filteredPosts = $scope.posts.slice(begin, end);
+        $scope.selectLanguage(); // initialize filter based on language
       });
     });
   };
@@ -102,10 +107,10 @@ angular.module('app')
 
   $scope.selectLanguage = () => {
     $scope.filteredPosts = $scope.posts.filter(post => {
-      if ($scope.selectedLanguage) {
-        return post.language === $scope.selectedLanguage.label;
-      } else {
+      if ($scope.selectedLanguage.label === 'All') {
         return post;
+      } else {
+        return post.language === $scope.selectedLanguage.label;
       }
     });
   }
