@@ -151,16 +151,13 @@
             <div class="form-group" >
               <label for="giftUser">Gift Hackcoins to another user:</label>
               <br>
-              <pre>User: {{asyncSelected | json}} Amount: {{ amountselected | json }}</pre>
-              <br>
-              
-              <input id="giftUser" ng-model="asyncSelected" class="form-control" type="text" autocomplete="off" placeholder="Search Users" uib-typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
+              <input id="giftUser" ng-model="gift.username" class="form-control" type="text" autocomplete="off" placeholder="Search Users" uib-typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
                 <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
                 <div ng-show="noResults">
                   <i class="glyphicon glyphicon-remove"></i> No Results Found
                 </div>
-              <input class="form-control" type="number" placeholder="Amount" ng-model="amountselected">
-              <button class="btn btn-primary" type="submit">Gift</button>
+              <input class="form-control" type="number" placeholder="Amount" ng-model="gift.amount">
+              <button class="btn btn-primary" type="submit" ng-click="submitGift()">Gift</button>
             </div>
             </form>
         </div>
