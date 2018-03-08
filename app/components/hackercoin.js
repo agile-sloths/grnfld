@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('TypeaheadCtrl', function($scope, $http) {
+.controller('TypeaheadCtrl', function($scope, $http, limitToFilter) {
     $scope.getUsers = function(val) {
         return $http.get('/users', {
           params: {
@@ -8,7 +8,7 @@ angular.module('app')
           }
         }).then(function(response){
           return response.data.map(function(item){
-            return item.username;
+            return limitToFilter(item.username, 5);
           });
         });
       };
