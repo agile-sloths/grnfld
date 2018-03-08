@@ -26,7 +26,7 @@ angular.module('app')
     });
   };
 
-  this.logout = function () {
+  this.logout = function (callback) {
     $http.post('/logout')
       .then(function (data) {
         callback(data);
