@@ -24,7 +24,7 @@ input[type=search]:focus  {
 
 .search {
 	margin-bottom: 20px;
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 .nav-item {
@@ -38,12 +38,12 @@ input[type=search]:focus  {
 .nav-item {
 	font-family: 'Quicksand', sans-serif;
 	font-size: 18px;
-	letter-spacing: -.05px;
+	/*letter-spacing: -.05px;*/
 }
 
 .nav-item:hover {
 	font-size: 19px;
-	letter-spacing: 1px;
+	/*letter-spacing: 1px;*/
 }
 
 #logo {
@@ -81,11 +81,12 @@ input[type=search]:focus  {
 
 /* hacky spacing fix */
 .navbar-brand {
+	margin-top: 10px;
    margin-bottom: 10px;
 }
 
 .navbar-inner {
-	margin-top: 10px;
-	padding-bottom: 20px;
+	margin-top: 13px;
+	/*padding-bottom: 30px;*/
 }
 /*  */
