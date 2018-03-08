@@ -153,14 +153,14 @@ app.delete('/coin*', isLoggedIn, async (req, res) => { // this feels a little ba
 app.post('/gift', isLoggedIn, async (req, res) => {
   let currentHackcoins = await getCurrentCoinsByUsername(req.body.params.username);
   db.giftCoin(req.body.params.username, req.body.params.amount)
-  //res.status(201).end();
+  res.status(201).end();
 })
 
 app.delete('/gift', isLoggedIn, async (req, res) => {
   let query = url.parse(req.url).query.split('?');
   console.log(query)
   db.deleteGiftedCoin(query[0], query[1])
-  //res.status(204).end();
+  res.status(204).end();
 })
 
 app.post('/solution', isLoggedIn, async (req, res) => {
