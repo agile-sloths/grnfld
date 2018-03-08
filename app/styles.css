@@ -50,12 +50,12 @@ input[type=search]:focus  {
 .nav-item {
 	font-family: 'Quicksand', sans-serif;
 	font-size: 18px;
-	letter-spacing: -.05px;
+	/*letter-spacing: -.05px;*/
 }
 
 .nav-item:hover {
 	font-size: 19px;
-	letter-spacing: 1px;
+	/*letter-spacing: 1px;*/
 }
 
 #logo {
