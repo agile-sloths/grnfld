@@ -8,6 +8,7 @@ USE hackXchange;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS userscomments;
 
 CREATE TABLE users
 (
@@ -74,7 +75,6 @@ CREATE TABLE userscomments
   FOREIGN KEY (user_id) REFERENCES users (user_id),
   FOREIGN KEY (comment_id) REFERENCES comments (comment_id)
 );
-
 
 -- ---
 -- Test Data
