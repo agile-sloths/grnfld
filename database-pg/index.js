@@ -34,7 +34,6 @@ const getVoters = (commentId) => {
 };
 
 const getUsers = async () => {
-  console.log('database works')
   return await knex.select('username').from('users');
 }
 
@@ -139,6 +138,16 @@ const refreshCoins = () => {
   knex('users').update('hackcoin', 5);
 };
 
+const giftCoin = async (username, amount) => {
+  let currentCoins = await knex.select('hackcoin').from('users').where('username', username);
+  await knex('users').where('username', username).update('hackcoin', currentCoins[0].hackcoin + amount);
+}
+
+const deleteGiftedCoin = async (currentUserId, amount) => {
+  let currentCoins = await knex.select('hackcoin').from('users').where('user_id', currentUserId);
+  await knex('users').where('user_id', currentUserId).update('hackcoin', currentCoins[0].hackcoin - amount);
+}
+
 module.exports = {
   getAllPosts,
   createPost,
@@ -154,5 +163,7 @@ module.exports = {
   subtractCoins,
   addCoin,
   refreshCoins,
-  getUsers
+  getUsers,
+  giftCoin,
+  deleteGiftedCoin
 };
