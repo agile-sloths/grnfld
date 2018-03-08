@@ -5,16 +5,29 @@ angular.module('app')
   });
 
   $scope.init = function() {
+    $rootScope.userId = window.localStorage.userId || null;
+    $rootScope.hackcoin = window.localStorage.hackcoin || null;
+    $rootScope.sessionId = window.localStorage.sessionID || null;
     $scope.currentPage = 1;
     $scope.numPerPage = 5;
 
     //get all posts on page load
-    postsService.getAll(data => {
-      console.log('got posts', data);
-      $scope.posts = data;
-      $scope.selectedLanguage = '';
-
+    postsService.getAll((posts, postVotes) => {
+      console.log('got posts', posts);
+      $scope.posts = posts;
+      $scope.postVotes = {};
+      postVotes.forEach(pair => {
+        if (!$scope.postVotes.hasOwnProperty(pair.post_id)) {
+          $scope.postVotes[pair.post_id] = {};
+        }
+        $scope.postVotes[pair.post_id][pair.user_id] = pair.vote;
+      })
+      // category selecter
       $scope.languages = [{
+        id: 0,
+        label: 'All'
+      },
+      {
         id: 1,
         label: 'HTML',
       }, {
@@ -36,6 +49,7 @@ angular.module('app')
         id: 7,
         label: 'Ruby',
       }];
+      $scope.selectedLanguage = $scope.languages[0]; // default to all languages
 
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
@@ -44,6 +58,25 @@ angular.module('app')
         let end = begin + $scope.numPerPage;
 
         $scope.filteredPosts = $scope.posts.slice(begin, end);
+
+        $scope.filteredPosts.forEach(post => { // for each visible post,
+          post.voters = {}; // create voters object
+          if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
+            for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
+              post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
+            }
+          }
+          if ($rootScope.userId) {
+            if (post.voters.hasOwnProperty($rootScope.userId)) {
+              if (post.voters[$rootScope.userId] === 0) {
+                post.votedOn = 'down';
+              } else {
+                post.votedOn = 'up';
+              }
+            }
+          }
+        })
+        $scope.selectLanguage(); // initialize filter based on language
       });
     });
   };
@@ -102,10 +135,10 @@ angular.module('app')
 
   $scope.selectLanguage = () => {
     $scope.filteredPosts = $scope.posts.filter(post => {
-      if ($scope.selectedLanguage) {
-        return post.language === $scope.selectedLanguage.label;
-      } else {
+      if ($scope.selectedLanguage.label === 'All') {
         return post;
+      } else {
+        return post.language === $scope.selectedLanguage.label;
       }
     });
   }
@@ -169,6 +202,38 @@ angular.module('app')
     }
   };
 
+  $scope.upvotePost = async (userId, postId, postUserId, index) => {''
+    await postsService.upvotePost({
+      userId: userId,
+      postId: postId,
+      postUserId: postUserId
+    }, (data) => {
+      if (data.status === 201) {
+        let post = $scope.filteredPosts[index];
+        console.log($scope)
+        post.votes++;
+        if (post.votedOn === null || !post.votedOn) {
+          post.votedOn = 'up';
+        } else if (post.votedOn === 'down') {
+          post.votedOn = null;
+        }
+      }
+    });
+  }
+
+  $scope.downvotePost = async (userId, postId, postUserId, index) => {
+    await postsService.downvotePost(userId, postId, postUserId, (data) => {
+      if (data.status === 204) {
+        let post = $scope.filteredPosts[index];
+        post.votes--;
+        if (post.votedOn === null || !post.votedOn) {
+          post.votedOn = 'down';
+        } else if (post.votedOn === 'up') {
+          post.votedOn = null;
+        }
+      }
+    });
+  }
 
   $scope.submitUnlikes = async (isValid) => {
     if (isValid) {
