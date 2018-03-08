@@ -5,6 +5,9 @@ angular.module('app')
   });
 
   $scope.init = function() {
+    $rootScope.userId = window.localStorage.userId || null;
+    $rootScope.hackcoin = window.localStorage.hackcoin || null;
+    $rootScope.sessionId = window.localStorage.sessionID || null;
     $scope.currentPage = 1;
     $scope.numPerPage = 5;
 
@@ -55,11 +58,21 @@ angular.module('app')
         let end = begin + $scope.numPerPage;
 
         $scope.filteredPosts = $scope.posts.slice(begin, end);
-        $scope.filteredPosts.forEach(post => {
-          post.voters = {};
-          if ($scope.postVotes.hasOwnProperty(post.post_id)) {
-            for (let voter in $scope.postVotes[post.post_id]) {
-              post.voters[voter] = $scope.postVotes[post.post_id][voter];
+
+        $scope.filteredPosts.forEach(post => { // for each visible post,
+          post.voters = {}; // create voters object
+          if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
+            for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
+              post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
+            }
+          }
+          if ($rootScope.userId) {
+            if (post.voters.hasOwnProperty($rootScope.userId)) {
+              if (post.voters[$rootScope.userId] === 0) {
+                post.votedOn = 'down';
+              } else {
+                post.votedOn = 'up';
+              }
             }
           }
         })
