@@ -7,16 +7,16 @@ angular.module('app')
 .component('app', {
   bindings: {},
   controller: 'AppCtrl',
-  templateUrl: 'templates/app.html'
+  templateUrl: '/templates/app.html'
 })
 .config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'templates/main.html',
+      templateUrl: '/templates/main.html',
       controller: 'MainCtrl'
     })
     .when('/submit', {
-      templateUrl: 'templates/submit.html',
+      templateUrl: '/templates/submit.html',
       controller: 'SubmitCtrl'
     })
     .otherwise({ redirectTo: '/' });

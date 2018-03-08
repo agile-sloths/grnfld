@@ -1,3 +1,8 @@
+* {
+	font-family: 'Quicksand', sans-serif;
+	font-size: 15px;
+}
+
 .disabled {
     cursor: not-allowed;
     opacity: .5;
@@ -7,8 +12,11 @@
    margin-right: 10px;
 }
 
-* {
-	font-family: 'Quicksand', sans-serif;
+
+/**** SEARCH BAR ****/
+.search {
+	margin-bottom: 20px;
+	margin-top: 40px;
 }
 
 select {
@@ -27,12 +35,10 @@ input[type=search] {
 input[type=search]:focus  {
    width: 100%;
 }
+/**** SEARCH BAR ****/
 
-.search {
-	margin-bottom: 20px;
-	margin-top: 20px;
-}
 
+/**** NAVBAR ****/
 .nav-item {
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -44,12 +50,12 @@ input[type=search]:focus  {
 .nav-item {
 	font-family: 'Quicksand', sans-serif;
 	font-size: 18px;
-	letter-spacing: -.05px;
+	/*letter-spacing: -.05px;*/
 }
 
 .nav-item:hover {
 	font-size: 19px;
-	letter-spacing: 1px;
+	/*letter-spacing: 1px;*/
 }
 
 #logo {
@@ -60,13 +66,6 @@ input[type=search]:focus  {
   cursor: pointer
 }
 
-#logo-x {
-	font-family: 'Rammetto One', cursive;
-	font-size: 30px;
-	padding-bottom: 20px;
-	letter-spacing: -2px;
-}
-
 #logo {
 	font-family: 'Quicksand', sans-serif;
 	font-size: 34px;
@@ -74,24 +73,30 @@ input[type=search]:focus  {
 	letter-spacing: -2px;
 }
 
-#logo:hover #logo-x {
-	/*font-size: 36px;*/
-	letter-spacing: 1px
+#logo-x {
+	font-family: 'Rammetto One', cursive;
+	font-size: 30px;
+	padding-bottom: 20px;
+	letter-spacing: -2px;
 }
 
 #logo:hover {
-	/*font-size: 36px;*/
 	letter-spacing: 1px;
 }
 
+#logo:hover #logo-x {
+	letter-spacing: 1px
+}
 
 /* hacky spacing fix */
 .navbar-brand {
+	margin-top: 10px;
    margin-bottom: 10px;
 }
 
 .navbar-inner {
-	margin-top: 10px;
-	padding-bottom: 20px;
+	margin-top: 13px;
 }
+/* hacky spacing fix */
+/**** NAVBAR ****/
 /*  */
