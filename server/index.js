@@ -51,6 +51,11 @@ app.get('/posts', async (req, res) => {
   // res.json(db.getPostsWithCommentsAsync());  //doesn't work
 // });
 
+app.get('/users', async(req, res) => {
+  let users = await db.getUsers();
+  res.json(users);
+})
+
 app.get('/comments', async (req, res) => {
   let postId = req.query.postId;
   let comments = await db.getComments(postId);
@@ -153,5 +158,5 @@ app.post('/solution/remove', async (req, res) => {
 app.get('*', (req, res) => res.redirect('/'));
 
 app.listen(process.env.PORT || 3000, function () {
-  console.log('listening on portttt 3000!');
+  console.log('listening on port 3000!');
 });

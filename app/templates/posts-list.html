@@ -1,6 +1,7 @@
 <div>
     <div class="list-group">
         <input ng-model="searchInput" type="search" class="form-control search" placeholder="Search for...">
+        <h4>Select Language:</h4><select ng-model="selectedLanguage" ng-options="language as language.label for language in languages" ng-change="selectLanguage()"></select>
         <button ng-click="refresh()" type="button" class="btn btn-primary btn-sm pull-right">Refresh</button>
         <button ng-click="toggleStyle()" type="button" id="styletoggle" class="btn btn-space btn-primary btn-sm pull-right">Light Mode</button>
         <div ng-if="searchInput.length === 0 || searchInput.length === undefined">
