@@ -9,9 +9,16 @@ angular.module('app')
     $scope.numPerPage = 5;
 
     //get all posts on page load
-    postsService.getAll(data => {
-      console.log('got posts', data);
-      $scope.posts = data;
+    postsService.getAll((posts, postVotes) => {
+      console.log('got posts', posts);
+      $scope.posts = posts;
+      $scope.postVotes = {};
+      postVotes.forEach(pair => {
+        if (!$scope.postVotes.hasOwnProperty(pair.post_id)) {
+          $scope.postVotes[pair.post_id] = {};
+        }
+        $scope.postVotes[pair.post_id][pair.user_id] = pair.vote;
+      })
       // category selecter
       $scope.languages = [{
         id: 0,
@@ -48,6 +55,14 @@ angular.module('app')
         let end = begin + $scope.numPerPage;
 
         $scope.filteredPosts = $scope.posts.slice(begin, end);
+        $scope.filteredPosts.forEach(post => {
+          post.voters = {};
+          if ($scope.postVotes.hasOwnProperty(post.post_id)) {
+            for (let voter in $scope.postVotes[post.post_id]) {
+              post.voters[voter] = $scope.postVotes[post.post_id][voter];
+            }
+          }
+        })
         $scope.selectLanguage(); // initialize filter based on language
       });
     });

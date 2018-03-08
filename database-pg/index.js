@@ -22,7 +22,7 @@ const getAllPosts = () => {
 };
 
 const getPostVotes = () => {
-  return knex.select().from('userscomments');
+  return knex('usersposts').select('post_id', 'user_id', 'vote');
 };
 
 const getComments = (postId) => {

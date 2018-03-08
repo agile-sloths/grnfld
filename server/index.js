@@ -36,9 +36,7 @@ let refreshCoins = setInterval( () => {
 app.get('/posts', async (req, res) => {
   let posts = await db.getAllPosts();
   let postVotes = await db.getPostVotes();
-  console.log(postVotes);
-  // loop over posts and posts votes and insert post votes
-  res.json(posts);
+  res.json({posts: posts, postVotes: postVotes});
 });
 
 // app.get('/test', (req, res) => {
