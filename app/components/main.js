@@ -84,6 +84,12 @@ angular.module('app')
     }
   };
 
+  $scope.deleteComment = (comment,commentId, postUserId, index) => {
+    console.log('delete comment!');
+    //postuserid is the userid of that comment
+    console.log(comment,commentId, postUserId, index);
+  };
+
   $scope.message = '';
 
   $scope.submitComment = (isValid) => {
@@ -189,8 +195,8 @@ angular.module('app')
 
 
   $scope.multipleUnlike = (commentId, postUserId, index) => {
-    if ($scope.comments[index].voters[$rootScope.userId] > 0) {
-      $scope.max = $scope.comments[index].voters[$rootScope.userId];
+    if ($scope.comments[index].voters[$rootScope.userId] > 1) {
+      $scope.max = $scope.comments[index].voters[$rootScope.userId] - 1;
       $scope.unlikeCommentId = commentId;
       $scope.unlikePostUserId = postUserId;
       $scope.unlikeIndex = index;

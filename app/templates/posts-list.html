@@ -137,6 +137,10 @@
                                         <!-- /panel-body -->
                                         <p style="margin-right: 2px;">
                                             <small>
+
+ <!--                                                <a ng-show="currentPost.user_id === $root.userId && currentPost.solution_id !== comment.comment_id" ng-click="selectSolution(comment)"
+                                                    href="">Delete</a> -->
+
                                                 <a ng-class="{'disabled': $root.hackcoin <= 0 || !$root.userId}" ng-click="likeComment(comment.comment_id, comment.user_id, $index)" ng-dblclick="multipleLike(comment.comment_id, comment.user_id, $index)"
                                                     href="">Like</a> -
 
@@ -150,6 +154,8 @@
                                                     href="">Not correct? Unmark as Solution</a> - Votes: {{comment.votes}}
 
                                             </small>
+                                            <br></br>
+                                            <button ng-click="deleteComment(comment,comment.comment_id, comment.user_id, $index)" type="button" class="btn btn-primary btn-sm pull-right">Delete Comment</button>
                                         </p>
                                     </div>
                                     <!-- /panel panel-default -->
