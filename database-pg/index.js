@@ -33,6 +33,11 @@ const getVoters = (commentId) => {
     .where(knex.raw(`comment_id = ${commentId}`));
 };
 
+const getUsers = async () => {
+  console.log('database works')
+  return await knex.select('username').from('users');
+}
+
 //using async/await
 //currently not used
 // async function getPostsWithCommentsAsync() {
@@ -141,5 +146,6 @@ module.exports = {
   checkCoin,
   subtractCoins,
   addCoin,
-  refreshCoins
+  refreshCoins,
+  getUsers
 };
