@@ -3,9 +3,9 @@
         <div class="users">
             <a ng-repeat="user in watchedUsers track by $index" ng-click="handleuserClick($index)" user="user" class="list-group-item list-group-item-action flex-column align-items-start"
                 data-toggle="modal" data-target="#userModal">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">
-                    <strong>Hello! {{user}}</strong>
+                <div class="userContainer">
+                  <h5>
+                    <strong>{{user.username}}</strong>
                   </h5>
                 </div>
              </a>
