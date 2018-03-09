@@ -170,7 +170,7 @@ input[name=username] {
   grid-row: 1;
   border: 1px solid black;
   min-height: 200px;
-  padding: 5px;
+  padding-: 5px;
 }
 
 .user-buttons {

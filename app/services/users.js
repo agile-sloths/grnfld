@@ -47,5 +47,9 @@ angular.module('app')
       .catch(function (err) {
         console.log(err);
       });
+  };  
+
+  this.getGithubPicture = function (callback) {
+    console.log("Hey I got it!!")
   };
 });

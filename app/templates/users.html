@@ -5,7 +5,7 @@
     </div>
     <div class="list-group">
         <div class="users-container">
-            <div ng-repeat="user in watchedUsers track by $index" ng-click="handleuserClick($index)" user="user"
+            <div ng-repeat="user in watchedUsers track by $index" ng-controller="UsersCtrl" ng-click="handleuserClick($index)" user="user"
                 data-toggle="modal" data-target="#userModal">
                 <div class="user-container">
                   <div ng-if="user.username">
@@ -13,6 +13,9 @@
                   </div>   
                   <div ng-if="user.github_handle">
                       <h5 class=""><a href="#"><strong>Github:</strong> {{ user.github_handle }}</a></h5>  <!-- make API call -->
+                  </div> 
+                  <div ng-if="user.github_handle">
+                      <h5 class=""><a href="#"><strong>Github:</strong> {{ getGithubPicture() }}</a></h5>  <!-- make API call -->
                   </div>
                   <div ng-if="user.location">
                       <p class=""><strong>Location:</strong> {{ user.location }}</p>
