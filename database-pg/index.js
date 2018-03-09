@@ -117,14 +117,15 @@ const checkCredentials = (username) => {
     .where(knex.raw(`LOWER(username) = LOWER('${username}')`));
 };
 
-const createUser = async (username, password, location, languages, github_handle) => {
+const createUser = async (req, username, password) => {
+  console.log('reqqqq', req.body)
   const query = await knex.select().from('users')
     .where(knex.raw(`LOWER(username) = LOWER('${username}')`));
 
   if (query.length) {
     return 'already exists';
   } else {
-    return await knex('users').insert({ username: username, password: password, location: location, languages: languages, github_handle: github_handle });
+    return await knex('users').insert({ username: username, password: password, location: req.body.location, languages: req.body.languages, github_handle: req.body.github_handle });
   }
 };
 

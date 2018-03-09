@@ -1,14 +1,27 @@
 <div>
     <div class="list-group">
         <div class="users">
-            <a ng-repeat="user in watchedUsers track by $index" ng-click="handleuserClick($index)" user="user" class="list-group-item list-group-item-action flex-column align-items-start"
+            <div ng-repeat="user in watchedUsers track by $index" ng-click="handleuserClick($index)" user="user"
                 data-toggle="modal" data-target="#userModal">
                 <div class="userContainer">
-                  <h5>
-                    <strong>{{user.username}}</strong>
-                  </h5>
+                  <p>{{ user }}</p>
+                  <div ng-if="user.username">
+                      <h3 class=""><a href="#">{{ user.username }}</a></h3>
+                  </div>   
+                  <div ng-if="user.github_handle">
+                      <h5 class=""><a href="#">Github: {{ user.github_handle }}</a></h5>
+                  </div>
+                  <div ng-if="user.location">
+                      <p class="">Location: {{ user.location }}</p>
+                  </div>   
+                  <div>
+                      <p class="">Hackcoins: {{ user.hackcoin }}</p>
+                  </div>  
+                  <div ng-if="user.languages">
+                      <p class="">Languages: {{ user.languages }}</p>
+                  </div>
                 </div>
-             </a>
+             </div>
         </div>
         <!-- <div id="userModal" class="modal fade" role="dialog">
             <div class="modal-dialog"> -->
