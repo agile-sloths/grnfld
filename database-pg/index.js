@@ -230,5 +230,6 @@ module.exports = {
   giftCoin,
   deleteGiftedCoin,
   checkCoinByUsername,
-  spendSlotCoin
+  spendSlotCoin,
+  awardSlotCoins
 };
