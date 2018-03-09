@@ -108,10 +108,9 @@ VALUES
   ('Hipster', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou');
 
 insert into posts
-  (user_id, title, code, summary, closed, language, solution_id)
+  (user_id, title, code, summary, language, solution_id)
 VALUES
-  (1, 'Help With Promises', 'var promise1 = Promise.resolve(3);\nvar promise2 = 42;\nvar promise3 = new Promise(function(resolve, reject) {\n&#9setTimeout(resolve, 100, 'foo');\n});\n\nPromise.all(promise1, promise2, promise3).then(function(values) {\n&#9;
-return values});', 'Promises are hard, can someone please explain why this is returning a promise object and not the value?', 'JavaScript', 123456),
+  (1, 'Get to the Choppa', 'aslkdjfleaf', 'Get to the choppa or die', 'JavaScript', 123456),
   (2, 'He is a real boy', 'hello world', 'Turn puppet into real boy', 'HTML', null),
   (3, 'A really big sword', 'chop chop its all in the mind', 'the ultimate onion chopper', 'Python', null),
   (4, 'How do you pronounce my name?', 'some military guy', 'Did not know how to say this till I was 25', 'JavaScript', null),
