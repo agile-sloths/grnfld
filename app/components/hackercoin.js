@@ -54,9 +54,9 @@ angular.module('app')
     }
     
     $scope.getRandomSlotValue = async () => {
-      $scope.slotError = false;
+      $scope.slotError === false;
       if ($rootScope.hackcoin <= 0) {
-        $scope.slotError.error = true;
+        $scope.slotError.error === true;
       } else {
         await coinsService.spendCoin($rootScope.userId);
         $rootScope.hackcoin = $rootScope.hackcoin - 1;
@@ -68,7 +68,7 @@ angular.module('app')
         //if result is a winner, add 10 coins to the users
         let result = $scope.randomSlot = $scope.slotValues[Math.floor(Math.random() * $scope.slotValues.length)];
         if (result.value === 'LOSE') {
-          $scope.slotError.error = true;
+          $scope.slotError.error === true;
           //show message that says 'You lost- click to try again'
         } else if (result.value === 'WIN') {
           coinsService.coinPrize($rootScope.userId);
