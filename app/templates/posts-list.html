@@ -20,9 +20,9 @@
               </h5>
               <small style="display: block; text-align: center;">
                 <div style="float: left;margin: -4px 20px 0 0;">
-                  <i class="glyphicon glyphicon-chevron-up" ng-class="{'upvote': featuredPost.votedOn === 'up'}" ng-click="upvotePost($root.userId, featuredPost.post_id, featuredPost.user_id, $index); $event.stopPropagation()"></i>
+                  <i class="glyphicon glyphicon-chevron-up" ng-class="{'upvote': featuredPost.votedOn === 'up'}" ng-click="upvotePost($root.userId, featuredPost.post_id, featuredPost.user_id, 'featured'); $event.stopPropagation()"></i>
                   <h4 style="margin: 3px 0 5px -1px">{{featuredPost.votes}}</h4>
-                  <i class="glyphicon glyphicon-chevron-down" ng-class="{'downvote': featuredPost.votedOn === 'down'}" ng-click="downvotePost($root.userId, featuredPost.post_id, featuredPost.user_id, $index); $event.stopPropagation()"></i>
+                  <i class="glyphicon glyphicon-chevron-down" ng-class="{'downvote': featuredPost.votedOn === 'down'}" ng-click="downvotePost($root.userId, featuredPost.post_id, featuredPost.user_id, 'featured'); $event.stopPropagation()"></i>
                 </div>
 
               </small>

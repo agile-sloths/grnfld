@@ -38,7 +38,7 @@ app.get('/posts', async (req, res) => {
   let postVotes = await db.getPostVotes();
   let featuredPost = await db.getFeaturedPost();
   if (featuredPost.length > 1) {
-    featuredPost = featuredPost[Math.floor(Math.random() * featuredPost.length)]
+    featuredPost = await [featuredPost[Math.floor(Math.random() * featuredPost.length)]]
   }
   res.json({posts: posts, postVotes: postVotes, featuredPost: featuredPost});
 });

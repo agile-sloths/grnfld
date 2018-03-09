@@ -50,8 +50,18 @@ angular.module('app')
       }];
       $scope.selectedLanguage = $scope.languages[0]; // default to all languages
 
+      $scope.$watch(function() {
+        return $rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
+      }, function(newValue, oldValue) {
+        if (newValue !== oldValue) {
+          $scope.init();
+        }
+      });
+
       //featured post
       $scope.featuredPost = featuredPost[0];
+
+      $scope.assignVoters($scope.featuredPost);
 
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
@@ -62,21 +72,7 @@ angular.module('app')
         $scope.filteredPosts = $scope.posts.slice(begin, end);
 
         $scope.filteredPosts.forEach(post => { // for each visible post,
-          post.voters = {}; // create voters object
-          if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
-            for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
-              post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
-            }
-          }
-          if ($rootScope.userId) {
-            if (post.voters.hasOwnProperty($rootScope.userId)) {
-              if (post.voters[$rootScope.userId] === 0) {
-                post.votedOn = 'down';
-              } else {
-                post.votedOn = 'up';
-              }
-            }
-          }
+          $scope.assignVoters(post);
         })
         $scope.selectLanguage(); // initialize filter based on language
       });
@@ -91,7 +87,6 @@ angular.module('app')
     $scope.currentPost = $scope.filteredPosts[clickedValue];
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
-      console.log('comments', data);
       $scope.comments = data;
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
@@ -134,6 +129,24 @@ angular.module('app')
       });
     }
   };
+
+  $scope.assignVoters = (post) => {
+    post.voters = {}; // create voters object
+    if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
+      for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
+        post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
+      }
+    }
+    if ($rootScope.userId) {
+      if (post.voters.hasOwnProperty($rootScope.userId)) {
+        if (post.voters[$rootScope.userId] === 0) {
+          post.votedOn = 'down';
+        } else {
+          post.votedOn = 'up';
+        }
+      }
+    }
+  }
 
   $scope.selectLanguage = (language) => {
     if (language) {
@@ -214,15 +227,16 @@ angular.module('app')
     }
   };
 
-  $scope.upvotePost = async (userId, postId, postUserId, index) => {''
+  $scope.upvotePost = async (userId, postId, postUserId, index) => {
     await postsService.upvotePost({
       userId: userId,
       postId: postId,
       postUserId: postUserId
     }, (data) => {
       if (data.status === 201) {
-        let post = $scope.filteredPosts[index];
-        console.log($scope)
+        index === 'featured' ?
+        post = $scope.featuredPost :
+        post = $scope.filteredPosts[index];
         post.votes++;
         if (post.votedOn === null || !post.votedOn) {
           post.votedOn = 'up';
@@ -236,7 +250,9 @@ angular.module('app')
   $scope.downvotePost = async (userId, postId, postUserId, index) => {
     await postsService.downvotePost(userId, postId, postUserId, (data) => {
       if (data.status === 204) {
-        let post = $scope.filteredPosts[index];
+        index === 'featured' ?
+        post = $scope.featuredPost :
+        post = $scope.filteredPosts[index];
         post.votes--;
         if (post.votedOn === null || !post.votedOn) {
           post.votedOn = 'down';
