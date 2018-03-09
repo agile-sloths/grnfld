@@ -129,6 +129,7 @@ app.post('/login', passport.authenticate('local-login'), (req, res) => {
 });
 
 app.post('/register', passport.authenticate('local-signup'), (req, res) => {
+  console.log('user', req.user[0])
   if (req.user === 'already exists') {
     res.status(409).end();
   } else {
@@ -136,6 +137,9 @@ app.post('/register', passport.authenticate('local-signup'), (req, res) => {
       user_id: req.user[0].user_id,
       username: req.user[0].username,
       hackcoin: req.user[0].hackcoin,
+      location: req.user[0].location,
+      languages: req.user[0].languages,
+      github_handle: req.user[0].github_handle,
       session_id: req.sessionID
     })
   }

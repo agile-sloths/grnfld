@@ -11,7 +11,7 @@ angular.module('app')
 
   $scope.submit = function (isValid) {
     if (isValid) {
-      usersService.register($scope.register.username, $scope.register.password, res => {
+      usersService.register($scope.register.username, $scope.register.password, $scope.register.location, $scope.register.languages, $scope.register.github_handle, res => {
         if (res.status === 409) {
           console.log('registration error');
           $('#registration-error').show();

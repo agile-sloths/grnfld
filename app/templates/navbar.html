@@ -108,6 +108,19 @@
             <input type="password" name="password" ng-model="register.password" ng-minlength="2" required>
             <p ng-show="registerForm.password.$invalid && registerForm.password.$dirty" class="help-block">Password is too short.</p>
             <p ng-show="registerForm.password.$error.required && registerForm.password.$dirty" class="help-block">A password is required.</p>
+          </div>   
+
+          <div class="form-group">
+            <label>Location:</label>
+            <input type="text" name="location" ng-model="register.location" placeholder="optional">
+          </div> 
+          <div class="form-group">
+            <label>Languages:</label>
+            <input type="text" name="languages" ng-model="register.languages" placeholder="optional">
+          </div>  
+          <div class="form-group">
+            <label>Github Handle:</label>
+            <input type="text" name="github_handle" ng-model="register.github_handle" placeholder="optional">
           </div>
       </div>
       <div class="modal-footer">
@@ -176,6 +189,4 @@
       </div>
     </div>
   </div>
-
-  <!-- Users Modal -->
 

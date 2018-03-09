@@ -13,10 +13,13 @@ angular.module('app')
     });
   };
 
-  this.register = function (username, password, callback) {
+  this.register = function (username, password, location, languages, github_handle, callback) {
     $http.post('/register', {
       username: username,
-      password: password
+      password: password,
+      location: location,
+      languages: languages,
+      github_handle: github_handle
     })
       .then(function (data) {
         callback(data);

@@ -12,7 +12,7 @@ angular.module('app')
     $scope.numPerPage = 5;
 
     // get all users 
-    usersService.getAllUsers(users => {
+    usersService.getAllUsers((users) => {
       console.log('got users', users)
       $scope.users = users
       // watch user changes

@@ -17,6 +17,9 @@ CREATE TABLE users
   username VARCHAR(25) NOT NULL,
   password varchar(60) NOT NULL,
   hackcoin int NOT NULL DEFAULT 100,
+  location VARCHAR(60) DEFAULT NULL,
+  languages VARCHAR(60) DEFAULT NULL,
+  github_handle VARCHAR(100) DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (user_id)
 );
