@@ -5,8 +5,8 @@ angular.module('app')
   });
 
   $scope.init = function() {
-    $rootScope.userId = window.localStorage.userId || null;
-    $rootScope.hackcoin = window.localStorage.hackcoin || null;
+    $rootScope.userId = +window.localStorage.userId || null;
+    $rootScope.hackcoin = +window.localStorage.hackcoin || null;
     $rootScope.sessionId = window.localStorage.sessionID || null;
     $scope.currentPage = 1;
     $scope.numPerPage = 5;
@@ -51,7 +51,7 @@ angular.module('app')
       $scope.selectedLanguage = $scope.languages[0]; // default to all languages
 
       $scope.$watch(function() {
-        return $rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
+        return +$rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
       }, function(newValue, oldValue) {
         if (newValue !== oldValue) {
           $scope.init();
@@ -87,6 +87,7 @@ angular.module('app')
     $scope.currentPost = $scope.filteredPosts[clickedValue];
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
+      console.log('comments:',data);
       $scope.comments = data;
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
@@ -111,6 +112,19 @@ angular.module('app')
         el.href = "https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/solar/bootstrap.min.css";
         buttonText.innerHTML = 'Light Mode'
         console.log(el)
+    }
+  };
+
+
+  $scope.deleteComment = async (comment, commentId, userId, index) => {
+    console.log('delete comment blahinput!',comment.comment_id, commentId, typeof userId, userId);
+    let res = await commentsService.deleteComment(comment.comment_id, $rootScope.userId);
+    if (res.status === 204) {
+      console.log('success!');
+      // $scope.$apply(() => {
+      //   $scope.comments[index].active = false;
+      // });
+      $('#like-alert').show();
     }
   };
 
@@ -169,6 +183,7 @@ angular.module('app')
   }
 
   $scope.selectSolution = (comment) => {
+    console.log(typeof $rootScope.userId);
     if ($rootScope.userId === $scope.currentPost.user_id) {
       $scope.currentPost.solution_id = comment.comment_id; //changes local solution_id so that star moves without refresh
       commentsService.selectSolution(comment.comment_id, $scope.currentPost.post_id);
@@ -282,8 +297,8 @@ angular.module('app')
 
 
   $scope.multipleUnlike = (commentId, postUserId, index) => {
-    if ($scope.comments[index].voters[$rootScope.userId] > 0) {
-      $scope.max = $scope.comments[index].voters[$rootScope.userId];
+    if ($scope.comments[index].voters[$rootScope.userId] > 1) {
+      $scope.max = $scope.comments[index].voters[$rootScope.userId] - 1;
       $scope.unlikeCommentId = commentId;
       $scope.unlikePostUserId = postUserId;
       $scope.unlikeIndex = index;

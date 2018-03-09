@@ -12,7 +12,7 @@ angular.module('app')
 
   //create new post variable
   $scope.post = {
-    userId: $rootScope.userId,
+    userId: +$rootScope.userId,
     title: '',
     codebox: '',
     description: ''
