@@ -108,7 +108,7 @@ VALUES
   ('Hipster', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou');
 
 insert into posts
-  (user_id, title, code, summary, language, solution_id)
+  (user_id, title, code, summary, closed, language, solution_id)
 VALUES
   (1, 'Get to the Choppa', 'aslkdjfleaf', 'Get to the choppa or die', 'JavaScript', 123456),
   (2, 'He is a real boy', 'hello world', 'Turn puppet into real boy', 'HTML', null),

@@ -27,12 +27,6 @@ const isLoggedIn = (req, res, next) => {
   res.status(401).end('You must log in to do that!');
 }
 
-const timer =  24 * 60 * 1000; //hours minutes seconds  //15 * 1000
-let refreshCoins = setInterval( () => {
-  db.refreshCoins();
-}, timer);
-
-
 app.get('/posts', async (req, res) => {
   let posts = await db.getAllPosts();
   let postVotes = await db.getPostVotes();
