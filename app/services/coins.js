@@ -13,4 +13,9 @@ angular.module('app')
             console.log(err)
         })
     }
+
+    this.spendCoin = async (userId) => {
+        return await $http.delete(`/slot?${userId}`)
+    }
+    
 });

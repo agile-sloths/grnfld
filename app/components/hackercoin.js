@@ -38,7 +38,14 @@ angular.module('app')
       }
     }
     
-    $scope.getRandomSlotValue = function(length) {
-      $scope.randomSlot = $scope.slotValues[Math.floor(Math.random() * $scope.slotValues.length)];
+    $scope.getRandomSlotValue = function() {
+      coinsService.spendCoin($rootScope.userId);
+      //take a coin on button click, then update window.localstorage.hackcoin
+      //disable button until function is done running
+      //run result
+      //if result is a loser, return a message telling to spend a coin to try again
+      //if result is a winner, add 10 coins to the users
+      let result = $scope.randomSlot = $scope.slotValues[Math.floor(Math.random() * $scope.slotValues.length)];
+      
     }
 });
