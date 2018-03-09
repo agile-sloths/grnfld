@@ -16,16 +16,19 @@ angular.module('app')
           console.log('registration error');
           $('#registration-error').show();
         } else {
-          $rootScope.userId = res.data.user_id;
-          $rootScope.hackcoin = res.data.hackcoin;
-          $rootScope.sessionId = res.data.session_id;
-          window.localStorage.sessionID = res.data.session_id;
+          $scope.$emit('signupEvent', [$scope.register.username, $scope.register.password]);
+          // $rootScope.userId = res.data.user_id;
+          // $rootScope.hackcoin = res.data.hackcoin;
+          // $rootScope.sessionId = res.data.session_id;
+          // window.localStorage.userId = res.data.user_id;
+          // window.localStorage.hackcoin = res.data.hackcoin;
+          // window.localStorage.sessionID = res.data.session_id;
           $scope.register = {
             username: '',
             password: ''
           };
           $('#register-modal').modal('toggle');
-          $location.path('/');
+          // $location.path('/');
         }
       });
     }

@@ -25,8 +25,7 @@ angular.module('app')
       $scope.languages = [{
         id: 0,
         label: 'All'
-      },
-      {
+      }, {
         id: 1,
         label: 'HTML',
       }, {
@@ -85,6 +84,7 @@ angular.module('app')
   $scope.handlePostClick = (clickedValue) => {
     $('#like-alert').hide();
     $('#delete-alert').hide();
+    clickedValue === 'featured' ? $scope.currentPost = $scope.featuredPost :
     $scope.currentPost = $scope.filteredPosts[clickedValue];
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
