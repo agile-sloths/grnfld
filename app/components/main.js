@@ -1,20 +1,32 @@
 angular.module('app')
-.controller('MainCtrl', function ($scope, postsService, $rootScope, commentsService) {
+.controller('MainCtrl', function ($scope, usersService, postsService, $rootScope, commentsService) {
   $('.alert .close').on('click', function (e) {
     $(this).parent().hide();
   });
 
   $scope.init = function() {
+    $rootScope.userId = window.localStorage.userId || null;
+    $rootScope.hackcoin = window.localStorage.hackcoin || null;
+    $rootScope.sessionId = window.localStorage.sessionID || null;
     $scope.currentPage = 1;
     $scope.numPerPage = 5;
 
     //get all posts on page load
-    postsService.getAll(data => {
-      console.log('got posts', data);
-      $scope.posts = data;
-      $scope.selectedLanguage = '';
-
+    postsService.getAll((posts, postVotes) => {
+      $scope.posts = posts;
+      $scope.postVotes = {};
+      postVotes.forEach(pair => {
+        if (!$scope.postVotes.hasOwnProperty(pair.post_id)) {
+          $scope.postVotes[pair.post_id] = {};
+        }
+        $scope.postVotes[pair.post_id][pair.user_id] = pair.vote;
+      })
+      // category selecter
       $scope.languages = [{
+        id: 0,
+        label: 'All'
+      },
+      {
         id: 1,
         label: 'HTML',
       }, {
@@ -36,6 +48,15 @@ angular.module('app')
         id: 7,
         label: 'Ruby',
       }];
+      $scope.selectedLanguage = $scope.languages[0]; // default to all languages
+
+      $scope.$watch(function() {
+        return $rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
+      }, function(newValue, oldValue) {
+        if (newValue !== oldValue) {
+          $scope.init();
+        }
+      })
 
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
@@ -44,6 +65,25 @@ angular.module('app')
         let end = begin + $scope.numPerPage;
 
         $scope.filteredPosts = $scope.posts.slice(begin, end);
+
+        $scope.filteredPosts.forEach(post => { // for each visible post,
+          post.voters = {}; // create voters object
+          if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
+            for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
+              post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
+            }
+          }
+          if ($rootScope.userId) {
+            if (post.voters.hasOwnProperty($rootScope.userId)) {
+              if (post.voters[$rootScope.userId] === 0) {
+                post.votedOn = 'down';
+              } else {
+                post.votedOn = 'up';
+              }
+            }
+          }
+        })
+        $scope.selectLanguage(); // initialize filter based on language
       });
     });
   };
@@ -102,10 +142,10 @@ angular.module('app')
 
   $scope.selectLanguage = () => {
     $scope.filteredPosts = $scope.posts.filter(post => {
-      if ($scope.selectedLanguage) {
-        return post.language === $scope.selectedLanguage.label;
-      } else {
+      if ($scope.selectedLanguage.label === 'All') {
         return post;
+      } else {
+        return post.language === $scope.selectedLanguage.label;
       }
     });
   }
@@ -156,8 +196,7 @@ angular.module('app')
 
   $scope.unlikeComment = async (commentId, postUserId, index) => {
     if ($scope.comments[index].voters[$rootScope.userId] > 0) {
-      let res = await commentsService.unlikeComment($rootScope.userId, commentId, postUserId);
-
+      let res = await commentsService.unlikeComment($rootScope.userId, commentId, postUserId, 1);
       if (res.status === 204) {
         $scope.$apply(() => {
           ++$rootScope.hackcoin;
@@ -170,47 +209,108 @@ angular.module('app')
     }
   };
 
+  $scope.upvotePost = async (userId, postId, postUserId, index) => {''
+    await postsService.upvotePost({
+      userId: userId,
+      postId: postId,
+      postUserId: postUserId
+    }, (data) => {
+      if (data.status === 201) {
+        let post = $scope.filteredPosts[index];
+        console.log($scope)
+        post.votes++;
+        if (post.votedOn === null || !post.votedOn) {
+          post.votedOn = 'up';
+        } else if (post.votedOn === 'down') {
+          post.votedOn = null;
+        }
+      }
+    });
+  }
+
+  $scope.downvotePost = async (userId, postId, postUserId, index) => {
+    await postsService.downvotePost(userId, postId, postUserId, (data) => {
+      if (data.status === 204) {
+        let post = $scope.filteredPosts[index];
+        post.votes--;
+        if (post.votedOn === null || !post.votedOn) {
+          post.votedOn = 'down';
+        } else if (post.votedOn === 'up') {
+          post.votedOn = null;
+        }
+      }
+    });
+  }
+
+  $scope.submitUnlikes = async (isValid) => {
+    if (isValid) {
+      let res = await commentsService.unlikeComment($rootScope.userId, $scope.unlikeCommentId, $scope.unlikePostUserId, $scope.unlike.input);
+        if (res.status === 204) {
+          $scope.$apply(() => {
+            $rootScope.hackcoin += $scope.unlike.input;
+            $scope.comments[$scope.unlikeIndex].votes -= $scope.unlike.input;
+            $scope.comments[$scope.unlikeIndex].voters[$rootScope.userId] -= $scope.unlike.input;
+          });
+          $('#unlike-modal').modal('toggle');
+          $('#like-alert').show();
+        }
+    } else {
+      $('#unlikemultiple-error').show();
+    }
+  };
+
+
+  $scope.multipleUnlike = (commentId, postUserId, index) => {
+    if ($scope.comments[index].voters[$rootScope.userId] > 0) {
+      $scope.max = $scope.comments[index].voters[$rootScope.userId];
+      $scope.unlikeCommentId = commentId;
+      $scope.unlikePostUserId = postUserId;
+      $scope.unlikeIndex = index;
+      $('#unlike-modal').modal('toggle');
+    }
+  };
+
+  $scope.unlike = {
+    input: 1
+  };
+
   $scope.multipleLike = (commentId, postUserId, index) => {
     if ($rootScope.hackcoin <= 0) {
       $('#like-error').show();
     } else {
-      console.log('like has been double clicked!-->',commentId, postUserId, index);
+      $scope.commentId = commentId;
+      $scope.postUserId = postUserId;
+      $scope.index = index;
       $('#like-modal').modal('toggle');
     }
   };
 
   $scope.like = {
-    input: 0
+    input: 1
   };
 
-  $scope.submit = async (isValid, commentId, postUserId, index) => {
+
+  $scope.submit = async (isValid) => {
     if (isValid) {
-      console.log('form is valid! heres scope:', $scope.like.input);
-      console.log('hers submit-->',commentId, postUserId, index);
-      if($scope.like.input === 0) {
-        $('#likemultiple-error').show();
-        $('#likemultiple-error').hide();
-      } else {
         let res = await commentsService.likeComment({
-          commentId: commentId,
-          postUserId: postUserId,
+          commentId: $scope.commentId,
+          postUserId: $scope.postUserId,
           userId: $rootScope.userId,
           hackCoins: $scope.like.input
         });
         if (res.status === 200) {
           $scope.$apply(() => {
             $rootScope.hackcoin -= $scope.like.input;
-            $scope.comments[index].votes += $scope.like.input;
-            if (!$scope.comments[index].voters.hasOwnProperty($rootScope.userId)) {
-              $scope.comments[index].voters[$rootScope.userId] = $scope.like.input;
+            $scope.comments[$scope.index].votes += $scope.like.input;
+            if (!$scope.comments[$scope.index].voters.hasOwnProperty($rootScope.userId)) {
+              $scope.comments[$scope.index].voters[$rootScope.userId] = $scope.like.input;
             } else {
-              $scope.comments[index].voters[$rootScope.userId] += $scope.like.input;
+              $scope.comments[$scope.index].voters[$rootScope.userId] += $scope.like.input;
             }
           });
           $('#like-modal').modal('toggle');
           $('#like-alert').show();
         }
-      }
     } else {
       $('#likemultiple-error').show();
     }

@@ -12,10 +12,12 @@
           <li class="nav-item" ng-show="$root.sessionId"><a href="/submit">Ask Question</a></li>
           <li class="nav-item"><a href="#" data-toggle="modal" data-target="#about-modal">About Us</a></li>
           <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#hackcoins">Hackcoin Exchange</a></li>
+          
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="nav-item" ng-hide="$root.sessionId"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
           <li class="nav-item" ng-hide="$root.sessionId"><a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a></li>
+          <li class="nav-item" ng-show="$root.sessionId"><a href="#">Hackcoins: <span class="hackcoins"> {{$root.hackcoin}} </span></a></li>
           <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#logout">Logout</a></li>
         </ul>
       </div>
@@ -148,11 +150,18 @@
           <h4>Total Hackcoins: {{ $root.hackcoin }}</h4>
           <br>
           <form class="form-inline my-6 my-lg-0">
-            <div class="form-group" >
+            <div class="form-group" id="giftUserForm">
               <label for="giftUser">Gift Hackcoins to another user:</label>
               <br>
-              <input id="giftUser" ng-model="gift.username" class="form-control" type="text" autocomplete="off" placeholder="Search Users" uib-typeahead="username for username in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults">
-                <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
+              <input id="giftUser" ng-model="gift.username" 
+                                   class="form-control" 
+                                   type="text" 
+                                   autocomplete="off"
+                                   placeholder="Search Users" 
+                                   uib-typeahead="username for username in getUsers($viewValue)" 
+                                   typeahead-loading="loadingUsers" 
+                                   typeahead-no-results="noResults">
+                <!-- <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i> -->
                 <div ng-show="noResults">
                   <i class="glyphicon glyphicon-remove"></i> No Results Found
                 </div>

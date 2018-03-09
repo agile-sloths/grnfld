@@ -1,12 +1,20 @@
+DROP DATABASE IF EXISTS hackXchange;
+
+CREATE DATABASE hackXchange;
+
+USE hackXchange;
+
+
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS userscomments;
 
 CREATE TABLE users (
  user_id serial PRIMARY KEY,
   username VARCHAR(25) NOT NULL,
   password VARCHAR(60) NOT NULL,
-  hackcoin INTEGER NOT NULL DEFAULT 5,  
+  hackcoin INTEGER NOT NULL DEFAULT 5,
   created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 
@@ -43,6 +51,17 @@ CREATE TABLE comments (
   created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 
+-- ---
+-- Table 'usercomment'
+--
+-- ---
+
+CREATE TABLE userscomments
+( id serial PRIMARY KEY,
+  user_id INTEGER REFERENCES users (user_id) NOT NULL,
+  comment_id INTEGER REFERENCES users (comment_id) NOT NULL,
+  votes INTEGER DEFAULT 0
+);
 
 -- ---
 -- Test Data
@@ -61,11 +80,11 @@ VALUES
 insert into posts
   (user_id, title, code, summary, solution_id)
 VALUES
-  (1, 'Get to the Choppa', 'aslkdjfleaf', 'Get to the choppa or die', 123456),
-  (2, 'He is a real boy', 'hello world', 'Turn puppet into real boy', null),
-  (3, 'A really big sword', 'chop chop its all in the mind', 'the ultimate onion chopper', null),
-  (4, 'How do you pronounce my name?', 'some military guy', 'Did not know how to say this till I was 25', null),
-  (5, 'I hate everything', 'Your music sucks', 'Going to drink some IPAs', 234567);
+  (1, 'Get to the Choppa', 'aslkdjfleaf', 'Get to the choppa or die', 'JavaScript', 123456),
+  (2, 'He is a real boy', 'hello world', 'Turn puppet into real boy', 'HTML', null),
+  (3, 'A really big sword', 'chop chop its all in the mind', 'the ultimate onion chopper', 'Python', null),
+  (4, 'How do you pronounce my name?', 'some military guy', 'Did not know how to say this till I was 25', 'JavaScript', null),
+  (5, 'I hate everything', 'Your music sucks', 'Going to drink some IPAs', 'JavaScript', 234567);
 
 insert into comments
   (user_id, post_id, message, votes)

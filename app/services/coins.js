@@ -7,10 +7,8 @@ angular.module('app')
                 amount: amount
             }
         }).then(function(response) {
-            console.log('coin service delete', response)
             currentUserId = $rootScope.userId;
             return $http.delete(`/gift?${currentUserId}?${amount}`)
-
         }).catch(function(err) {
             console.log(err)
         })
