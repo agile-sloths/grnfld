@@ -21,7 +21,7 @@ angular.module('app')
     }) 
     .when('/userspage', {
       templateUrl: '/templates/users.html',
-      controller: 'UsersCtrl'
+      controller: 'MainCtrl'
     })
     .otherwise({ redirectTo: '/' });
   $locationProvider.html5Mode(true);

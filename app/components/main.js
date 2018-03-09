@@ -15,12 +15,11 @@ angular.module('app')
     usersService.getAllUsers(users => {
       console.log('got users', users)
       $scope.users = users
+      // watch user changes
+      $scope.$watch(function () {
+        $scope.watchedUsers = $scope.users;
+      });
     })
-
-    // watch user changes
-    $scope.$watch(function () {
-      $scope.watchedUsers = $scope.users;
-    });
 
     //get all posts on page load
     postsService.getAll((posts, postVotes, featuredPost) => {
