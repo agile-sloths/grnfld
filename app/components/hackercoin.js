@@ -11,10 +11,6 @@ angular.module('app')
       {value: 'LOSE'}
     ]
 
-    $scope.slotResults = {
-      value: ''
-    }
-  
     $scope.getUsers = function(val) {
         return $http.get('/users', {
           params: {
@@ -41,11 +37,8 @@ angular.module('app')
         $scope.gift.amount = '';
       }
     }
-
+    
     $scope.getRandomSlotValue = function(length) {
-
-      var result = Math.floor(Math.random() * length);
-      return result;
-      $scope.slotValues.value = result.value
+      $scope.randomSlot = $scope.slotValues[Math.floor(Math.random() * $scope.slotValues.length)];
     }
 });
