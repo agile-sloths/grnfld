@@ -57,6 +57,7 @@ CREATE TABLE comments
   message VARCHAR(8000),
   votes INTEGER DEFAULT 0,
   solution boolean DEFAULT FALSE,
+  active boolean DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (comment_id),
   FOREIGN KEY (user_id) REFERENCES users (user_id),
