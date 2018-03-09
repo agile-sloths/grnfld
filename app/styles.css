@@ -59,6 +59,17 @@ i.downvote {
 }
 /**** UPVOTE/DOWNVOTE ****/
 
+/**** FEATURED POST ****/
+.featured {
+	background-color: lightgray;
+	color: black;
+	padding: 4px 10px 4px;
+	border-radius: 8px;
+	border: black solid 1px;
+	margin: 15px 0;
+}
+/**** FEATURED POST ****/
+
 /**** NAVBAR ****/
 .nav-item {
   -webkit-transition: all 0.5s ease;
@@ -121,3 +132,23 @@ i.downvote {
 /* hacky spacing fix */
 /**** NAVBAR ****/
 /*  */
+
+.hackcoins {
+    border-radius: 100%;
+    border-color:#002b36;
+    background-color:#002b36;
+    color:white;
+    padding-left:8px;
+    padding-right:8px;
+    padding-top:6px;
+    padding-bottom:6px;
+    font-size:1.3em;
+}
+
+input[name=password] {
+  margin-left: 10px
+}
+
+input[name=username] {
+  margin-left: 7px
+}
