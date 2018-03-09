@@ -3,6 +3,10 @@ angular.module('app')
   $rootScope.userId = 0;
   $rootScope.hackcoin = 0;
   $rootScope.sessionId = window.localStorage.sessionID;
+  $rootScope.$on('signupEvent', function() {
+    let loginInfo = Array.from(arguments)[1];
+    $rootScope.$broadcast('registerEvent', {loginInfo: loginInfo})
+  })
 })
 .component('app', {
   bindings: {},
