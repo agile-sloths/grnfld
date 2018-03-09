@@ -189,7 +189,8 @@
 
                                             </small>
                                             <br></br>
-                                            <button ng-show="comment.user_id === $root.userId" ng-click="deleteComment(comment, $index)" type="button" class="btn btn-primary btn-sm pull-right">Delete Comment</button>
+                                            <!-- ng-class="{'disabled': comment.user_id !== +$root.userId || !$root.userId}" -->
+                                            <button ng-show="comment.user_id === $root.userId" ng-click="deleteComment(comment, comment.user_id, $root.userId, $index)" type="button" class="btn btn-primary btn-sm pull-right">Delete Comment</button>
                                         </p>
                                     </div>
                                     <!-- /panel panel-default -->

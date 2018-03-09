@@ -5,8 +5,8 @@ angular.module('app')
   });
 
   $scope.init = function() {
-    $rootScope.userId = window.localStorage.userId || null;
-    $rootScope.hackcoin = window.localStorage.hackcoin || null;
+    $rootScope.userId = +window.localStorage.userId || null;
+    $rootScope.hackcoin = +window.localStorage.hackcoin || null;
     $rootScope.sessionId = window.localStorage.sessionID || null;
     $scope.currentPage = 1;
     $scope.numPerPage = 5;
@@ -51,7 +51,7 @@ angular.module('app')
       $scope.selectedLanguage = $scope.languages[0]; // default to all languages
 
       $scope.$watch(function() {
-        return $rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
+        return +$rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
       }, function(newValue, oldValue) {
         if (newValue !== oldValue) {
           $scope.init();
@@ -87,6 +87,7 @@ angular.module('app')
     $scope.currentPost = $scope.filteredPosts[clickedValue];
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
+      console.log('comments:',data);
       $scope.comments = data;
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
@@ -115,8 +116,8 @@ angular.module('app')
   };
 
 
-  $scope.deleteComment = async (comment, index) => {
-    console.log('delete comment input!',comment.comment_id, $rootScope.userId);
+  $scope.deleteComment = async (comment, commentId, userId, index) => {
+    console.log('delete comment blahinput!',comment.comment_id, commentId, typeof userId, userId);
     let res = await commentsService.deleteComment(comment.comment_id, $rootScope.userId);
     if (res.status === 204) {
       console.log('success!');
@@ -182,6 +183,7 @@ angular.module('app')
   }
 
   $scope.selectSolution = (comment) => {
+    console.log(typeof $rootScope.userId);
     if ($rootScope.userId === $scope.currentPost.user_id) {
       $scope.currentPost.solution_id = comment.comment_id; //changes local solution_id so that star moves without refresh
       commentsService.selectSolution(comment.comment_id, $scope.currentPost.post_id);

@@ -84,8 +84,8 @@ app.delete('/comment*', isLoggedIn, async (req, res) => {
 app.post('/createPost', isLoggedIn, async (req, res) => {
   try {
     await db.createPost(req.body);
+    res.status(200).end();
   } catch (err) {
-    res.end();
     console.log(err);
   }
 });
