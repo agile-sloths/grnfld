@@ -12,16 +12,22 @@
                       <h3 class=""><a href="#">{{ user.username }}</a></h3>
                   </div>   
                   <div ng-if="user.github_handle">
-                      <h5 class=""><a href="#">Github: {{ user.github_handle }}</a></h5>  <!-- make API call -->
+                      <h5 class=""><a href="#"><strong>Github:</strong> {{ user.github_handle }}</a></h5>  <!-- make API call -->
                   </div>
                   <div ng-if="user.location">
-                      <p class="">Location: {{ user.location }}</p>
+                      <p class=""><strong>Location:</strong> {{ user.location }}</p>
+                  </div>     
+                  <div ng-if="!user.location">
+                      <p class=""><strong>Location:</strong> Somewhere out there</p>
                   </div>   
                   <div>
-                      <p class="">Hackcoins: {{ user.hackcoin }}</p>
+                      <p class=""><strong>Hackcoins:</strong> {{ user.hackcoin }}</p>
                   </div>  
                   <div ng-if="user.languages">
-                      <p class="">Languages: {{ user.languages }}</p>
+                      <p class=""><strong>Favorite Languages:</strong> {{ user.languages }}</p>
+                  </div> 
+                  <div ng-if="!user.languages">
+                      <p class=""><strong>Favorite Languages:</strong> none specified</p>
                   </div>
                 </div>
              </div>

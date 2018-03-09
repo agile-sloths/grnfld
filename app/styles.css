@@ -161,7 +161,6 @@ input[name=username] {
 	margin-top: 150px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  width: 100%;
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
 }
@@ -170,6 +169,8 @@ input[name=username] {
   grid-column: 1 / 1;
   grid-row: 1;
   border: 1px solid black;
+  min-height: 200px;
+  padding: 5px;
 }
 
 .user-buttons {
