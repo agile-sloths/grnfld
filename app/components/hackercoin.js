@@ -21,6 +21,14 @@ angular.module('app')
       };
 
     $scope.submitGift = function() {
-      return coinsService.submitNewGift($scope.gift.username, $scope.gift.amount, $rootScope.userId)
+      if ($rootScope.hackcoin < $scope.gift.amount) {
+        console.log(`You don't have enough coins to give that amount!`)
+      } else {
+        coinsService.submitNewGift($scope.gift.username, $scope.gift.amount, $rootScope.userId)
+        $rootScope.hackcoin = $rootScope.hackcoin - $scope.gift.amount;
+        window.localStorage.hackcoin = $rootScope.hackcoin;
+        $scope.gift.username = '';
+        $scope.gift.amount = '';
+      }
     }
 });

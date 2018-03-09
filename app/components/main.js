@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('MainCtrl', function ($scope, postsService, $rootScope, commentsService) {
+.controller('MainCtrl', function ($scope, usersService, postsService, $rootScope, commentsService) {
   $('.alert .close').on('click', function (e) {
     $(this).parent().hide();
   });

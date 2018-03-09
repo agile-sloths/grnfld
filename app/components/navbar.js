@@ -2,6 +2,7 @@ angular.module('app')
 .controller('NavbarCtrl', function($scope, $rootScope, $location, usersService) {
   $scope.logout = function() {
     $rootScope.userId = 0;
+    $rootScope.hackcoin = 0;
     usersService.logout((err, data) => {
       err ? console.log(err) : console.log(data);
     });
