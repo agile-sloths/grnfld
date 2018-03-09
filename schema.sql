@@ -9,9 +9,10 @@ DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS userscomments;
+DROP TABLE IF EXISTS usersposts;
 
 CREATE TABLE users (
- user_id serial PRIMARY KEY,
+  user_id serial PRIMARY KEY,
   username VARCHAR(25) NOT NULL,
   password VARCHAR(60) NOT NULL,
   hackcoin INTEGER NOT NULL DEFAULT 5,
@@ -28,10 +29,12 @@ CREATE TABLE posts (
   user_id INTEGER REFERENCES users (user_id) NOT NULL,
   title VARCHAR(50) NOT NULL,
   code VARCHAR(8000) DEFAULT NULL,
+  votes INTEGER DEFAULT 0,
   summary VARCHAR(8000) DEFAULT NULL,
   anon boolean DEFAULT FALSE,
   closed boolean DEFAULT FALSE,
-  solution_id INTEGER DEFAULT NULL, --references comment_id from comment table
+  language VARCHAR(120) DEFAULT NULL,
+  solution_id INTEGER DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 
@@ -48,6 +51,7 @@ CREATE TABLE comments (
   message VARCHAR(8000),
   votes INTEGER DEFAULT 0,
   solution boolean DEFAULT FALSE,
+  active boolean DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 
@@ -59,8 +63,20 @@ CREATE TABLE comments (
 CREATE TABLE userscomments
 ( id serial PRIMARY KEY,
   user_id INTEGER REFERENCES users (user_id) NOT NULL,
-  comment_id INTEGER REFERENCES users (comment_id) NOT NULL,
+  comment_id INTEGER REFERENCES comments (comment_id) NOT NULL,
   votes INTEGER DEFAULT 0
+);
+
+-- ---
+-- Table 'usersposts'
+--
+-- ---
+
+CREATE TABLE usersposts
+( id serial PRIMARY KEY,
+  user_id INTEGER REFERENCES users (user_id) NOT NULL,
+  post_id INTEGER REFERENCES posts (post_id) NOT NULL,
+  vote boolean DEFAULT NULL
 );
 
 -- ---
@@ -78,7 +94,7 @@ VALUES
   ('Hipster', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou');
 
 insert into posts
-  (user_id, title, code, summary, solution_id)
+  (user_id, title, code, summary, language, solution_id)
 VALUES
   (1, 'Get to the Choppa', 'aslkdjfleaf', 'Get to the choppa or die', 'JavaScript', 123456),
   (2, 'He is a real boy', 'hello world', 'Turn puppet into real boy', 'HTML', null),
