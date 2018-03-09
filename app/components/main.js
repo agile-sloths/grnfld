@@ -117,10 +117,17 @@ angular.module('app')
     }
   };
 
-  $scope.deleteComment = (comment,commentId, postUserId, index) => {
-    console.log('delete comment!');
-    //postuserid is the userid of that comment
-    console.log(comment,commentId, postUserId, index);
+
+  $scope.deleteComment = async (comment, index) => {
+    console.log('delete comment input!',comment.comment_id, $rootScope.userId);
+    let res = await commentsService.deleteComment(comment.comment_id, $rootScope.userId);
+    if (res.status === 204) {
+      console.log('success!');
+      // $scope.$apply(() => {
+      //   $scope.comments[index].active = false;
+      // });
+      $('#like-alert').show();
+    }
   };
 
   $scope.message = '';

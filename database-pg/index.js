@@ -140,6 +140,10 @@ const checkCoinByUsername = (username) => {
   return knex.select('hackcoin').from('users').where('username', username);
 };
 
+// const deleteComment = async (commentId) => {
+//   await knex('comments').where('comment_id', commentId).update('active', false);
+// };
+
 const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, commentId, flag) => {
   await knex('users').where('user_id', userId).update('hackcoin', currenthackcoin - subtractinghackcoin);
 
@@ -194,6 +198,7 @@ module.exports = {
   downvotePost,
   getComments,
   getVoters,
+  //deleteComment,
   // getPostsWithCommentsAsync,
   checkCredentials,
   createUser,
