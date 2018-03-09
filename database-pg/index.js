@@ -188,7 +188,12 @@ const refreshCoins = () => {
 
 const spendSlotCoin = async (userId) => {
   let currentCoins = await knex.select('hackcoin').from('users').where('user_id', userId);
-  await knex('users').where('user_id', userId).update('hackcoin', currentCoins[0].hackcoin - 1)
+  await knex('users').where('user_id', userId).update('hackcoin', currentCoins[0].hackcoin - 1);
+}
+
+const awardSlotCoins = async (userId) => {
+  let currentCoins = await knex.select('hackcoin').from('users').where('user_id', userId);
+  await knex('users').where('user_id', userId).update('hackcoin', currentCoins[0].hackcoin + 10);
 }
 
 const giftCoin = async (username, amount) => {
