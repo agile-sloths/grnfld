@@ -175,8 +175,15 @@
               <label for="spin">Spend a coin for a chance to get 10 back!</label>
               <br>
               <br>
+
+                <div>
+                  <div ng-repeat="slot in slotValues | limitTo: 1">
+                        <p> Result: {{slotValues[getRandomSlotValue(slotValues.length)].value}} </p>
+                  </div>
+                </div>
+
               <div>
-                <button id="spin" class="btn btn-primary" type="submit">Try your luck!</button>
+                <button id="spin" class="btn btn-primary" type="submit" ng-click="getRandomSlotValue()">Try your luck!</button>
               </div>
             </div>
         </div>

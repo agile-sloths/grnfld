@@ -4,6 +4,18 @@ angular.module('app')
       username: '',
       amount: ''
     }
+
+    $scope.slotValues = [
+      {value: 'LOSE'},
+      {value: 'WIN'},
+      {value: 'LOSE'},
+      {value: 'LOSE'},
+      {value: 'LOSE'},
+      {value: 'LOSE'},
+      {value: 'LOSE'},
+      {value: 'LOSE'},
+      {value: 'LOSE'},
+    ]
   
     $scope.getUsers = function(val) {
         return $http.get('/users', {
@@ -30,5 +42,9 @@ angular.module('app')
         $scope.gift.username = '';
         $scope.gift.amount = '';
       }
+    }
+
+    $scope.getRandomSlotValue = function(length) {
+      return Math.floor(Math.random() * length)
     }
 });
