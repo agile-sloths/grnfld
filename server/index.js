@@ -36,7 +36,11 @@ let refreshCoins = setInterval( () => {
 app.get('/posts', async (req, res) => {
   let posts = await db.getAllPosts();
   let postVotes = await db.getPostVotes();
-  res.json({posts: posts, postVotes: postVotes});
+  let featuredPost = await db.getFeaturedPost();
+  if (featuredPost.length > 1) {
+    featuredPost = await [featuredPost[Math.floor(Math.random() * featuredPost.length)]]
+  }
+  res.json({posts: posts, postVotes: postVotes, featuredPost: featuredPost});
 });
 
 // app.get('/test', (req, res) => {
@@ -70,11 +74,18 @@ app.get('/comments', async (req, res) => {
   res.json(comments);
 });
 
+app.delete('/comment*', isLoggedIn, async (req, res) => {
+  let query = url.parse(req.url).query.split('?');
+  console.log(query);
+  //await db.deleteComment(+query[0], +query[1]);
+  res.status(204).end();
+});
+
 app.post('/createPost', isLoggedIn, async (req, res) => {
   try {
     await db.createPost(req.body);
+    res.status(200).end();
   } catch (err) {
-    res.end();
     console.log(err);
   }
 });
@@ -194,6 +205,6 @@ app.post('/solution/remove', async (req, res) => {
 
 app.get('*', (req, res) => res.redirect('/'));
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log('listening on port 3000!');
+app.listen(process.env.PORT || 8000, function () {
+  console.log('listening on port 8000!');
 });

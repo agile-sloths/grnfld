@@ -59,6 +59,17 @@ i.downvote {
 }
 /**** UPVOTE/DOWNVOTE ****/
 
+/**** FEATURED POST ****/
+.featured {
+	background-color: lightgray;
+	color: black;
+	padding: 4px 10px 4px;
+	border-radius: 8px;
+	border: black solid 1px;
+	margin: 15px 0;
+}
+/**** FEATURED POST ****/
+
 /**** NAVBAR ****/
 .nav-item {
   -webkit-transition: all 0.5s ease;

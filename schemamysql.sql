@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS userscomments;
+DROP TABLE IF EXISTS usersposts;
 
 CREATE TABLE users
 (
