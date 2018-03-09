@@ -18,8 +18,8 @@
     return await $http.delete(`/coin?${userId}?${commentId}?${postUserId}?${hackCoins}`);
   };
 
-  this.deleteComment = async (commentId, userId) => {
-    return await $http.delete(`/comment?${commentId}?${userId}`);
+  this.deleteComment = async (commentId) => {
+    return await $http.delete(`/comment?${commentId}`);
   };
 
   //grab commentshackCoins

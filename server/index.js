@@ -70,8 +70,7 @@ app.get('/comments', async (req, res) => {
 
 app.delete('/comment*', isLoggedIn, async (req, res) => {
   let query = url.parse(req.url).query.split('?');
-  console.log(query);
-  //await db.deleteComment(+query[0], +query[1]);
+  await db.deleteComment(+query[0]);
   res.status(204).end();
 });
 
@@ -182,7 +181,6 @@ app.post('/gift', isLoggedIn, async (req, res) => {
 
 app.delete('/gift', isLoggedIn, async (req, res) => {
   let query = url.parse(req.url).query.split('?');
-  console.log(query)
   db.deleteGiftedCoin(query[0], query[1])
   res.status(204).end();
 })
@@ -199,6 +197,6 @@ app.post('/solution/remove', async (req, res) => {
 
 app.get('*', (req, res) => res.redirect('/'));
 
-app.listen(process.env.PORT || 8000, function () {
-  console.log('listening on port 8000!');
+app.listen(process.env.PORT || 3000, function () {
+  console.log('listening on port 3000!');
 });
