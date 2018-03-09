@@ -9,7 +9,16 @@ angular.module('app')
     password: ''
   };
 
-  $scope.submit = function(isValid) {
+  $scope.$on('registerEvent', function() {
+    let registerInfo = Array.from(arguments)[1].loginInfo;
+    $scope.login = {
+      username: registerInfo[0],
+      password: registerInfo[1]
+    }
+    $scope.submit(true, 'flag');
+  });
+
+  $scope.submit = function(isValid, flag) {
     if (isValid) {
       usersService.login($scope.login.username, $scope.login.password, res => {
         if (res.status === 401) {
@@ -25,7 +34,9 @@ angular.module('app')
             username: '',
             password: ''
           };
-          $('#login-modal').modal('toggle');
+          if (!flag) {
+            $('#login-modal').modal('toggle');
+          }
           $location.path('/');
         }
       });
