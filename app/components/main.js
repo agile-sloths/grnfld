@@ -12,8 +12,7 @@ angular.module('app')
     $scope.numPerPage = 5;
 
     //get all posts on page load
-    postsService.getAll((posts, postVotes) => {
-      console.log('got posts', posts);
+    postsService.getAll((posts, postVotes, featuredPost) => {
       $scope.posts = posts;
       $scope.postVotes = {};
       postVotes.forEach(pair => {
@@ -50,6 +49,9 @@ angular.module('app')
         label: 'Ruby',
       }];
       $scope.selectedLanguage = $scope.languages[0]; // default to all languages
+
+      //featured post
+      $scope.featuredPost = featuredPost[0];
 
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
@@ -133,8 +135,18 @@ angular.module('app')
     }
   };
 
-  $scope.selectLanguage = () => {
+  $scope.selectLanguage = (language) => {
+    if (language) {
+      for (let i = 0; i < $scope.languages.length; i++) {
+        if ($scope.languages[i].label === language) {
+          $scope.selectedLanguage = $scope.languages[i];
+        }
+      }
+    }
     $scope.filteredPosts = $scope.posts.filter(post => {
+      if (post.post_id === $scope.featuredPost.post_id) {
+        return;
+      }
       if ($scope.selectedLanguage.label === 'All') {
         return post;
       } else {

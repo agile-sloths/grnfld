@@ -36,7 +36,11 @@ let refreshCoins = setInterval( () => {
 app.get('/posts', async (req, res) => {
   let posts = await db.getAllPosts();
   let postVotes = await db.getPostVotes();
-  res.json({posts: posts, postVotes: postVotes});
+  let featuredPost = await db.getFeaturedPost();
+  if (featuredPost.length > 1) {
+    featuredPost = featuredPost[Math.floor(Math.random() * featuredPost.length)]
+  }
+  res.json({posts: posts, postVotes: postVotes, featuredPost: featuredPost});
 });
 
 // app.get('/test', (req, res) => {
