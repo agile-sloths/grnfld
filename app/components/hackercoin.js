@@ -47,4 +47,14 @@ angular.module('app')
     $scope.getRandomSlotValue = function(length) {
       return Math.floor(Math.random() * length)
     }
+
+    // $scope.slotInit = function() {
+    //   odoo.default({el:'.js-odoo'})
+    // }
+
+    $scope.slotMachine = function() {
+      odoo.default({ el:'.js-odoo', from: 'NOVEMBER16', to: 'CODEVEMBER', animationDelay: 1000 });
+    }
+
+    // $scope.slotInit()
 });

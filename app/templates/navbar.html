@@ -176,14 +176,15 @@
               <br>
               <br>
 
-                <div>
-                  <div ng-repeat="slot in slotValues | limitTo: 1">
+              <div class="js-odoo">NOVEMBER16</div>
+              <br>
+                  <!-- <div ng-repeat="slot in slotValues | limitTo: 1">
                         <p> Result: {{slotValues[getRandomSlotValue(slotValues.length)].value}} </p>
-                  </div>
-                </div>
+                  </div> -->
+                
 
               <div>
-                <button id="spin" class="btn btn-primary" type="submit" ng-click="getRandomSlotValue()">Try your luck!</button>
+                <button id="spin" class="btn btn-primary" type="submit" ng-click="slotMachine()">Try your luck!</button>
               </div>
             </div>
         </div>
