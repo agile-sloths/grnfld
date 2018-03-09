@@ -174,16 +174,14 @@
               <h4>Slot Machine</h4>
               <label for="spin">Spend a coin for a chance to get 10 back!</label>
               <br>
-              <br>
-              
-                
-              
-              <br>
                   <div ng-repeat="slot in slotValues | limitTo: 1" ng-model="slotResults.value">
                         <p>Result: {{ randomSlot.value }}</p>
                   </div>
-                
-
+                  <div>
+                    <p ng-show="slotError.error" class="help-block">You don't have any coins to spend!</p>
+                    <p ng-show="slotError.error" class="help-block">You lost - click to try again.</p>
+                    <p ng-show="slotError.error" class="help-block">OMFG you won 10 hackcoins!</p>
+                  </div>
               <div>
                 <button id="spin" class="btn btn-primary" type="button" ng-click="getRandomSlotValue()">Try your luck!</button>
               </div>

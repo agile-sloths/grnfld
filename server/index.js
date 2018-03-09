@@ -192,6 +192,11 @@ app.delete('/slot', isLoggedIn, async (req, res) => {
   res.status(204).end();
 })
 
+app.post('/slot', isLoggedIn, async (req,res) => {
+  await db.awardSlotCoins(req.body.params.userId);
+  res.status(201).end();
+})
+
 app.post('/solution', isLoggedIn, async (req, res) => {
   const data = await db.markSolution(req.body.commentId, req.body.postId);
   res.status(200).end();

@@ -18,11 +18,10 @@ angular.module('app')
         return await $http.delete(`/slot?${userId}`)
     }
 
-    this.coinPrize = async (userId, amount) => {
-        return await $http.post('/slot', {
+    this.coinPrize = (userId) => {
+        $http.post('/slot', {
             params: {
-                userId: $rootScope.userId,
-                amount: 10
+                userId: $rootScope.userId
             }
         }).then(function(response) {
 
