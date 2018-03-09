@@ -1,15 +1,18 @@
-<div>
+<div class="container">
+    <div class="user-buttons">
+        <button ng-click="refresh()" type="button" class="btn btn-primary btn-sm pull-right">Refresh</button>
+        <button ng-click="toggleStyle()" type="button" id="styletoggle" class="btn btn-space btn-primary btn-sm pull-right">Light Mode</button>
+    </div>
     <div class="list-group">
-        <div class="users">
+        <div class="users-container">
             <div ng-repeat="user in watchedUsers track by $index" ng-click="handleuserClick($index)" user="user"
                 data-toggle="modal" data-target="#userModal">
-                <div class="userContainer">
-                  <p>{{ user }}</p>
+                <div class="user-container">
                   <div ng-if="user.username">
                       <h3 class=""><a href="#">{{ user.username }}</a></h3>
                   </div>   
                   <div ng-if="user.github_handle">
-                      <h5 class=""><a href="#">Github: {{ user.github_handle }}</a></h5>
+                      <h5 class=""><a href="#">Github: {{ user.github_handle }}</a></h5>  <!-- make API call -->
                   </div>
                   <div ng-if="user.location">
                       <p class="">Location: {{ user.location }}</p>
