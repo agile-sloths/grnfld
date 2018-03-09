@@ -40,6 +40,8 @@ angular.module('app')
     
     $scope.getRandomSlotValue = function() {
       coinsService.spendCoin($rootScope.userId);
+      $rootScope.hackcoin = $rootScope.hackcoin - 1;
+      window.localStorage.hackcoin = $rootScope.hackcoin;
       //take a coin on button click, then update window.localstorage.hackcoin
       //disable button until function is done running
       //run result

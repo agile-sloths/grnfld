@@ -185,6 +185,13 @@ app.delete('/gift', isLoggedIn, async (req, res) => {
   res.status(204).end();
 })
 
+app.delete('/slot', isLoggedIn, async (req, res) => {
+  let query = url.parse(req.url).query.split('?');
+  let currentHackCoins = await getCurrentHackCoins(query[0]);
+  db.spendSlotCoin(query[0]);
+  res.status(204).end();
+})
+
 app.post('/solution', isLoggedIn, async (req, res) => {
   const data = await db.markSolution(req.body.commentId, req.body.postId);
   res.status(200).end();
