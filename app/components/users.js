@@ -4,6 +4,7 @@ angular.module('app')
         return $http.get('/users', {
 
         }).then(function(response){
+          console.log('controller response', response)
           return response;
         }).catch(function(err) {
           console.log(err)

@@ -17,6 +17,11 @@ angular.module('app')
       $scope.users = users
     })
 
+    // watch user changes
+    $scope.$watch(function () {
+      $scope.watchedUsers = $scope.users;
+    });
+
     //get all posts on page load
     postsService.getAll((posts, postVotes) => {
       $scope.posts = posts;

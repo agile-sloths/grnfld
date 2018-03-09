@@ -12,12 +12,12 @@
           <li class="nav-item" ng-show="$root.sessionId"><a href="/submit">Ask Question</a></li>
           <li class="nav-item"><a href="#" data-toggle="modal" data-target="#about-modal">About Us</a></li>
           <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#hackcoins">Hackcoin Exchange</a></li>
-          
+          <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#users-modal">Users</span></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="nav-item" ng-hide="$root.sessionId"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
           <li class="nav-item" ng-hide="$root.sessionId"><a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a></li>
-          <li class="nav-item" ng-show="$root.sessionId"><a href="#">Hackcoins: <span class="hackcoins"> {{$root.hackcoin}} </span></a></li>
+          <li class="nav-item" ng-show="$root.sessionId"><a href="#">Hackcoins: <span class="hackcoins"> {{$root.hackcoin}} </span></a></li> 
           <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#logout">Logout</a></li>
         </ul>
       </div>
@@ -169,6 +169,29 @@
               <button class="btn btn-primary" type="submit" ng-click="submitGift()">Gift</button>
             </div>
             </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Modal -->
+<div class="modal fade" id="users-modal" role="dialog" ng-controller="UsersCtrl">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          Users
+        </div>
+        <div class="modal-body">
+          <a ng-repeat="user in watchedUsers track by $index" user="user" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <small>
+                  <strong>{{user}}</strong>
+                </small>
+              </div>
+          </a>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
