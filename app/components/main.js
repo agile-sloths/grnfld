@@ -35,8 +35,7 @@ angular.module('app')
       $scope.languages = [{
         id: 0,
         label: 'All'
-      },
-      {
+      }, {
         id: 1,
         label: 'HTML',
       }, {
@@ -94,6 +93,8 @@ angular.module('app')
 
   $scope.handlePostClick = (clickedValue) => {
     $('#like-alert').hide();
+    $('#delete-alert').hide();
+    clickedValue === 'featured' ? $scope.currentPost = $scope.featuredPost :
     $scope.currentPost = $scope.filteredPosts[clickedValue];
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
@@ -126,16 +127,17 @@ angular.module('app')
   };
 
 
-  $scope.deleteComment = async (comment, commentId, userId, index) => {
-    console.log('delete comment blahinput!',comment.comment_id, commentId, typeof userId, userId);
-    let res = await commentsService.deleteComment(comment.comment_id, $rootScope.userId);
+  $scope.deleteComment = async (commentId) => {
+    let res = await commentsService.deleteComment(commentId);
     if (res.status === 204) {
-      console.log('success!');
-      // $scope.$apply(() => {
-      //   $scope.comments[index].active = false;
-      // });
-      $('#like-alert').show();
+      $scope.handlePostClick($scope.currentIndex);
+      $('#delete-alert').show();
+      $scope.refresh();
     }
+  };
+
+  $scope.deletePost = async (postId) => {
+    console.log('post deleted yay!',postId);
   };
 
   $scope.message = '';
@@ -193,7 +195,6 @@ angular.module('app')
   }
 
   $scope.selectSolution = (comment) => {
-    console.log(typeof $rootScope.userId);
     if ($rootScope.userId === $scope.currentPost.user_id) {
       $scope.currentPost.solution_id = comment.comment_id; //changes local solution_id so that star moves without refresh
       commentsService.selectSolution(comment.comment_id, $scope.currentPost.post_id);

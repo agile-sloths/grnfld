@@ -34,7 +34,7 @@ const getFeaturedPost = async () => {
 const getComments = (postId) => {
   return knex.column(knex.raw('comments.*, users.username')).select()
     .from(knex.raw('comments, users'))
-    .where(knex.raw(`comments.post_id = ${postId} and comments.user_id = users.user_id`))
+    .where(knex.raw(`comments.post_id = ${postId} and comments.user_id = users.user_id and comments.active = true`))
     .orderBy('votes', 'desc');
 };
 
@@ -146,9 +146,9 @@ const checkCoinByUsername = (username) => {
   return knex.select('hackcoin').from('users').where('username', username);
 };
 
-// const deleteComment = async (commentId) => {
-//   await knex('comments').where('comment_id', commentId).update('active', false);
-// };
+const deleteComment = async (commentId) => {
+  await knex('comments').where('comment_id', commentId).update('active', false);
+};
 
 const subtractCoins = async (currenthackcoin, subtractinghackcoin, userId, commentId, flag) => {
   await knex('users').where('user_id', userId).update('hackcoin', currenthackcoin - subtractinghackcoin);
@@ -205,7 +205,7 @@ module.exports = {
   downvotePost,
   getComments,
   getVoters,
-  //deleteComment,
+  deleteComment,
   // getPostsWithCommentsAsync,
   checkCredentials,
   createUser,

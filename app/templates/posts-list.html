@@ -10,11 +10,11 @@
         <div ng-if="searchInput.length > 0">
             <h3 class="" >Posts related to {{ searchInput }}:</h3>
         </div>
-        <div class="featured"><h3>Featured Post:</h3>
+        <div class="featured" ng-click="handlePostClick('featured')" data-toggle="modal" data-target="#myModal"><h3>Featured Post:</h3>
           <div>
 
           </div>
-          <div class="d-flex w-100 justify-content-between">
+          <div class="d-flex w-100 justify-content-betweenvlist-group-item list-group-item-action flex-column align-items-start">
               <h5 class="mb-1">
                   <strong>{{featuredPost.title}}</strong>
               </h5>
@@ -64,6 +64,7 @@
 
                 <h5><strong class="text-warning" ng-show="post.solution_id !== null">Solved!</strong></h5>
 
+                <button ng-show="post.user_id === $root.userId" ng-click="deletePost(post.post_id)" type="button" class="btn btn-warning btn-sm">Delete Post</button>
             </a>
         </div>
         <div id="myModal" class="modal fade" role="dialog">
@@ -92,6 +93,10 @@
 
                             <div id="like-error" class="alert alert-danger alert-dismissible fade in" style="display:none">
                                 <strong>No more Hackcoins!</strong> Please wait for your coins to refresh
+                            </div>
+
+                            <div id="delete-alert" class="alert alert-danger alert-dismissible fade in" style="display:none">
+                                <strong>Your comment has been deleted!!!</strong>
                             </div>
 
 
@@ -190,7 +195,7 @@
                                             </small>
                                             <br></br>
                                             <!-- ng-class="{'disabled': comment.user_id !== +$root.userId || !$root.userId}" -->
-                                            <button ng-show="comment.user_id === $root.userId" ng-click="deleteComment(comment, comment.user_id, $root.userId, $index)" type="button" class="btn btn-primary btn-sm pull-right">Delete Comment</button>
+                                            <button ng-show="comment.user_id === $root.userId" ng-click="deleteComment(comment.comment_id)" type="button" class="btn btn-warning btn-sm pull-right">Delete Comment</button>
                                         </p>
                                     </div>
                                     <!-- /panel panel-default -->

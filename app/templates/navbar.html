@@ -11,13 +11,13 @@
         <ul class="nav navbar-nav navbar-left">
           <li class="nav-item" ng-show="$root.sessionId"><a href="/submit">Ask Question</a></li>
           <li class="nav-item"><a href="#" data-toggle="modal" data-target="#about-modal">About Us</a></li>
-          <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#hackcoins">Hackcoin Exchange</a></li>
           <li class="nav-item" ng-show="$root.sessionId"><a href="/userspage">Users</span></a></li>
+          <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#hackcoins">Xchange</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="nav-item" ng-hide="$root.sessionId"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
           <li class="nav-item" ng-hide="$root.sessionId"><a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a></li>
-          <li class="nav-item" ng-show="$root.sessionId"><a href="#">Hackcoins: <span class="hackcoins"> {{$root.hackcoin}} </span></a></li> 
+          <li class="nav-item" ng-show="$root.sessionId"><a href="#"><span class="hackcoins"> {{$root.hackcoin}} </span></a></li>
           <li class="nav-item" ng-show="$root.sessionId"><a href="#" data-toggle="modal" data-target="#logout">Logout</a></li>
         </ul>
       </div>
@@ -138,11 +138,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Welcome to grnfld.</h4>
+        <h4 class="modal-title">Welcome to hacXchange.</h4>
       </div>
       <div class="modal-body">
         <em>A Hack Reactor forum for code review and troubleshooting, built with Stack Overflow in mind. Register to post your questions, comment, mark solutions, and assign HackCoins to quality responses.<br><br>
-         Brought to you by Da Brain Trust LLC/LTD/GmbH.</em>
+         Brought to you by Agile Sloths, a far superior team to Da Brain Trust LLC/LTD/GmbH.</em>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -166,13 +166,13 @@
             <div class="form-group" id="giftUserForm">
               <label for="giftUser">Gift Hackcoins to another user:</label>
               <br>
-              <input id="giftUser" ng-model="gift.username" 
-                                   class="form-control" 
-                                   type="text" 
+              <input id="giftUser" ng-model="gift.username"
+                                   class="form-control"
+                                   type="text"
                                    autocomplete="off"
-                                   placeholder="Search Users" 
-                                   uib-typeahead="username for username in getUsers($viewValue)" 
-                                   typeahead-loading="loadingUsers" 
+                                   placeholder="Search Users"
+                                   uib-typeahead="username for username in getUsers($viewValue)"
+                                   typeahead-loading="loadingUsers"
                                    typeahead-no-results="noResults">
                 <!-- <i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i> -->
                 <div ng-show="noResults">
