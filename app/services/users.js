@@ -35,4 +35,14 @@ angular.module('app')
         callback(err);
     });
   };
+
+  this.getAllUsers = function (callback) {
+    $http.get('/users')
+      .then(function ({ data }) {
+        callback(data.users);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
 });

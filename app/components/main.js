@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('MainCtrl', function ($scope, postsService, $rootScope, commentsService) {
+.controller('MainCtrl', function ($scope, postsService, usersService, $rootScope, commentsService) {
   $('.alert .close').on('click', function (e) {
     $(this).parent().hide();
   });
@@ -10,6 +10,12 @@ angular.module('app')
     $rootScope.sessionId = window.localStorage.sessionID || null;
     $scope.currentPage = 1;
     $scope.numPerPage = 5;
+
+    // get all users 
+    usersService.getAllUsers(users => {
+      console.log('got users', users)
+      $scope.users = users
+    }
 
     //get all posts on page load
     postsService.getAll((posts, postVotes) => {
