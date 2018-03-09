@@ -39,7 +39,7 @@ angular.module('app')
   this.getAllUsers = function (callback) {
     $http.get('/users')
       .then(function ({ data }) {
-        callback(data.users);
+        callback(data);
       })
       .catch(function (err) {
         console.log(err);
