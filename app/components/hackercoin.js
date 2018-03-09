@@ -8,14 +8,12 @@ angular.module('app')
     $scope.slotValues = [
       {value: 'LOSE'},
       {value: 'WIN'},
-      {value: 'LOSE'},
-      {value: 'LOSE'},
-      {value: 'LOSE'},
-      {value: 'LOSE'},
-      {value: 'LOSE'},
-      {value: 'LOSE'},
-      {value: 'LOSE'},
+      {value: 'LOSE'}
     ]
+
+    $scope.slotResults = {
+      value: ''
+    }
   
     $scope.getUsers = function(val) {
         return $http.get('/users', {
@@ -45,16 +43,9 @@ angular.module('app')
     }
 
     $scope.getRandomSlotValue = function(length) {
-      return Math.floor(Math.random() * length)
+
+      var result = Math.floor(Math.random() * length);
+      return result;
+      $scope.slotValues.value = result.value
     }
-
-    // $scope.slotInit = function() {
-    //   odoo.default({el:'.js-odoo'})
-    // }
-
-    $scope.slotMachine = function() {
-      odoo.default({ el:'.js-odoo', from: 'NOVEMBER16', to: 'CODEVEMBER', animationDelay: 1000 });
-    }
-
-    // $scope.slotInit()
 });

@@ -175,16 +175,19 @@
               <label for="spin">Spend a coin for a chance to get 10 back!</label>
               <br>
               <br>
-
-              <div class="js-odoo">NOVEMBER16</div>
+              
+                
+              
               <br>
-                  <!-- <div ng-repeat="slot in slotValues | limitTo: 1">
+                  <div ng-repeat="slot in slotValues | limitTo: 1" ng-model="slotResults.value">
                         <p> Result: {{slotValues[getRandomSlotValue(slotValues.length)].value}} </p>
-                  </div> -->
+
+                        <p>test: {{ slotResults.value }}</p>
+                  </div>
                 
 
               <div>
-                <button id="spin" class="btn btn-primary" type="submit" ng-click="slotMachine()">Try your luck!</button>
+                <button id="spin" class="btn btn-primary" type="button" ng-click="getRandomSlotValue()">Try your luck!</button>
               </div>
             </div>
         </div>

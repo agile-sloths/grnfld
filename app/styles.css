@@ -152,3 +152,16 @@ input[name=password] {
 input[name=username] {
   margin-left: 7px
 }
+
+/* SLOT MACHINE */
+
+.js-odoo {
+
+  display: flex;
+  font-size: 16vmin;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  fill: #fff;
+  font-weight: bold;
+}
