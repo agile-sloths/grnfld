@@ -122,7 +122,7 @@ app.post('/login', passport.authenticate('local-login'), (req, res) => {
 });
 
 app.post('/register', passport.authenticate('local-signup'), (req, res) => {
-  console.log('user', req.user[0])
+  console.log('user', req.user[0].location)
   if (req.user === 'already exists') {
     res.status(409).end();
   } else {
