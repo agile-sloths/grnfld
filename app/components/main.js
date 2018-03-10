@@ -175,13 +175,15 @@ angular.module('app')
       }
     }
     $scope.filteredPosts = $scope.posts.filter(post => {
-      if (post.post_id === $scope.featuredPost.post_id) {
-        return;
-      }
-      if ($scope.selectedLanguage.label === 'All') {
-        return post;
-      } else {
-        return post.language === $scope.selectedLanguage.label;
+      if (post) {
+        if (post.post_id === $scope.featuredPost.post_id) {
+          return;
+        }
+        if ($scope.selectedLanguage.label === 'All') {
+          return post;
+        } else {
+          return post.language === $scope.selectedLanguage.label;
+        }
       }
     });
   }
