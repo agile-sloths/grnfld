@@ -17,7 +17,7 @@ if (config.mySql) {
 const getAllPosts = () => {
   return knex.column(knex.raw('posts.*, users.username')).select()
     .from(knex.raw('posts, users'))
-    .where(knex.raw('posts.user_id = users.user_id'))
+    .where(knex.raw('posts.user_id = users.user_id and posts.closed = false'))
     .orderBy('post_id', 'desc')
     .orderBy('votes', 'desc');
 };
@@ -27,9 +27,13 @@ const getPostVotes = () => {
 };
 
 const getFeaturedPost = async () => {
-  let maxVotes = await knex('posts').max('votes').select();
+  let maxVotes = await knex('posts').max('votes').select().where('closed', false);
   return knex('posts').select().where('votes', maxVotes[0]['max(`votes`)']);
-}
+};
+
+const deletePost = async (postId) => {
+  await knex('posts').where('post_id', postId).update('closed', true);
+};
 
 const getComments = (postId) => {
   return knex.column(knex.raw('comments.*, users.username')).select()
@@ -216,6 +220,7 @@ module.exports = {
   getComments,
   getVoters,
   deleteComment,
+  deletePost,
   // getPostsWithCommentsAsync,
   checkCredentials,
   createUser,
