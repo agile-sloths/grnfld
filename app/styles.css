@@ -213,14 +213,15 @@ input[name=username] {
 	height: 70px;
 	width: 100px;
 	display: block;
+	margin-top: 10px;
 	margin-left: auto;
 	margin-right: auto;
 	width: 50%;
 }
 
 .default-currentUser-image {
-	height: 200px;
-	width: 200px;
+	height: 225px;
+	width: 100px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;

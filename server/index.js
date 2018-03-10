@@ -90,7 +90,7 @@ app.post('/upvotePost', isLoggedIn, async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-})
+});
 
 app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
   let query = url.parse(req.url).query.split('/');
@@ -100,10 +100,18 @@ app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-})
+});
+
+app.get('/getUserPosts', async (req, res) => {
+  console.log('reqqqqqqq', req)
+  let userId = req.query.userId;
+  let posts = await db.getUserPosts(userId);
+  res.json(posts);
+});
+
 
 app.post('/createComment', isLoggedIn, async (req, res) => {
-  let comment = req.body;
+  let comment = req;
   try {
     await db.createComment(comment);
   } catch (err) {

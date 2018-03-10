@@ -38,6 +38,13 @@ const getComments = (postId) => {
     .orderBy('votes', 'desc');
 };
 
+const getUserPosts = (userId) => {
+  return knex.column(knex.raw('posts.*, users.username')).select()
+    .from(knex.raw('posts, users'))
+    .where(knex.raw(`posts.user_id = ${userId}`))
+    .orderBy('created_at', 'desc');
+};
+
 const getVoters = (commentId) => {
   return knex.column(knex.raw('userscomments.user_id, userscomments.votes')).select().from('userscomments')
     .where(knex.raw(`comment_id = ${commentId}`));
@@ -232,5 +239,6 @@ module.exports = {
   deleteGiftedCoin,
   checkCoinByUsername,
   spendSlotCoin,
-  awardSlotCoins
+  awardSlotCoins,
+  getUserPosts
 };

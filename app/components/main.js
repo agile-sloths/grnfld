@@ -24,6 +24,10 @@ angular.module('app')
     $scope.handleUserClick = (clickedValue) => {
       $scope.currentUser = $scope.watchedUsers[clickedValue];
       console.log($scope.currentUser)
+
+      postsService.getUserPosts($scope.currentUser.user_id, (data) => {
+        console.log('user posts', data);
+      })
       //get all comments from clicked post
       // commentsService.getComments($scope.currentPost.post_id, (data) => {
       //   console.log('comments:',data);

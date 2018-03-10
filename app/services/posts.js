@@ -39,4 +39,16 @@ angular.module('app')
         console.log(err);
     });
   };
+
+  this.getUserPosts = function(userId, callback) {
+    $http.get('/getUserPosts', {
+      params: { userId: userId }
+    })
+    .then(function(data) {
+      callback(data);
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
 });

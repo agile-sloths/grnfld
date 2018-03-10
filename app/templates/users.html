@@ -32,6 +32,9 @@
                           <p ng-if="!currentUser.location" class="location"><strong>Location:</strong> Somewhere out there</p>
                           <p ng-if="currentUser.languages" class="favorites"><strong>Favorite Languages:</strong> {{ currentUser.languages }}</p>
                           <p ng-if="!currentUser.languages" class="favorites"><strong>Favorite Languages:</strong> none specified</p>
+                          <!-- <div ng-repeat="user in watchedUsers track by $index" ng-controller="UsersCtrl" ng-click="handleUserClick($index)" user="user" data-toggle="modal" data-target="#user-modal">
+                            <h3>User Questions</h3>
+                          </div> -->
                         </div>
                     </div> <!-- currentUserContainer div -->
                 </div> <!-- modal content div -->
