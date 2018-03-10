@@ -11,9 +11,6 @@
     </div>
     <div class="collapse navbar-collapse navbar-expand-md navbar-inner">
       <ul class="nav navbar-nav navbar-left">
-        <li class="nav-item" ng-show="$root.sessionId">
-          <a href="/submit">Ask Question</a>
-        </li>
         <li class="nav-item">
           <a href="#" data-toggle="modal" data-target="#about-modal">About Us</a>
         </li>
@@ -57,7 +54,7 @@
         <p>Are you sure want to log out?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" ng-click="logout()" data-dismiss="modal">Logout</button>
+        <button type="button" class="btn btn-danger" ng-click="logout()" data-dismiss="modal">Logout</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -129,17 +126,17 @@
             <input class="form-control" type="password" name="password" ng-model="register.password" ng-minlength="2" required>
             <p ng-show="registerForm.password.$invalid && registerForm.password.$dirty" class="help-block">Password is too short.</p>
             <p ng-show="registerForm.password.$error.required && registerForm.password.$dirty" class="help-block">A password is required.</p>
-          </div>   
-          
+          </div>
+
           <div class="signup-margin">
             <div class="form-group">
               <label>Location:</label>
               <input class="form-control" type="text" name="location" ng-model="register.location" placeholder="optional">
-            </div> 
+            </div>
             <div class="form-group">
               <label>Languages:</label>
               <input  class="form-control" type="text" name="languages" ng-model="register.languages" placeholder="optional">
-            </div>  
+            </div>
             <div class="form-group">
               <label>Github Handle:</label>
               <input class="form-control" type="text" name="github_handle" ng-model="register.github_handle" placeholder="optional">
