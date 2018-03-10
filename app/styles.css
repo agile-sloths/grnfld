@@ -167,15 +167,32 @@ input[name=username] {
 
 .user-container {
   grid-column: 1 / 1;
-  grid-row: 1;
   border: 1px solid black;
   min-height: 200px;
-  padding-: 5px;
+  padding: 5px;
+  background: #B58900;
+  color: white;
+  border-radius: 5px;
 }
 
 .user-buttons {
 	margin-top: 100px;
 	margin-bottom: 30px;
+}
+
+.username a {
+	text-decoration: none;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.username a {
+	color: white;
+}
+
+.username a:hover {
+	color: #36448A;
 }
 /**** USER PAGE ****/
 
