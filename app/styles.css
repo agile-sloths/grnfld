@@ -144,12 +144,13 @@ i.downvote {
     border-color:#002b36;
     background-color:#002b36;
     color:white;
-		text-align: center;
+	text-align: center;
     padding-left:8px;
     padding-right:8px;
     padding-top:4px;
     padding-bottom:6px;
-    font-size:1.3em;
+	font-size:1.3em;
+	cursor: default;
 }
 
 input[name=password] {
@@ -260,5 +261,9 @@ input[name=username] {
 .currentUser-username {
 	font-size: 30px;
 	text-align: center;
+}
+
+.hackcoinscontainer {
+	cursor: default;
 }
 /**** USER PAGE ****/

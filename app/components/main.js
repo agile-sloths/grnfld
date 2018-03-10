@@ -363,6 +363,9 @@ angular.module('app')
     input: 1
   };
 
+  $scope.easterEgg = function() {
+    $('.navbar-brand').text('grundleflow');
+  }
 
   $scope.submit = async (isValid) => {
     if (isValid) {

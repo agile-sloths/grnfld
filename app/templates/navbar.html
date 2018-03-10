@@ -28,8 +28,8 @@
         <li class="nav-item" ng-hide="$root.sessionId">
           <a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a>
         </li>
-        <li class="nav-item" ng-show="$root.sessionId">
-          <a href="#">
+        <li class="nav-item" ng-show="$root.sessionId" ng-controller="MainCtrl">
+          <a href="#" class="hackcoinscontainer" ng-click="easterEgg()">
             <span class="hackcoins"> {{$root.hackcoin || 0}} </span>
           </a>
         </li>
