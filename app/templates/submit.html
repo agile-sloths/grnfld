@@ -1,49 +1,100 @@
-<h2 style="opacity: 0;">Submission Page</h2>
-<div>
-    <form name="submitForm" ng-submit="submit(submitForm.$valid)" novalidate>
-        <div class="form-group">
-            <label for="newPostTitle">Title</label>
-            <input type="text" name="title" ng-model="post.title" class="form-control" id="newPostTitle" rows="10" placeholder="Title"
-                ng-maxlength="50" required />
-            <p ng-show="submitForm.title.$error.maxlength && submitForm.title.$dirty" class="help-block">The title is too long.</p>
-            <p ng-show="submitForm.title.$error.required && submitForm.title.$dirty" class="help-block">A title is required.</p>
-        </div>
-        <div class="form-group">
-            <label for="newPostCode">Code</label>
-            <div hljs hljs-source="post.codebox"></div>
-            <textarea name="codebox" ng-model="post.codebox" class="form-control" id="newPostCode" rows="10" placeholder="Your code goes here, idiot"
-                ng-maxlength="8000" required></textarea>
-            <p ng-show="submitForm.codebox.$error.maxlength && submitForm.codebox.$dirty" class="help-block">Your code is too long.</p>
-            <p ng-show="submitForm.codebox.$error.required && submitForm.codebox.$dirty" class="help-block">Code is required.</p>
-        </div>
+<div style="padding-top: 50px">
+  <h2 style="opacity: 0;">Submission Page</h2>
+  <div>
+      <form name="submitForm" ng-submit="submit(submitForm.$valid)" novalidate>
+          <div class="form-group">
+              <label for="newPostTitle">Title</label>
+              <input
+                  type="text"
+                  name="title"
+                  ng-model="post.title"
+                  class="form-control"
+                  id="newPostTitle"
+                  rows="10"
+                  placeholder="Title"
+                  ng-maxlength="50"
+                  required
+              />
+              <p
+                  ng-show="submitForm.title.$error.maxlength && submitForm.title.$dirty"
+                  class="help-block"
+              >The title is too long.</p>
+              <p
+                  ng-show="submitForm.title.$error.required && submitForm.title.$dirty"
+                  class="help-block"
+              >A title is required.</p>
+          </div>
+          <label>Language:</label>
+          <select ng-model="post.language"
+            ng-options="language.label as language.label for language in languages"
+            required
+            style="font-size: 1em;">
+          </select>
+            <div class="form-group">
+              <label for="newPostCode">Code</label>
+              <div hljs hljs-source="post.codebox"></div>
+              <textarea
+                  name="codebox"
+                  ng-model="post.codebox"
+                  class="form-control"
+                  id="newPostCode"
+                  rows="10"
+                  placeholder="Your code goes here, idiot"
+                  ng-maxlength="8000"
+                  required
+              ></textarea>
+              <p
+                  ng-show="submitForm.codebox.$error.maxlength && submitForm.codebox.$dirty"
+                  class="help-block"
+              >Your code is too long.</p>
+              <p
+                  ng-show="submitForm.codebox.$error.required && submitForm.codebox.$dirty"
+                  class="help-block"
+              >Code is required.</p>
+          </div>
 
-        <div class="form-group">
-            <label for="newPostDescription">Description</label>
-            <textarea name="description" ng-model="post.description" id="newPostDescription" class="form-control" rows="3" placeholder="Describe your coding issue"
-                ng-maxlength="8000" required></textarea>
-            <p ng-show="submitForm.description.$error.maxlength && submitForm.description.$dirty" class="help-block">The description is too long.</p>
-            <p ng-show="submitForm.description.$error.required && submitForm.description.$dirty" class="help-block">A description is required.</p>
-        </div>
-        <button type="submit" ng-disabled="submitForm.$invalid" class="btn btn-primary">Submit</button>
-    </form>
+          <div class="form-group">
+              <label for="newPostDescription">Description</label>
+              <textarea
+                  name="description"
+                  ng-model="post.description"
+                  id="newPostDescription"
+                  class="form-control"
+                  rows="3"
+                  placeholder="Describe your coding issue"
+                  ng-maxlength="8000"
+                  required
+              ></textarea>
+              <p
+                  ng-show="submitForm.description.$error.maxlength && submitForm.description.$dirty"
+                  class="help-block"
+              >The description is too long.</p>
+              <p
+                  ng-show="submitForm.description.$error.required && submitForm.description.$dirty"
+                  class="help-block"
+              >A description is required.</p>
+          </div>
+          <button type="submit" ng-disabled="submitForm.$invalid" class="btn btn-primary">Submit</button>
+      </form>
+  </div>
 </div>
 
 
 
 
 
-<!--SEPARATE FILE-->
-<!-- <script>
+  <!--SEPARATE FILE-->
+  <!-- <script>
   var app = angular.module('myApp', []);
   app.controller('formCtrl', function($scope) {
     //   $scope.master = {firstName:"John", lastName:"Doe"};
-      $scope.submit = function() {    
+      $scope.submit = function() {
        $http.post("insert.php", {
      'bname':$scope.bname,
     'bauthor':$scope.bauthor,
     'bprice':$scope.bprice,
     'blanguage':$scope.blanguage})
-    
+
     .success(function(data,status,headers,config){
     console.log("Data Inserted Successfully");
     });
