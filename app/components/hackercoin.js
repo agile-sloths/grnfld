@@ -65,9 +65,9 @@ angular.module('app')
         window.localStorage.hackcoin = $rootScope.hackcoin;
         let result = $scope.randomSlot = $scope.slotValues[Math.floor(Math.random() * $scope.slotValues.length)];
         if (result.value === 'LOSE') {
-          $('#slot-alert').show();
+          $('#slot-alert').show("slow");
         } else if (result.value === 'WIN') {
-          $('#slotwon-alert').show();
+          $('#slotwon-alert').show("slow");
           $rootScope.hackcoin = $rootScope.hackcoin + 10;
           coinsService.coinPrize($rootScope.userId);
           window.localStorage.hackcoin = $rootScope.hackcoin;
