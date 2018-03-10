@@ -230,14 +230,27 @@ input[name=username] {
 }
 
 .user-questions {
-	border: 1px solid #B58900;
-	border-radius: 5px;
+	border-bottom: 1px solid #B58900;
 	margin: 10px;
 }
 
 .user-questions-title {
 	/*font-size: 18px;*/
 	margin-top: 15px;
+}
+
+.post-title {
+	margin-bottom: 10px;
+}
+
+.currentUser-post-info {
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+
+.currentUser-username {
+	font-size: 30px;
+	text-align: center;
 }
 /**** USER PAGE ****/
 
