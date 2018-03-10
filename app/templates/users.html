@@ -5,33 +5,20 @@
     </div>
     <div class="list-group">
         <div class="users-container">
-            <div ng-repeat="user in watchedUsers track by $index" ng-controller="UsersCtrl" ng-click="handleuserClick($index)" user="user"
+            <div ng-repeat="user in users track by $index" ng-controller="UsersCtrl" ng-click="handleuserClick($index)" user="user"
                 data-toggle="modal" data-target="#userModal">
                 <div class="user-container">
-                  <div ng-if="user.username">
-                      <p class="username"><a href="#">{{ user.username }}</a></p>
-                  </div> 
-                  <div ng-if="user.github_handle">
-                      <p class="github"><a href="#"><strong>Github:</strong> {{ user.github_handle }}</a></p> 
-                  </div> 
+                      <p class="github"><img class="default-user-image" src="http://www.hrzone.com/sites/all/themes/pp/img/default-user.png" alt=""></p> 
+                    <div class="inner-container">
            <!--        <div ng-if="user.github_handle">
                       <h5 class=""><img src="{{ getGithubPicture(user.github_handle) }}" alt=""></h5> 
                   </div> -->
-                  <div ng-if="user.location">
-                      <p class="location"><strong>Location:</strong> {{ user.location }}</p>
-                  </div>     
-                  <div ng-if="!user.location">
-                      <p class="location"><strong>Location:</strong> Somewhere out there</p>
-                  </div>   
-                  <div>
-                      <p class="hackcoin"><strong>Hackcoins:</strong> {{ user.hackcoin }}</p>
-                  </div>  
-                  <div ng-if="user.languages">
-                      <p class="favorites"><strong>Favorite Languages:</strong> {{ user.languages }}</p>
-                  </div> 
-                  <div ng-if="!user.languages">
-                      <p class="favorites"><strong>Favorite Languages:</strong> none specified</p>
-                  </div>
+                      <p ng-if="user.username" class="username"><a href="#">{{ user.username }}</a> has <strong>{{ user.hackcoin }}</strong> hackcoins</p>
+                      <p ng-if="user.location" class="location"><strong>Location:</strong> {{ user.location }}</p>
+                      <p ng-if="!user.location" class="location"><strong>Location:</strong> Somewhere out there</p>
+                      <p ng-if="user.languages" class="favorites"><strong>Favorite Languages:</strong> {{ user.languages }}</p>
+                      <p ng-if="!user.languages" class="favorites"><strong>Favorite Languages:</strong> none specified</p>
+                    </div>
                 </div>
              </div>
         </div>

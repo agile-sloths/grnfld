@@ -120,6 +120,10 @@ i.downvote {
 	letter-spacing: 1px
 }
 
+.signup-margin {
+	margin-left: 10px;
+}
+
 /* hacky spacing fix */
 .navbar-brand {
 	margin-top: 10px;
@@ -168,11 +172,17 @@ input[name=username] {
 .user-container {
   grid-column: 1 / 1;
   border: 1px solid black;
-  min-height: 200px;
+  min-height: 300px;
+  min-width:  250px;
   padding: 5px;
   background: #B58900;
   color: white;
   border-radius: 5px;
+}
+
+.inner-container {
+	/*background: #002B36;*/
+	padding-top: 20px;
 }
 
 .user-buttons {
@@ -193,6 +203,15 @@ input[name=username] {
 
 .username a:hover {
 	color: #36448A;
+}
+
+.default-user-image {
+	height: 100px;
+	width: 100px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
 }
 /**** USER PAGE ****/
 
