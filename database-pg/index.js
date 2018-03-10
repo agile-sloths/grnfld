@@ -1,18 +1,18 @@
-// const config = require('./config.js');
+const config = require('./config.js');
 let knex;
 
-// if (config.mySql) {
-//   knex = require('knex')({
-//     client: 'mysql',
-//     connection: config.mySql
-//   });
-// } else {
+if (config.mySql) {
+  knex = require('knex')({
+    client: 'mysql',
+    connection: config.mySql
+  });
+} else {
   knex = require('knex')({
     client: 'pg',
     connection: process.env.DATABASE_URL,
     ssl: true
   });
-// }
+}
 
 const getAllPosts = () => {
   return knex.column(knex.raw('posts.*, users.username')).select()
@@ -28,7 +28,7 @@ const getPostVotes = () => {
 
 const getFeaturedPost = async () => {
   let maxVotes = await knex('posts').max('votes').select();
-  return knex('posts').select().where('votes', maxVotes[0]['max'] || 0);
+  return knex('posts').select().where('votes', maxVotes[0]['max(`votes`)'] || 0);
 }
 
 const getComments = (postId) => {
