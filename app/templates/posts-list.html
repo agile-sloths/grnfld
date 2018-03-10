@@ -34,7 +34,8 @@
           <p class="mb-1">{{featuredPost.summary}}</p>
           <small>{{featuredPost.created_at | date:'medium'}}, <i ng-click="selectLanguage(featuredPost.language); $event.stopPropagation()">{{featuredPost.language}}</i></small>
 
-          <h5><strong class="text-warning" ng-show="post.solution_id !== null">Solved!</strong></h5>
+          <h5><strong class="text-warning" ng-show="featuredPost.solution_id !== null">Solved!</strong></h5>
+          <button ng-show="featuredPost.user_id === $root.userId" ng-click="deletePost(featuredPost.post_id,$index); $event.stopPropagation()" type="button" class="btn btn-warning btn-sm">Delete Post</button>
         </div>
         <div class="posts">
             <a ng-repeat="post in filteredPosts | filter:searchInput track by $index" ng-click="handlePostClick($index)" post="post" class="list-group-item list-group-item-action flex-column align-items-start"
@@ -131,8 +132,9 @@
       <form style="text-align: center;" name="likeForm" ng-submit="submit(likeForm.$valid)" novalidate>
       <div class="modal-body">
           <div class="form-group">
-            <label for="input">Number of hackcoins to use:    </label>
-            <input type="number" name="input" ng-model="like.input" required step="1" min="1" max="{{$root.hackcoin}}" required>
+            <label for="input">Number of hackcoins to use:</label>
+            <br>
+            <input class="form-control" type="number" name="input" ng-model="like.input" required step="1" min="1" max="{{$root.hackcoin}}" required>
             <p ng-show="likeForm.input.$error.min || likeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1 and {{$root.hackcoin}}. </p>
             <p ng-show="likeForm.input.$error.required" class="help-block">A number is required.</p>
           </div>
@@ -164,7 +166,8 @@
       <div class="modal-body">
           <div class="form-group">
             <label for="input">Number of hackcoins to use: </label>
-            <input type="number" name="input" ng-model="unlike.input" required step="1" min="1" max="{{max}}" required>
+            <br>
+            <input class="form-control" type="number" name="input" ng-model="unlike.input" required step="1" min="1" max="{{max}}" required>
             <p ng-show="unlikeForm.input.$error.min || unlikeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1 and {{max}}.</p>
             <p ng-show="unlikeForm.input.$error.required" class="help-block">A number is required.</p>
           </div>

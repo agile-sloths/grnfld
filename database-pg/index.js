@@ -28,7 +28,7 @@ const getPostVotes = () => {
 
 const getFeaturedPost = async () => {
   let maxVotes = await knex('posts').max('votes').select().where('closed', false);
-  return knex('posts').select().where('votes', maxVotes[0]['max(`votes`)']);
+  return knex('posts').select().where('votes', maxVotes[0]['max(`votes`)']).andWhere('closed', 0);
 };
 
 const deletePost = async (postId) => {
