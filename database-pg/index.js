@@ -125,7 +125,6 @@ const checkCredentials = (username) => {
 };
 
 const createUser = async (req, username, password) => {
-  console.log('reqqqq', req.body)
   const query = await knex.select().from('users')
     .where(knex.raw(`LOWER(username) = LOWER('${username}')`));
 

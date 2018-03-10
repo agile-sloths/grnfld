@@ -110,7 +110,7 @@ app.get('/getUserPosts', async (req, res) => {
 
 
 app.post('/createComment', isLoggedIn, async (req, res) => {
-  let comment = req;
+  let comment = req.body;
   try {
     await db.createComment(comment);
   } catch (err) {
