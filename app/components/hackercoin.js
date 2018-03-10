@@ -56,9 +56,10 @@ angular.module('app')
 
     $scope.getRandomSlotValue = async () => {
       $('#slot-alert').hide();
+      $('#slot-alert2').hide();
       $('#slotwon-alert').hide();
       if ($rootScope.hackcoin <= 0) {
-        console.log('not enough coins')
+        $('#slot-alert2').show("slow");
       } else {
         $rootScope.hackcoin = $rootScope.hackcoin - 1;
         await coinsService.spendCoin($rootScope.userId);

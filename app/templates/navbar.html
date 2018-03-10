@@ -32,7 +32,7 @@
         </li>
         <li class="nav-item" ng-show="$root.sessionId">
           <a href="#">
-            <span class="hackcoins"> {{$root.hackcoin}} </span>
+            <span class="hackcoins"> {{$root.hackcoin || 0}} </span>
           </a>
         </li>
         <li class="nav-item" ng-show="$root.sessionId">
@@ -192,8 +192,11 @@
           <div ng-repeat="slot in slotValues | limitTo: 1" ng-model="slotResults.value">
           </div>
           <div>
-            <div id="slot-alert" class="alert alert-danger alert-dismissible fade in" style="display:none">
+            <div id="slot-alert" class="alert alert-warning alert-dismissible fade in" style="display:none">
               You lost!
+            </div>
+            <div id="slot-alert2" class="alert alert-danger alert-dismissible fade in" style="display:none">
+              You don't have enough coins!
             </div>
             <div id="slotwon-alert" class="alert alert-success alert-dismissible fade in" style="display:none">
               You won 10 hackcoins!
