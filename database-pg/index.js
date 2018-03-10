@@ -81,7 +81,7 @@ const upvotePost = async (post) => {
     await knex('users').where('user_id', post.postUserId).increment('hackcoin', 1); // give owner of post hackcoin
     await knex('usersposts').insert({user_id: post.userId, post_id: post.postId, vote: true}); // create record of post
     return 1; // need status code to tell to server to send on success
-  } else if (voted[0].vote === 0) {
+  } else if (voted[0].vote === true) {
     await knex('posts').where('post_id', post.postId).increment('votes', 1); // increase post votes
     await knex('users').where('user_id', post.postUserId).increment('hackcoin', 1); // give owner of post hackcoin
     await knex('usersposts').where('user_id', post.userId).andWhere('post_id', post.postId).del();
@@ -91,13 +91,13 @@ const upvotePost = async (post) => {
 
 const downvotePost = async (userId, postId, postUserId) => {
   let voted = await knex('usersposts').select('vote').where('user_id', userId).andWhere('post_id', postId);
-  console.log('DOWNVOTE------------_>', voted);
+  console.log('DOWNVOTE------------_>', typeof voted[0].vote);
   if (!voted.length) {
     await knex('posts').where('post_id', postId).decrement('votes', 1);
     await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin
     await knex('usersposts').insert({user_id: userId, post_id: postId, vote: false});
     return 1; // need status code to tell to server to send on success
-  } else if (voted[0].vote === 1) {
+  } else if (voted[0].vote === false) {
     await knex('posts').where('post_id', postId).decrement('votes', 1);
     await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin
     await knex('usersposts').where('user_id', userId).andWhere('post_id', postId).del();
