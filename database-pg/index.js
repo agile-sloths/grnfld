@@ -68,6 +68,7 @@ const createPost = (post) => {
   return knex('posts').insert({
     user_id: post.userId,
     title: post.title,
+    language: post.language,
     code: post.codebox,
     summary: post.description,
     anon: false //hard coded to false until functionality implemented

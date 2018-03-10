@@ -31,7 +31,6 @@ angular.module('app')
   }
 
   this.submitNewPost = function (newPostObj, callback) {
-    console.log(newPostObj)
     $http.post('/createPost', newPostObj)
       .then(function (data) {
         callback(data);
