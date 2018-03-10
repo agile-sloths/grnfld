@@ -28,9 +28,9 @@
         <li class="nav-item" ng-hide="$root.sessionId">
           <a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a>
         </li>
-        <li class="nav-item" ng-show="$root.sessionId">
-          <a href="#">
-            <span class="hackcoins"> {{$root.hackcoin}} </span>
+        <li class="nav-item" ng-show="$root.sessionId" ng-controller="MainCtrl">
+          <a href="#" class="hackcoinscontainer" ng-click="easterEgg()">
+            <span class="hackcoins"> {{$root.hackcoin || 0}} </span>
           </a>
         </li>
         <li class="nav-item" ng-show="$root.sessionId">
@@ -203,11 +203,13 @@
           <label for="spin">Spend a coin for a chance to get 10 back!</label>
           <br>
           <div ng-repeat="slot in slotValues | limitTo: 1" ng-model="slotResults.value">
-            <p>Result: {{ randomSlot.value }}</p>
           </div>
           <div>
-            <div id="slot-alert" class="alert alert-danger alert-dismissible fade in" style="display:none">
+            <div id="slot-alert" class="alert alert-warning alert-dismissible fade in" style="display:none">
               You lost!
+            </div>
+            <div id="slot-alert2" class="alert alert-danger alert-dismissible fade in" style="display:none">
+              You don't have enough coins!
             </div>
             <div id="slotwon-alert" class="alert alert-success alert-dismissible fade in" style="display:none">
               You won 10 hackcoins!
