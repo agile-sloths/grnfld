@@ -162,6 +162,7 @@ angular.module('app')
     let res = await postsService.deletePost(postId);
     if (res.status === 204) {
       $scope.refresh();
+      $('#delete-modal').modal('toggle');
     }
   };
 

@@ -76,9 +76,30 @@
                     <strong class="text-warning" ng-show="post.solution_id !== null">Solved!</strong>
                 </h3>
 
-                <button ng-show="post.user_id === $root.userId" ng-click="deletePost(post.post_id,$index); $event.stopPropagation()" type="button"
-                    class="btn btn-warning btn-sm">Delete Post</button>
+                <button ng-show="post.user_id === $root.userId" ng-click="deletePost(post.post_id,$index); $event.stopPropagation()" type="button" class="btn btn-warning btn-sm">Delete Post</button>
+
             </a>
+
+
+            <!-- Delete Post Modal -->
+<div class="modal fade" id="delete-modal" role="dialog" ng-controller="MainCtrl">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title" style="color: white;">Alert</h3>
+      </div>
+      <div class="modal-body">
+        <div><strong style="color: white;">Your post has been deleted!</strong>
+          <br>
+          <br></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-sm pull-right" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -100,17 +121,16 @@
                         <div id="like-alert" class="alert alert-success alert-dismissible fade in" style="display:none">
                             You have {{$root.hackcoin}} hackcoins left!
                         </div>
-
+                        
+                        <div id="like-error" class="alert alert-danger alert-dismissible fade in" style="display:none">
+                            <strong>No more Hackcoins! :( </strong> Please wait for your coins to refresh
+                        </div>
+                        
+                        <div id="delete-alert" class="alert alert-danger alert-dismissible fade in" style="display:none">
+                            <strong>Your comment has been deleted!</strong>
+                        </div>
 
                         <div ng-repeat="comment in comments track by $index" class="comments-list" ng-class="{'solution': comment.solution}">
-
-                            <div id="like-error" class="alert alert-danger alert-dismissible fade in" style="display:none">
-                                <strong>No more Hackcoins! :( </strong> Please wait for your coins to refresh
-                            </div>
-
-                            <div id="delete-alert" class="alert alert-danger alert-dismissible fade in" style="display:none">
-                                <strong>Your comment has been deleted!</strong>
-                            </div>
 
 
                             <div class="row">
