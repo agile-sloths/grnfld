@@ -91,6 +91,7 @@ const upvotePost = async (post) => {
 
 const downvotePost = async (userId, postId, postUserId) => {
   let voted = await knex('usersposts').select('vote').where('user_id', userId).andWhere('post_id', postId);
+  console.log('DOWNVOTE------------_>', voted);
   if (!voted.length) {
     await knex('posts').where('post_id', postId).decrement('votes', 1);
     await knex('users').where('user_id', postUserId).decrement('hackcoin', 1); // give owner of post hackcoin

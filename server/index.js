@@ -88,7 +88,7 @@ app.post('/upvotePost', isLoggedIn, async (req, res) => {
   try {
     let upvote = await db.upvotePost(req.body);
     console.log('UPVOTE ---------->', upvote);
-    upvote ? res.status(201).end() : null;
+    upvote ? res.status(201).end() : res.status(205).end();
   } catch (err) {
     console.log(err);
   }
@@ -100,7 +100,7 @@ app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
   try {
     let downvote = await db.downvotePost(query[0], query[1], query[2]);
     console.log('DOWNVOTE--------->', downvote);
-    downvote ? res.status(204).end() : null;
+    downvote ? res.status(204).end() : res.status(205).end();
   } catch (err) {
     console.log(err);
   }
