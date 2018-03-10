@@ -22,6 +22,8 @@ angular.module('app')
       {value: 'LOSE'},
     ]
 
+    $scope.userData = [];
+
     $scope.getUsers = function(val) {
         return $http.get('/users', {
           params: {
@@ -30,12 +32,15 @@ angular.module('app')
           }
         }).then(function(response){
           return response.data.map(function(item){
-            return item.username;
+            $scope.userData.push(item.username);
+            return $scope.userData
           });
         }).catch(function(err) {
           console.log(err)
         });
       };
+
+    $scope.getUsers();
 
     $scope.submitGift = function() {
       if ($rootScope.hackcoin < $scope.gift.amount) {
@@ -58,15 +63,9 @@ angular.module('app')
         $rootScope.hackcoin = $rootScope.hackcoin - 1;
         await coinsService.spendCoin($rootScope.userId);
         window.localStorage.hackcoin = $rootScope.hackcoin;
-        //take a coin on button click, then update window.localstorage.hackcoin
-        //disable button until function is done running
-        //run result
-        //if result is a loser, return a message telling to spend a coin to try again
-        //if result is a winner, add 10 coins to the users
         let result = $scope.randomSlot = $scope.slotValues[Math.floor(Math.random() * $scope.slotValues.length)];
         if (result.value === 'LOSE') {
           $('#slot-alert').show();
-          //show message that says 'You lost- click to try again'
         } else if (result.value === 'WIN') {
           $('#slotwon-alert').show();
           $rootScope.hackcoin = $rootScope.hackcoin + 10;
