@@ -144,12 +144,13 @@ i.downvote {
     border-color:#002b36;
     background-color:#002b36;
     color:white;
-		text-align: center;
+	text-align: center;
     padding-left:8px;
     padding-right:8px;
     padding-top:4px;
     padding-bottom:6px;
-    font-size:1.3em;
+	font-size:1.3em;
+	cursor: default;
 }
 
 input[name=password] {
@@ -213,6 +214,10 @@ input[name=username] {
 .default-user-image {
 	height: 100px;
 	width: 100px;
+	max-height: 100px;
+	max-width: 100px;
+	min-height: 100px;
+	min-width: 100px;
 	display: block;
 	margin-top: 10px;
 	margin-left: auto;
@@ -222,7 +227,11 @@ input[name=username] {
 
 .default-currentUser-image {
 	height: 225px;
-	width: 100px;
+	width: 225px;
+	max-height: 225px;
+	max-width: 225px;
+	min-height: 225px;
+	min-width: 225px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -253,6 +262,8 @@ input[name=username] {
 	font-size: 30px;
 	text-align: center;
 }
+
+.hackcoinscontainer {
+	cursor: default;
+}
 /**** USER PAGE ****/
-
-

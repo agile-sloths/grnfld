@@ -11,9 +11,6 @@
     </div>
     <div class="collapse navbar-collapse navbar-expand-md navbar-inner">
       <ul class="nav navbar-nav navbar-left">
-        <li class="nav-item" ng-show="$root.sessionId">
-          <a href="/submit">Ask Question</a>
-        </li>
         <li class="nav-item">
           <a href="#" data-toggle="modal" data-target="#about-modal">About Us</a>
         </li>
@@ -31,9 +28,9 @@
         <li class="nav-item" ng-hide="$root.sessionId">
           <a href="#" data-toggle="modal" data-target="#register-modal">Sign up</a>
         </li>
-        <li class="nav-item" ng-show="$root.sessionId">
-          <a href="#">
-            <span class="hackcoins"> {{$root.hackcoin}} </span>
+        <li class="nav-item" ng-show="$root.sessionId" ng-controller="MainCtrl">
+          <a href="#" class="hackcoinscontainer" ng-click="easterEgg()">
+            <span class="hackcoins"> {{$root.hackcoin || 0}} </span>
           </a>
         </li>
         <li class="nav-item" ng-show="$root.sessionId">
@@ -57,7 +54,7 @@
         <p>Are you sure want to log out?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" ng-click="logout()" data-dismiss="modal">Logout</button>
+        <button type="button" class="btn btn-danger" ng-click="logout()" data-dismiss="modal">Logout</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -129,17 +126,17 @@
             <input class="form-control" type="password" name="password" ng-model="register.password" ng-minlength="2" required>
             <p ng-show="registerForm.password.$invalid && registerForm.password.$dirty" class="help-block">Password is too short.</p>
             <p ng-show="registerForm.password.$error.required && registerForm.password.$dirty" class="help-block">A password is required.</p>
-          </div>   
-          
+          </div>
+
           <div class="signup-margin">
             <div class="form-group">
               <label>Location:</label>
               <input class="form-control" type="text" name="location" ng-model="register.location" placeholder="optional">
-            </div> 
+            </div>
             <div class="form-group">
               <label>Languages:</label>
               <input  class="form-control" type="text" name="languages" ng-model="register.languages" placeholder="optional">
-            </div>  
+            </div>
             <div class="form-group">
               <label>Github Handle:</label>
               <input class="form-control" type="text" name="github_handle" ng-model="register.github_handle" placeholder="optional">
@@ -206,11 +203,13 @@
           <label for="spin">Spend a coin for a chance to get 10 back!</label>
           <br>
           <div ng-repeat="slot in slotValues | limitTo: 1" ng-model="slotResults.value">
-            <p>Result: {{ randomSlot.value }}</p>
           </div>
           <div>
-            <div id="slot-alert" class="alert alert-danger alert-dismissible fade in" style="display:none">
+            <div id="slot-alert" class="alert alert-warning alert-dismissible fade in" style="display:none">
               You lost!
+            </div>
+            <div id="slot-alert2" class="alert alert-danger alert-dismissible fade in" style="display:none">
+              You don't have enough coins!
             </div>
             <div id="slotwon-alert" class="alert alert-success alert-dismissible fade in" style="display:none">
               You won 10 hackcoins!
