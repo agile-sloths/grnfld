@@ -24,7 +24,13 @@
                   class="help-block"
               >A title is required.</p>
           </div>
-          <div class="form-group">
+          <label>Language:</label>
+          <select ng-model="language"
+            ng-options="language as language.label for language in languages"
+            ng-change="selectLanguage()"
+            style="font-size: 1em;">
+          </select>
+            <div class="form-group">
               <label for="newPostCode">Code</label>
               <div hljs hljs-source="post.codebox"></div>
               <textarea

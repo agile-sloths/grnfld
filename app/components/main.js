@@ -46,6 +46,9 @@ angular.module('app')
       }, {
         id: 7,
         label: 'Ruby',
+      }, {
+        id: 8,
+        label: 'Other',
       }];
       $scope.selectedLanguage = $scope.languages[0] || 'All'; // default to all languages
 
