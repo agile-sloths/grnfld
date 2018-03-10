@@ -22,6 +22,10 @@ angular.module('app')
     .when('/submit', {
       templateUrl: '/templates/submit.html',
       controller: 'SubmitCtrl'
+    }) 
+    .when('/userspage', {
+      templateUrl: '/templates/users.html',
+      controller: 'MainCtrl'
     })
     .otherwise({ redirectTo: '/' });
   $locationProvider.html5Mode(true);

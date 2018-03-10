@@ -11,6 +11,34 @@ angular.module('app')
     $scope.currentPage = 1;
     $scope.numPerPage = 6;
 
+    // get all users 
+    usersService.getAllUsers((users) => {
+      console.log('got users', users)
+      $scope.users = users
+      // watch user changes
+      $scope.$watch(function () {
+        $scope.watchedUsers = $scope.users;
+      });
+    })
+
+    $scope.handleUserClick = (clickedValue) => {
+      $scope.currentUser = $scope.watchedUsers[clickedValue];
+      console.log($scope.currentUser)
+
+      $scope.currentUserPosts = [];
+      let postIds = []; 
+
+      postsService.getUserPosts($scope.currentUser.user_id, (data) => {
+        data.data.forEach(post => {
+          if(!postIds.includes(post.post_id)) {
+            postIds.push(post.post_id);
+            $scope.currentUserPosts.push(post);
+          }
+        })
+        console.log('Current user posts', $scope.currentUserPosts)
+      })
+    };
+
     //get all posts on page load
     postsService.getAll((posts, postVotes, featuredPost) => {
       $scope.posts = posts;
