@@ -28,6 +28,7 @@ const getPostVotes = () => {
 
 const getFeaturedPost = async () => {
   let maxVotes = await knex('posts').max('votes').select();
+  console.log('------------->', maxVotes)
   return knex('posts').select().where('votes', maxVotes[0]['max(`votes`)'] || 0);
 }
 
