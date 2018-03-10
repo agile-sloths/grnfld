@@ -13,4 +13,20 @@ angular.module('app')
             console.log(err)
         })
     }
+
+    this.spendCoin = async (userId) => {
+        return await $http.delete(`/slot?${userId}`)
+    }
+
+    this.coinPrize = (userId) => {
+        $http.post('/slot', {
+            params: {
+                userId: $rootScope.userId
+            }
+        }).then(function(response) {
+
+        }).catch(function(err) {
+            console.log(err)
+        })
+    }
 });
