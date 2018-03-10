@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('TypeaheadCtrl', function($scope, $http, coinsService, $rootScope) {
+  .controller('TypeaheadCtrl', function ($scope, $http, coinsService, $rootScope) {
     $scope.gift = {
       username: '',
       amount: ''
@@ -24,25 +24,25 @@ angular.module('app')
 
     $scope.userData = [];
 
-    $scope.getUsers = function(val) {
-        return $http.get('/users', {
-          params: {
-            username: val,
-            sensor: false
-          }
-        }).then(function(response){
-          return response.data.map(function(item){
-            $scope.userData.push(item.username);
-            return $scope.userData
-          });
-        }).catch(function(err) {
-          console.log(err)
+    $scope.getUsers = function (val) {
+      return $http.get('/users', {
+        params: {
+          username: val,
+          sensor: false
+        }
+      }).then(function (response) {
+        return response.data.map(function (item) {
+          $scope.userData.push(item.username);
+          return $scope.userData
         });
-      };
+      }).catch(function (err) {
+        console.log(err)
+      });
+    };
 
     $scope.getUsers();
 
-    $scope.submitGift = function() {
+    $scope.submitGift = function () {
       if ($rootScope.hackcoin < $scope.gift.amount) {
         console.log(`You don't have enough coins to give that amount!`)
       } else {
@@ -53,7 +53,7 @@ angular.module('app')
         $scope.gift.amount = '';
       }
     }
-    
+
     $scope.getRandomSlotValue = async () => {
       $('#slot-alert').hide();
       $('#slotwon-alert').hide();
@@ -74,4 +74,4 @@ angular.module('app')
         }
       }
     }
-});
+  });
