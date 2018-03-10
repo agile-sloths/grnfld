@@ -74,7 +74,7 @@ angular.module('app')
           $('#slotwon-alert').toggle("slide", "left", "slow").effect('shake', 'slow');
           setTimeout(function() {
             $('#spin').removeClass("disabled");
-          }, 1000); 
+          }, 1700); 
           $rootScope.hackcoin = $rootScope.hackcoin + 10;
           coinsService.coinPrize($rootScope.userId);
           window.localStorage.hackcoin = $rootScope.hackcoin;
