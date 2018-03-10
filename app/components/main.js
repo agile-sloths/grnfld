@@ -62,6 +62,7 @@ angular.module('app')
 
       $scope.assignVoters($scope.featuredPost);
 
+      $scope.selectLanguage(); // initialize filter based on language
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
         //filter posts by page number
@@ -73,7 +74,6 @@ angular.module('app')
         $scope.filteredPosts.forEach(post => { // for each visible post,
           $scope.assignVoters(post);
         })
-        $scope.selectLanguage(); // initialize filter based on language
       });
     });
   };
