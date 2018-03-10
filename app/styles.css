@@ -164,7 +164,7 @@ input[name=username] {
 .users-container{
 	margin-top: 150px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
 }
@@ -172,8 +172,8 @@ input[name=username] {
 .user-container {
   grid-column: 1 / 1;
   border: 1px solid black;
-/*  min-height: 70px;
-  min-width:  20px;*/
+  min-height: 70px;
+  min-width:  70px;
   padding: 5px;
   background: #B58900;
   color: white;
@@ -210,7 +210,7 @@ input[name=username] {
 }
 
 .default-user-image {
-	height: 70px;
+	height: 100px;
 	width: 100px;
 	display: block;
 	margin-top: 10px;
