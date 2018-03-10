@@ -93,7 +93,7 @@ app.post('/createPost', isLoggedIn, async (req, res) => {
 app.post('/upvotePost', isLoggedIn, async (req, res) => {
   try {
     let upvote = await db.upvotePost(req.body);
-    upvote ? res.status(201).end() : null;
+    upvote ? res.status(201).end() : res.status(205).end();
   } catch (err) {
     console.log(err);
   }
@@ -103,7 +103,7 @@ app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
   let query = url.parse(req.url).query.split('/');
   try {
     let downvote = await db.downvotePost(query[0], query[1], query[2]);
-    downvote ? res.status(204).end() : null;
+    downvote ? res.status(204).end() : res.status(205).end();
   } catch (err) {
     console.log(err);
   }

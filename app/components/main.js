@@ -46,8 +46,11 @@ angular.module('app')
       }, {
         id: 7,
         label: 'Ruby',
+      }, {
+        id: 8,
+        label: 'Other',
       }];
-      $scope.selectedLanguage = $scope.languages[0]; // default to all languages
+      $scope.selectedLanguage = $scope.languages[0] || 'All'; // default to all languages
 
       $scope.$watch(function() {
         return +$rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
@@ -86,12 +89,10 @@ angular.module('app')
   $scope.handlePostClick = (clickedValue) => {
       $('#like-alert').hide();
       $('#delete-alert').hide();
-      console.log('heres clicked',clickedValue);
       clickedValue === 'featured' ? $scope.currentPost = $scope.featuredPost :
       $scope.currentPost = $scope.filteredPosts[clickedValue];
       //get all comments from clicked post
       commentsService.getComments($scope.currentPost.post_id, (data) => {
-        console.log('comments:',data);
         $scope.comments = data;
         $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
         $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
@@ -153,18 +154,20 @@ angular.module('app')
   };
 
   $scope.assignVoters = (post) => {
-    post.voters = {}; // create voters object
-    if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
-      for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
-        post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
+    if (post) {
+      post.voters = {}; // create voters object
+      if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
+        for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
+          post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
+        }
       }
-    }
-    if ($rootScope.userId) {
-      if (post.voters.hasOwnProperty($rootScope.userId)) {
-        if (post.voters[$rootScope.userId] === 0) {
-          post.votedOn = 'down';
-        } else {
-          post.votedOn = 'up';
+      if ($rootScope.userId) {
+        if (post.voters.hasOwnProperty($rootScope.userId)) {
+          if (post.voters[$rootScope.userId] === 0) {
+            post.votedOn = 'down';
+          } else {
+            post.votedOn = 'up';
+          }
         }
       }
     }

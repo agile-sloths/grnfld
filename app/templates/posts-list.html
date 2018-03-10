@@ -1,45 +1,53 @@
 <div>
     <div class="list-group">
         <input ng-model="searchInput" type="search" class="form-control search" placeholder="Search for...">
-        <h4>Select Language:</h4><select ng-model="selectedLanguage" ng-options="language as language.label for language in languages" ng-change="selectLanguage()"></select>
+        <h4>Select Language:</h4>
+        <select ng-model="selectedLanguage" ng-options="language as language.label for language in languages"
+            ng-change="selectLanguage()"></select>
         <button ng-click="refresh()" type="button" class="btn btn-primary btn-sm pull-right">Refresh</button>
         <button ng-click="toggleStyle()" type="button" id="styletoggle" class="btn btn-space btn-primary btn-sm pull-right">Light Mode</button>
         <div ng-if="searchInput.length === 0 || searchInput.length === undefined">
             <h3 class="">Recent posts:</h3>
         </div>
         <div ng-if="searchInput.length > 0">
-            <h3 class="" >Posts related to {{ searchInput }}:</h3>
+            <h3 class="">Posts related to {{ searchInput }}:</h3>
         </div>
-        <div class="featured" ng-click="handlePostClick('featured')" data-toggle="modal" data-target="#myModal"><h3>Featured Post:</h3>
-          <div>
+        <div class="featured" ng-click="handlePostClick('featured')" data-toggle="modal" data-target="#myModal">
+            <h3>Featured Post:</h3>
+            <div>
 
-          </div>
-          <div class="d-flex w-100 justify-content-betweenvlist-group-item list-group-item-action flex-column align-items-start">
-              <h5 class="mb-1">
-                  <strong>{{featuredPost.title}}</strong>
-              </h5>
-              <small style="display: block; text-align: center;">
-                <div style="float: left;margin: -4px 20px 0 0;">
-                  <i class="glyphicon glyphicon-chevron-up" ng-class="{'upvote': featuredPost.votedOn === 'up'}" ng-click="upvotePost($root.userId, featuredPost.post_id, featuredPost.user_id, 'featured'); $event.stopPropagation()"></i>
-                  <h4 style="margin: 3px 0 5px -1px">{{featuredPost.votes}}</h4>
-                  <i class="glyphicon glyphicon-chevron-down" ng-class="{'downvote': featuredPost.votedOn === 'down'}" ng-click="downvotePost($root.userId, featuredPost.post_id, featuredPost.user_id, 'featured'); $event.stopPropagation()"></i>
-                </div>
+            </div>
+            <div class="d-flex w-100 justify-content-betweenvlist-group-item list-group-item-action flex-column align-items-start">
+                <h5 class="mb-1">
+                    <strong>{{featuredPost.title}}</strong>
+                </h5>
+                <small style="display: block; text-align: center;">
+                    <div style="float: left;margin: -4px 20px 0 0;">
+                        <i class="glyphicon glyphicon-chevron-up" ng-class="{'upvote': featuredPost.votedOn === 'up'}" ng-click="upvotePost($root.userId, featuredPost.post_id, featuredPost.user_id, 'featured'); $event.stopPropagation()"></i>
+                        <h4 style="margin: 3px 0 5px -1px">{{featuredPost.votes}}</h4>
+                        <i class="glyphicon glyphicon-chevron-down" ng-class="{'downvote': featuredPost.votedOn === 'down'}" ng-click="downvotePost($root.userId, featuredPost.post_id, featuredPost.user_id, 'featured'); $event.stopPropagation()"></i>
+                    </div>
 
-              </small>
+                </small>
 
-              <small>
-                  <strong>{{featuredPost.username}}</strong>
-              </small>
-          </div>
-          <p class="mb-1">{{featuredPost.summary}}</p>
-          <small>{{featuredPost.created_at | date:'medium'}}, <i ng-click="selectLanguage(featuredPost.language); $event.stopPropagation()">{{featuredPost.language}}</i></small>
 
-          <h5><strong class="text-warning" ng-show="featuredPost.solution_id !== null">Solved!</strong></h5>
+                <small>
+                    <strong>{{featuredPost.username}}</strong>
+                </small>
+            </div>
+            <p class="mb-1">{{featuredPost.summary}}</p>
+            <small>{{featuredPost.created_at | date:'medium'}},
+                <i ng-click="selectLanguage(featuredPost.language); $event.stopPropagation()">{{featuredPost.language}}</i>
+            </small>
+
+            <h5><strong class="text-warning" ng-show="featuredPost.solution_id !== null">Solved!</strong></h5>
+            
           <button ng-show="featuredPost.user_id === $root.userId" ng-click="deletePost(featuredPost.post_id,$index); $event.stopPropagation()" type="button" class="btn btn-warning btn-sm">Delete Post</button>
+
         </div>
         <div class="posts">
-            <a ng-repeat="post in filteredPosts | filter:searchInput track by $index" ng-click="handlePostClick($index)" post="post" class="list-group-item list-group-item-action flex-column align-items-start"
-                data-toggle="modal" data-target="#myModal">
+            <a ng-repeat="post in filteredPosts | filter:searchInput track by $index" ng-click="handlePostClick($index)" post="post"
+                class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="modal" data-target="#myModal">
                 <div>
 
                 </div>
@@ -48,11 +56,11 @@
                         <strong>{{post.title}}</strong>
                     </h5>
                     <small style="display: block; text-align: center;">
-                      <div style="float: left;margin: -4px 20px 0 0;">
-                        <i class="glyphicon glyphicon-chevron-up" ng-class="{'upvote': post.votedOn === 'up'}" ng-click="upvotePost($root.userId, post.post_id, post.user_id, $index); $event.stopPropagation()"></i>
-                        <h4 style="margin: 3px 0 5px -1px">{{post.votes}}</h4>
-                        <i class="glyphicon glyphicon-chevron-down" ng-class="{'downvote': post.votedOn === 'down'}" ng-click="downvotePost($root.userId, post.post_id, post.user_id, $index); $event.stopPropagation()"></i>
-                      </div>
+                        <div style="float: left;margin: -4px 20px 0 0;">
+                            <i class="glyphicon glyphicon-chevron-up" ng-class="{'upvote': post.votedOn === 'up'}" ng-click="upvotePost($root.userId, post.post_id, post.user_id, $index); $event.stopPropagation()"></i>
+                            <h4 style="margin: 3px 0 5px -1px">{{post.votes}}</h4>
+                            <i class="glyphicon glyphicon-chevron-down" ng-class="{'downvote': post.votedOn === 'down'}" ng-click="downvotePost($root.userId, post.post_id, post.user_id, $index); $event.stopPropagation()"></i>
+                        </div>
 
                     </small>
 
@@ -61,11 +69,16 @@
                     </small>
                 </div>
                 <p class="mb-1">{{post.summary}}</p>
-                <small>{{post.created_at | date:'medium'}}, <i ng-click="selectLanguage(post.language); $event.stopPropagation()">{{post.language}}</i></small>
+                <small>{{post.created_at | date:'medium'}},
+                    <i ng-click="selectLanguage(post.language); $event.stopPropagation()">{{post.language}}</i>
+                </small>
 
-                <h3><strong class="text-warning" ng-show="post.solution_id !== null">Solved!</strong></h3>
+                <h3>
+                    <strong class="text-warning" ng-show="post.solution_id !== null">Solved!</strong>
+                </h3>
 
-                <button ng-show="post.user_id === $root.userId" ng-click="deletePost(post.post_id,$index); $event.stopPropagation()" type="button" class="btn btn-warning btn-sm">Delete Post</button>
+                <button ng-show="post.user_id === $root.userId" ng-click="deletePost(post.post_id,$index); $event.stopPropagation()" type="button"
+                    class="btn btn-warning btn-sm">Delete Post</button>
             </a>
         </div>
         <div id="myModal" class="modal fade" role="dialog">
@@ -85,9 +98,9 @@
                     </div>
                     <div class="modal-footer">
 
-                            <div id="like-alert" class="alert alert-success alert-dismissible fade in" style="display:none">
-                                You have {{$root.hackcoin}} hackcoins left!
-                            </div>
+                        <div id="like-alert" class="alert alert-success alert-dismissible fade in" style="display:none">
+                            You have {{$root.hackcoin}} hackcoins left!
+                        </div>
 
 
                         <div ng-repeat="comment in comments track by $index" class="comments-list" ng-class="{'solution': comment.solution}">
@@ -107,7 +120,7 @@
                                         <div class="panel-heading">
                                             <strong>{{comment.username}}</strong>
                                             <span class="text-muted">commented at {{comment.created_at | date:'short'}} </span>
-                                            <span ng-show="currentPost.solution_id === comment.comment_id">  Best solution!</span>
+                                            <span ng-show="currentPost.solution_id === comment.comment_id"> Best solution!</span>
                                             <span ng-class="{'glyphicon glyphicon-star': currentPost.solution_id === comment.comment_id}" aria-hidden="true"></span>
                                         </div>
                                         <div class="panel-body">
@@ -116,6 +129,7 @@
 
 
                                         <!-- Multiple Like Modal -->
+<<<<<<< HEAD
 <div class="modal fade" id="like-modal" role="dialog" ng-controller="MainCtrl">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -180,6 +194,76 @@
     </div>
   </div>
 </div>
+=======
+                                        <div class="modal fade" id="like-modal" role="dialog" ng-controller="MainCtrl">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">
+                                                            <h3 style="text-align: center; color: white;">Submit Multiple Likes!</h3>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div style="text-align: center; color: white;">Please choose # of hackcoins to submit for *likes*! </div>
+                                                    </div>
+                                                    <div id="likemultiple-error" class="alert alert-danger alert-dismissible fade in" style="display:none;">
+                                                        <a href="#" class="close" aria-label="close">&times;</a>
+                                                        <strong>Error!</strong> Please specify a valid number and try again.
+                                                    </div>
+                                                    <form style="text-align: center;" name="likeForm" ng-submit="submit(likeForm.$valid)" novalidate>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="input">Number of hackcoins to use: </label>
+                                                                <input type="number" name="input" ng-model="like.input" required step="1" min="1" max="{{$root.hackcoin}}" required>
+                                                                <p ng-show="likeForm.input.$error.min || likeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1
+                                                                    and {{$root.hackcoin}}. </p>
+                                                                <p ng-show="likeForm.input.$error.required" class="help-block">A number is required.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-success" ng-click="likeForm.$setPristine()" ng-disabled="likeForm.$invalid">Submit Likes</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Multiple Unike Modal -->
+                                        <div class="modal fade" id="unlike-modal" role="dialog" ng-controller="MainCtrl">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">
+                                                            <h3 style="text-align: center; color: white;">Submit Multiple Unlikes!</h3>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div style="text-align: center; color: white;">Please choose # of hackcoins to submit for *unlikes*! </div>
+                                                    </div>
+                                                    <div id="unlikemultiple-error" class="alert alert-danger alert-dismissible fade in" style="display:none;">
+                                                        <a href="#" class="close" aria-label="close">&times;</a>
+                                                        <strong>Error!</strong> Please specify a valid number and try again.
+                                                    </div>
+                                                    <form style="text-align: center;" name="unlikeForm" ng-submit="submitUnlikes(unlikeForm.$valid)" novalidate>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label for="input">Number of hackcoins to use: </label>
+                                                                <input type="number" name="input" ng-model="unlike.input" required step="1" min="1" max="{{max}}" required>
+                                                                <p ng-show="unlikeForm.input.$error.min || unlikeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1
+                                                                    and {{max}}.</p>
+                                                                <p ng-show="unlikeForm.input.$error.required" class="help-block">A number is required.</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-success" ng-click="unlikeForm.$setPristine()" ng-disabled="unlikeForm.$invalid">Submit Unlikes</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+>>>>>>> 706cb59f8820bd9b8761ee4abab869dc6303f232
 
 
 
@@ -187,10 +271,11 @@
                                         <p style="margin-right: 2px;">
                                             <small>
 
-                                                <a ng-class="{'disabled': $root.hackcoin <= 0 || !$root.userId || comment.user_id === $root.userId}" ng-click="likeComment(comment.comment_id, comment.user_id, $index)" ng-dblclick="multipleLike(comment.comment_id, comment.user_id, $index)"
-                                                    href="">Like</a> -
+                                                <a ng-class="{'disabled': $root.hackcoin <= 0 || !$root.userId || comment.user_id === $root.userId}" ng-click="likeComment(comment.comment_id, comment.user_id, $index)"
+                                                    ng-dblclick="multipleLike(comment.comment_id, comment.user_id, $index)" href="">Like</a> -
 
-                                                <a ng-class="{'disabled': !comment.voters.hasOwnProperty($root.userId) || comment.voters[$root.userId] < 1 || !$root.userId || comment.user_id === $root.userId}" ng-click="unlikeComment(comment.comment_id, comment.user_id, $index)" ng-dblclick="multipleUnlike(comment.comment_id, comment.user_id, $index)"
+                                                <a ng-class="{'disabled': !comment.voters.hasOwnProperty($root.userId) || comment.voters[$root.userId] < 1 || !$root.userId || comment.user_id === $root.userId}"
+                                                    ng-click="unlikeComment(comment.comment_id, comment.user_id, $index)" ng-dblclick="multipleUnlike(comment.comment_id, comment.user_id, $index)"
                                                     href="">Unlike</a> -
 
                                                 <a ng-show="currentPost.user_id === $root.userId && currentPost.solution_id !== comment.comment_id" ng-click="selectSolution(comment)"
