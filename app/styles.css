@@ -172,8 +172,8 @@ input[name=username] {
 .user-container {
   grid-column: 1 / 1;
   border: 1px solid black;
-  min-height: 300px;
-  min-width:  250px;
+  min-height: 70px;
+  min-width:  70px;
   padding: 5px;
   background: #B58900;
   color: white;
@@ -182,7 +182,11 @@ input[name=username] {
 
 .inner-container {
 	/*background: #002B36;*/
-	padding-top: 20px;
+	/*padding-top: 20px;*/
+}
+
+.currentUser-container {
+	padding: 20px;
 }
 
 .user-buttons {
@@ -190,15 +194,15 @@ input[name=username] {
 	margin-bottom: 30px;
 }
 
-.username a {
-	text-decoration: none;
-	color: white;
-	font-size: 16px;
-	font-weight: bold;
+.username {
+	text-align: center;
 }
 
 .username a {
+	text-decoration: none;
 	color: white;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .username a:hover {
@@ -206,8 +210,17 @@ input[name=username] {
 }
 
 .default-user-image {
-	height: 100px;
+	height: 70px;
 	width: 100px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
+.default-currentUser-image {
+	height: 200px;
+	width: 200px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;

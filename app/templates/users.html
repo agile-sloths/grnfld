@@ -5,67 +5,37 @@
     </div>
     <div class="list-group">
         <div class="users-container">
-            <div ng-repeat="user in users track by $index" ng-controller="UsersCtrl" ng-click="handleuserClick($index)" user="user"
-                data-toggle="modal" data-target="#userModal">
+            <div ng-repeat="user in watchedUsers track by $index" ng-controller="UsersCtrl" ng-click="handleUserClick($index)" user="user"
+                data-toggle="modal" data-target="#user-modal">
                 <div class="user-container">
                       <p class="github"><img class="default-user-image" src="http://www.hrzone.com/sites/all/themes/pp/img/default-user.png" alt=""></p> 
                     <div class="inner-container">
            <!--        <div ng-if="user.github_handle">
                       <h5 class=""><img src="{{ getGithubPicture(user.github_handle) }}" alt=""></h5> 
                   </div> -->
-                      <p ng-if="user.username" class="username"><a href="#">{{ user.username }}</a> has <strong>{{ user.hackcoin }}</strong> hackcoins</p>
-                      <p ng-if="user.location" class="location"><strong>Location:</strong> {{ user.location }}</p>
-                      <p ng-if="!user.location" class="location"><strong>Location:</strong> Somewhere out there</p>
-                      <p ng-if="user.languages" class="favorites"><strong>Favorite Languages:</strong> {{ user.languages }}</p>
-                      <p ng-if="!user.languages" class="favorites"><strong>Favorite Languages:</strong> none specified</p>
+                      <p ng-if="user.username" class="username">{{ user.username }}</p>
                     </div>
                 </div>
              </div>
         </div>
-        <!-- <div id="userModal" class="modal fade" role="dialog">
-            <div class="modal-dialog"> -->
-
-                <!-- Modal content-->
-    <!--             <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">{{currentuser.title}}</h4>
-        </div>
-        <div class="modal-body">
-            <div hljs hljs-source="currentuser.code"></div>
-        </div>
-        <div class="modal-body">
-            <p>{{currentuser.summary}}</p>
-        </div>
-        <div class="modal-footer">
-    
-                <div id="like-alert" class="alert alert-success alert-dismissible fade in" style="display:none">
-                    You have {{$root.hackcoin}} hackcoins left!
-                </div>
-    
-    
-            <div ng-repeat="comment in comments track by $index" class="comments-list" ng-class="{'solution': comment.solution}">
-    
-                <div id="like-error" class="alert alert-danger alert-dismissible fade in" style="display:none">
-                    <strong>No more Hackcoins!</strong> Please wait for your coins to refresh
-                </div>
-    
-    
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <strong>{{comment.username}}</strong>
-                                <span class="text-muted">commented at {{comment.created_at | date:'short'}} </span>
-                                <span ng-show="currentuser.solution_id === comment.comment_id">  Best solution!</span>
-                                <span ng-class="{'glyphicon glyphicon-star': currentuser.solution_id === comment.comment_id}" aria-hidden="true"></span>
-                            </div>
-                            <div class="panel-body">
-                                <p ng-bind-html="comment.message"></p>
-                            </div>
-    
-                
-                </div>
-            </div> -->
+        
+        <!-- user profile modal -->
+        <div id="user-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="currentUser-container">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="modal-body">
+                          <img class="default-currentUser-image" src="http://www.hrzone.com/sites/all/themes/pp/img/default-user.png" alt="">
+                          <h4><strong>{{ currentUser.username }}</strong> has <strong>{{ currentUser.hackcoin }}</strong> hackcoins</h4>
+                          <p ng-if="currentUser.location" class="location"><strong>Location:</strong> {{ currentUser.location }}</p>
+                          <p ng-if="!currentUser.location" class="location"><strong>Location:</strong> Somewhere out there</p>
+                          <p ng-if="currentUser.languages" class="favorites"><strong>Favorite Languages:</strong> {{ currentUser.languages }}</p>
+                          <p ng-if="!currentUser.languages" class="favorites"><strong>Favorite Languages:</strong> none specified</p>
+                        </div>
+                    </div> <!-- currentUserContainer div -->
+                </div> <!-- modal content div -->
+            </div>
+        </div> <!-- modal end -->
     </div>
 </div>

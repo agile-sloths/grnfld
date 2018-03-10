@@ -21,6 +21,18 @@ angular.module('app')
       });
     })
 
+    $scope.handleUserClick = (clickedValue) => {
+      $scope.currentUser = $scope.watchedUsers[clickedValue];
+      console.log($scope.currentUser)
+      //get all comments from clicked post
+      // commentsService.getComments($scope.currentPost.post_id, (data) => {
+      //   console.log('comments:',data);
+      //   $scope.comments = data;
+      //   $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
+      //   $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
+      // });
+    };
+
     //get all posts on page load
     postsService.getAll((posts, postVotes, featuredPost) => {
       $scope.posts = posts;
@@ -103,7 +115,6 @@ angular.module('app')
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
     });
-
   };
 
   //hacky way of refreshing the current view to get new posts
