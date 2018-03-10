@@ -162,6 +162,7 @@ angular.module('app')
     let res = await postsService.deletePost(postId);
     if (res.status === 204) {
       $scope.refresh();
+      $('#delete-modal').modal('toggle');
     }
   };
 
@@ -351,7 +352,7 @@ angular.module('app')
   $scope.multipleLike = (commentId, postUserId, index) => {
     if ($rootScope.hackcoin <= 0 && postUserId !== $rootScope.userId) {
       $('#like-error').show();
-    } else if(postUserId !== $rootScope.userId) {
+    } else if($rootScope.hackcoin > 0 && postUserId !== $rootScope.userId) {
       $scope.commentId = commentId;
       $scope.postUserId = postUserId;
       $scope.index = index;
