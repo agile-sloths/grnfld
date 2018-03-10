@@ -174,8 +174,8 @@ angular.module('app')
         }
       }
     }
-    $scope.filteredPosts = $scope.posts.filter(post => {
-      if (post) {
+    if ($scope.posts) {
+      $scope.filteredPosts = $scope.posts.filter(post => {
         if (post.post_id === $scope.featuredPost.post_id) {
           return;
         }
@@ -184,8 +184,8 @@ angular.module('app')
         } else {
           return post.language === $scope.selectedLanguage.label;
         }
-      }
-    });
+      });
+    }
   }
 
   $scope.selectSolution = (comment) => {
