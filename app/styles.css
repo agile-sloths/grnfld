@@ -120,6 +120,10 @@ i.downvote {
 	letter-spacing: 1px
 }
 
+.signup-margin {
+	margin-left: 10px;
+}
+
 /* hacky spacing fix */
 .navbar-brand {
 	margin-top: 10px;
@@ -133,6 +137,8 @@ i.downvote {
 /**** NAVBAR ****/
 /*  */
 
+
+/**** HACKCOINS ****/
 .hackcoins {
     border-radius: 100%;
     border-color:#002b36;
@@ -153,3 +159,100 @@ input[name=password] {
 input[name=username] {
   margin-left: 7px
 }
+/**** HACKCOINS ****/
+
+/**** USER PAGE ****/
+.users-container{
+	margin-top: 150px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.user-container {
+  grid-column: 1 / 1;
+  border: 1px solid black;
+  min-height: 70px;
+  min-width:  70px;
+  padding: 5px;
+  background: #B58900;
+  color: white;
+  border-radius: 5px;
+}
+
+.inner-container {
+	/*background: #002B36;*/
+	/*padding-top: 20px;*/
+}
+
+.currentUser-container {
+	padding: 20px;
+}
+
+.user-buttons {
+	margin-top: 100px;
+	margin-bottom: 30px;
+}
+
+.username {
+	text-align: center;
+}
+
+.username a {
+	text-decoration: none;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.username a:hover {
+	color: #36448A;
+}
+
+.default-user-image {
+	height: 100px;
+	width: 100px;
+	display: block;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
+.default-currentUser-image {
+	height: 225px;
+	width: 100px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	margin-top: 10px;
+}
+
+.user-questions {
+	border-bottom: 1px solid #B58900;
+	margin: 10px;
+}
+
+.user-questions-title {
+	/*font-size: 18px;*/
+	margin-top: 15px;
+}
+
+.post-title {
+	margin-bottom: 10px;
+}
+
+.currentUser-post-info {
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+
+.currentUser-username {
+	font-size: 30px;
+	text-align: center;
+}
+/**** USER PAGE ****/
+
+

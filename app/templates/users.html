@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="user-buttons">
+        <button ng-click="refresh()" type="button" class="btn btn-primary btn-sm pull-right">Refresh</button>
+        <button ng-click="toggleStyle()" type="button" id="styletoggle" class="btn btn-space btn-primary btn-sm pull-right">Light Mode</button>
+    </div>
+    <div class="list-group">
+        <div class="users-container">
+            <div ng-repeat="user in watchedUsers track by $index" ng-controller="UsersCtrl" ng-click="handleUserClick($index)" user="user"
+                data-toggle="modal" data-target="#user-modal">
+                <div class="user-container">
+                      <p class="github"><img class="default-user-image" src="http://www.hrzone.com/sites/all/themes/pp/img/default-user.png" alt=""></p> 
+                    <div class="inner-container">
+           <!--        <div ng-if="user.github_handle">
+                      <h5 class=""><img src="{{ getGithubPicture(user.github_handle) }}" alt=""></h5> 
+                  </div> -->
+                      <p ng-if="user.username" class="username">{{ user.username }}</p>
+                    </div>
+                </div>
+             </div>
+        </div>
+        
+        <!-- user profile modal -->
+        <div id="user-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="currentUser-container">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>        
+                        <div class="modal-body">
+                          <div class="currentUser-username"><strong>{{ currentUser.username }}</strong></div>
+                          <img class="default-currentUser-image" src="http://www.hrzone.com/sites/all/themes/pp/img/default-user.png" alt="">
+                          <div><strong>Hackcoins: </strong>{{ currentUser.hackcoin }}</div>
+                          <div ng-if="currentUser.location" class="location"><strong>Location:</strong> {{ currentUser.location }}</div>
+                          <div ng-if="!currentUser.location" class="location"><strong>Location:</strong> Somewhere out there</div>
+                          <div ng-if="currentUser.languages" class="favorites"><strong>Favorite Languages:</strong> {{ currentUser.languages }}</div>
+                          <div ng-if="!currentUser.languages" class="favorites"><strong>Favorite Languages:</strong> none specified</div>
+
+                          <div ng-if="currentUserPosts.length > 0">
+                          <div class="user-questions-title"><strong>Top Posts:</strong></div>
+                              <div ng-repeat="post in currentUserPosts track by $index">
+
+                                <div class="user-questions modal-body">
+                                    <div class="post-title"><strong>{{ post.title }}</strong></div>
+                                    <div class="currentUser-post-info">{{ post.votes}} votes | {{post.created_at | date:'short'}}</div>
+                                    <div hljs hljs-source="post.code"></div>
+                                    <div>{{ post.summary }}</div>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div> <!-- currentUserContainer div -->
+                </div> <!-- modal content div -->
+            </div>
+        </div> <!-- modal end -->
+    </div>
+</div>

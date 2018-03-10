@@ -42,13 +42,20 @@ const getComments = (postId) => {
     .orderBy('votes', 'desc');
 };
 
+const getUserPosts = (userId) => {
+  return knex.column(knex.raw('posts.*, users.username')).select()
+    .from(knex.raw('posts, users'))
+    .where(knex.raw(`posts.user_id = ${userId}`))
+    .orderBy('votes', 'desc');
+};
+
 const getVoters = (commentId) => {
   return knex.column(knex.raw('userscomments.user_id, userscomments.votes')).select().from('userscomments')
     .where(knex.raw(`comment_id = ${commentId}`));
 };
 
 const getUsers = async () => {
-  return await knex.column(knex.raw('username, user_id')).select().from('users');
+  return await knex.column(knex.raw('username, user_id, hackcoin, location, languages, github_handle')).select().from('users');
 }
 
 //using async/await
@@ -122,14 +129,14 @@ const checkCredentials = (username) => {
     .where(knex.raw(`LOWER(username) = LOWER('${username}')`));
 };
 
-const createUser = async (username, password) => {
+const createUser = async (req, username, password) => {
   const query = await knex.select().from('users')
     .where(knex.raw(`LOWER(username) = LOWER('${username}')`));
 
   if (query.length) {
     return 'already exists';
   } else {
-    return await knex('users').insert({ username: username, password: password});
+    return await knex('users').insert({ username: username, password: password, location: req.body.location, languages: req.body.languages, github_handle: req.body.github_handle });
   }
 };
 
@@ -237,5 +244,6 @@ module.exports = {
   deleteGiftedCoin,
   checkCoinByUsername,
   spendSlotCoin,
-  awardSlotCoins
+  awardSlotCoins,
+  getUserPosts
 };

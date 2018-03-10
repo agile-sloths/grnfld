@@ -37,14 +37,15 @@ module.exports = function(passport) {
   //LOCAL SIGNUP Strategy
   passport.use('local-signup', new LocalStrategy({
     usernameField: 'username',
-    passwordField: 'password'
+    passwordField: 'password',
+    passReqToCallback: true
   },
-    (username, password, cb) => {
+    (req, username, password, cb) => {
       bcrypt.hash(password, 10, async (err, hash) => {
         if (err) {
           cb(err, null);
         } else {
-          const data = await db.createUser(username, hash);
+          const data = await db.createUser(req, username, hash);
           if (data === 'already exists') {
             cb(data, null);
           } else {

@@ -17,6 +17,9 @@ CREATE TABLE users
   username VARCHAR(25) NOT NULL,
   password varchar(60) NOT NULL,
   hackcoin int NOT NULL DEFAULT 100,
+  location VARCHAR(60) NULL,
+  languages VARCHAR(60) NULL,
+  github_handle VARCHAR(100) NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (user_id)
 );
@@ -99,15 +102,15 @@ CREATE TABLE usersposts
 --
 -- ---
 
-insert into users
-  (username, password)
-VALUES
-  ('yaboi', '$2a$10$MCRlmB8bUswMTqKG.kURCu2pu8ipopli2LLaO5OODNokt44cpLZ56'),
-  ('Gepeto', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou'),
-  ('Zanbato', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou'),
-  ('Colonel', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou'),
-  ('Hipster', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou');
 
+insert into users
+  (username, password, location, languages)
+VALUES
+  ('yaboi', '$2a$10$MCRlmB8bUswMTqKG.kURCu2pu8ipopli2LLaO5OODNokt44cpLZ56', 'Austin, Texas', 'Ruby, R, Python'),
+  ('Gepeto', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou', 'Dallas, Texas', 'JavaScript, Python'),
+  ('Zanbato', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou', 'San Antonio, Texas', 'JavaScript, R, Python'),
+  ('Colonel', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou', 'Denver, Colorado', 'JavaScript, Ruby'),
+  ('Hipster', '$2a$10$pKgnmkFU5W7D70ekyEurruql72IonF7c5MiPlfnHrc9ywjrAF89Ou', 'Boulder, Colorado', 'C++, Ruby, R, Python');
 insert into posts
   (user_id, title, code, summary, language, solution_id)
 VALUES
@@ -125,6 +128,5 @@ VALUES
   (3, 1, 'sword = shield', 525),
   (4, 1, 'Pulls out rocket launcher', 15),
   (5, 1, 'I used those before they were cool', 0);
-
 
 -- mysql -u root < schemamysql.sql
