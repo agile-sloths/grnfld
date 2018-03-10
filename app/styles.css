@@ -213,6 +213,10 @@ input[name=username] {
 .default-user-image {
 	height: 100px;
 	width: 100px;
+	max-height: 100px;
+	max-width: 100px;
+	min-height: 100px;
+	min-width: 100px;
 	display: block;
 	margin-top: 10px;
 	margin-left: auto;
@@ -254,5 +258,3 @@ input[name=username] {
 	text-align: center;
 }
 /**** USER PAGE ****/
-
-
