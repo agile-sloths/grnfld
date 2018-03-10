@@ -15,7 +15,7 @@ CREATE TABLE users (
   user_id serial PRIMARY KEY,
   username VARCHAR(25) NOT NULL,
   password VARCHAR(60) NOT NULL,
-  hackcoin INTEGER NOT NULL DEFAULT 5,
+  hackcoin INTEGER NOT NULL DEFAULT 100,
   created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 
@@ -60,8 +60,8 @@ CREATE TABLE comments (
 --
 -- ---
 
-CREATE TABLE userscomments
-( id serial PRIMARY KEY,
+CREATE TABLE userscomments (
+  id serial PRIMARY KEY,
   user_id INTEGER REFERENCES users (user_id) NOT NULL,
   comment_id INTEGER REFERENCES comments (comment_id) NOT NULL,
   votes INTEGER DEFAULT 0
