@@ -9,7 +9,7 @@ angular.module('app')
     $rootScope.hackcoin = +window.localStorage.hackcoin || null;
     $rootScope.sessionId = window.localStorage.sessionID || null;
     $scope.currentPage = 1;
-    $scope.numPerPage = 5;
+    $scope.numPerPage = 6;
 
     //get all posts on page load
     postsService.getAll((posts, postVotes, featuredPost) => {
@@ -62,18 +62,20 @@ angular.module('app')
 
       $scope.assignVoters($scope.featuredPost);
 
+      $scope.selectLanguage(); // initialize filter based on language
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
         //filter posts by page number
         let begin = (($scope.currentPage - 1) * $scope.numPerPage);
         let end = begin + $scope.numPerPage;
 
-        $scope.filteredPosts = $scope.posts.slice(begin, end);
+        $scope.filteredPosts = $scope.posts.slice(begin, end).filter(post => {
+          return post.post_id !== $scope.featuredPost.post_id;
+        });
 
         $scope.filteredPosts.forEach(post => { // for each visible post,
           $scope.assignVoters(post);
         })
-        $scope.selectLanguage(); // initialize filter based on language
       });
     });
   };
