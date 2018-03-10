@@ -47,7 +47,7 @@ angular.module('app')
         id: 7,
         label: 'Ruby',
       }];
-      $scope.selectedLanguage = $scope.languages[0]; // default to all languages
+      $scope.selectedLanguage = $scope.languages[0] || 'All'; // default to all languages
 
       $scope.$watch(function() {
         return +$rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
