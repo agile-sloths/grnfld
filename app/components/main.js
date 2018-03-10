@@ -9,7 +9,7 @@ angular.module('app')
     $rootScope.hackcoin = +window.localStorage.hackcoin || null;
     $rootScope.sessionId = window.localStorage.sessionID || null;
     $scope.currentPage = 1;
-    $scope.numPerPage = 5;
+    $scope.numPerPage = 6;
 
     // get all users 
     usersService.getAllUsers((users) => {
@@ -74,8 +74,11 @@ angular.module('app')
       }, {
         id: 7,
         label: 'Ruby',
+      }, {
+        id: 8,
+        label: 'Other',
       }];
-      $scope.selectedLanguage = $scope.languages[0]; // default to all languages
+      $scope.selectedLanguage = $scope.languages[0] || 'All'; // default to all languages
 
       $scope.$watch(function() {
         return +$rootScope.userId; // watch user id so that whenever login/signup/logout happens, renrender
@@ -90,18 +93,20 @@ angular.module('app')
 
       $scope.assignVoters($scope.featuredPost);
 
+      $scope.selectLanguage(); // initialize filter based on language
       //pagination
       $scope.$watch('currentPage + numPerPage', function () {
         //filter posts by page number
         let begin = (($scope.currentPage - 1) * $scope.numPerPage);
         let end = begin + $scope.numPerPage;
 
-        $scope.filteredPosts = $scope.posts.slice(begin, end);
+        $scope.filteredPosts = $scope.posts.slice(begin, end).filter(post => {
+          return post.post_id !== $scope.featuredPost.post_id;
+        });
 
         $scope.filteredPosts.forEach(post => { // for each visible post,
           $scope.assignVoters(post);
         })
-        $scope.selectLanguage(); // initialize filter based on language
       });
     });
   };
@@ -110,17 +115,16 @@ angular.module('app')
   $scope.init();
 
   $scope.handlePostClick = (clickedValue) => {
-    $('#like-alert').hide();
-    $('#delete-alert').hide();
-    clickedValue === 'featured' ? $scope.currentPost = $scope.featuredPost :
-    $scope.currentPost = $scope.filteredPosts[clickedValue];
-    //get all comments from clicked post
-    commentsService.getComments($scope.currentPost.post_id, (data) => {
-      console.log('comments:',data);
-      $scope.comments = data;
-      $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
-      $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
-    });
+      $('#like-alert').hide();
+      $('#delete-alert').hide();
+      clickedValue === 'featured' ? $scope.currentPost = $scope.featuredPost :
+      $scope.currentPost = $scope.filteredPosts[clickedValue];
+      //get all comments from clicked post
+      commentsService.getComments($scope.currentPost.post_id, (data) => {
+        $scope.comments = data;
+        $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
+        $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
+      });
   };
 
   //hacky way of refreshing the current view to get new posts
@@ -153,8 +157,12 @@ angular.module('app')
     }
   };
 
-  $scope.deletePost = async (postId) => {
-    console.log('post deleted yay!',postId);
+
+  $scope.deletePost = async (postId, index) => {
+    let res = await postsService.deletePost(postId);
+    if (res.status === 204) {
+      $scope.refresh();
+    }
   };
 
   $scope.message = '';
@@ -174,18 +182,20 @@ angular.module('app')
   };
 
   $scope.assignVoters = (post) => {
-    post.voters = {}; // create voters object
-    if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
-      for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
-        post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
+    if (post) {
+      post.voters = {}; // create voters object
+      if ($scope.postVotes.hasOwnProperty(post.post_id)) { // check if post exists in all retrieved post vote pairs
+        for (let voter in $scope.postVotes[post.post_id]) { // if so, select each voter in that pair
+          post.voters[voter] = $scope.postVotes[post.post_id][voter]; // and set it to the post object
+        }
       }
-    }
-    if ($rootScope.userId) {
-      if (post.voters.hasOwnProperty($rootScope.userId)) {
-        if (post.voters[$rootScope.userId] === 0) {
-          post.votedOn = 'down';
-        } else {
-          post.votedOn = 'up';
+      if ($rootScope.userId) {
+        if (post.voters.hasOwnProperty($rootScope.userId)) {
+          if (post.voters[$rootScope.userId] === 0) {
+            post.votedOn = 'down';
+          } else {
+            post.votedOn = 'up';
+          }
         }
       }
     }
@@ -230,9 +240,9 @@ angular.module('app')
   $scope.likeComment = async (commentId, postUserId, index) => {
     //need commmentId, usernameId(rootscope), how many coins to use (ng-click to send one and ng-double click to send more?)
     //TODO add modal for ng-doubleclick
-    if ($rootScope.hackcoin <= 0) {
+    if ($rootScope.hackcoin <= 0 && postUserId !== $rootScope.userId) {
       $('#like-error').show();
-    } else {
+    } else if (postUserId !== $rootScope.userId) {
       let res = await commentsService.likeComment({
         commentId: commentId,
         postUserId: postUserId,
@@ -256,7 +266,7 @@ angular.module('app')
   };
 
   $scope.unlikeComment = async (commentId, postUserId, index) => {
-    if ($scope.comments[index].voters[$rootScope.userId] > 0) {
+    if ($scope.comments[index].voters[$rootScope.userId] > 0 && postUserId !== $rootScope.userId) {
       let res = await commentsService.unlikeComment($rootScope.userId, commentId, postUserId, 1);
       if (res.status === 204) {
         $scope.$apply(() => {
@@ -325,7 +335,7 @@ angular.module('app')
 
 
   $scope.multipleUnlike = (commentId, postUserId, index) => {
-    if ($scope.comments[index].voters[$rootScope.userId] > 1) {
+    if ($scope.comments[index].voters[$rootScope.userId] > 1 && postUserId !== $rootScope.userId) {
       $scope.max = $scope.comments[index].voters[$rootScope.userId] - 1;
       $scope.unlikeCommentId = commentId;
       $scope.unlikePostUserId = postUserId;
@@ -339,9 +349,9 @@ angular.module('app')
   };
 
   $scope.multipleLike = (commentId, postUserId, index) => {
-    if ($rootScope.hackcoin <= 0) {
+    if ($rootScope.hackcoin <= 0 && postUserId !== $rootScope.userId) {
       $('#like-error').show();
-    } else {
+    } else if(postUserId !== $rootScope.userId) {
       $scope.commentId = commentId;
       $scope.postUserId = postUserId;
       $scope.index = index;

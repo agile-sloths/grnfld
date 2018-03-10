@@ -18,7 +18,7 @@ angular.module('app')
       .catch(function (err) {
         console.log(err);
       });
-  }
+  };
 
   this.downvotePost = function (userId, postId, postUserId, callback) {
     $http.delete(`/downvotePost?${userId}/${postId}/${postUserId}`)
@@ -28,7 +28,11 @@ angular.module('app')
       .catch(function (err) {
         console.log(err);
       });
-  }
+  };
+
+  this.deletePost = async (postId) => {
+    return await $http.delete(`/post?${postId}`);
+  };
 
   this.submitNewPost = function (newPostObj, callback) {
     $http.post('/createPost', newPostObj)
