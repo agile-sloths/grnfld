@@ -6,6 +6,7 @@
             ng-change="selectLanguage()"></select>
         <button ng-click="refresh()" type="button" class="btn btn-primary btn-sm pull-right">Refresh</button>
         <button ng-click="toggleStyle()" type="button" id="styletoggle" class="btn btn-space btn-primary btn-sm pull-right">Light Mode</button>
+        <a href="/submit"><button type="button" ng-show="$root.sessionId" class="btn btn-space btn-success btn-sm pull-right">Ask Question</button></a>
         <div ng-if="searchInput.length === 0 || searchInput.length === undefined">
             <h3 class="">Recent posts:</h3>
         </div>
