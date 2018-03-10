@@ -33,7 +33,7 @@ CREATE TABLE posts (
   summary VARCHAR(8000) DEFAULT NULL,
   anon boolean DEFAULT FALSE,
   closed boolean DEFAULT FALSE,
-  language VARCHAR(120) DEFAULT NULL,
+  language VARCHAR(120) DEFAULT 'Other',
   solution_id INTEGER DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );

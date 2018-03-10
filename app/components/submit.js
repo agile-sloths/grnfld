@@ -10,10 +10,6 @@ angular.module('app')
     }
   };
 
-  $scope.selectLangauge = function(language) {
-    $scope.language = language;
-  }
-
   //create new post variable
   $scope.post = {
     userId: +$rootScope.userId,

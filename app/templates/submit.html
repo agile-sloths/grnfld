@@ -25,9 +25,9 @@
               >A title is required.</p>
           </div>
           <label>Language:</label>
-          <select ng-model="language"
-            ng-options="language as language.label for language in languages"
-            ng-change="selectLanguage()"
+          <select ng-model="post.language"
+            ng-options="language.label as language.label for language in languages"
+            required
             style="font-size: 1em;">
           </select>
             <div class="form-group">
