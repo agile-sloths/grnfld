@@ -178,9 +178,12 @@
                         <p>Result: {{ randomSlot.value }}</p>
                   </div>
                   <div>
-                    <p ng-show="slotError.error" class="help-block">You don't have any coins to spend!</p>
-                    <p ng-show="slotError.error" class="help-block">You lost - click to try again.</p>
-                    <p ng-show="slotError.error" class="help-block">OMFG you won 10 hackcoins!</p>
+                    <div id="slot-alert" class="alert alert-danger alert-dismissible fade in" style="display:none">
+                      You lost!
+                    </div>
+                    <div id="slotwon-alert" class="alert alert-success alert-dismissible fade in" style="display:none">
+                      You won 10 hackcoins!
+                    </div>
                   </div>
               <div>
                 <button id="spin" class="btn btn-primary" type="button" ng-click="getRandomSlotValue()">Try your luck!</button>

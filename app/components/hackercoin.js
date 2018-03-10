@@ -22,10 +22,6 @@ angular.module('app')
       {value: 'LOSE'},
     ]
 
-    $scope.slotError = {
-      error: false
-    }
-
     $scope.getUsers = function(val) {
         return $http.get('/users', {
           params: {
@@ -54,12 +50,13 @@ angular.module('app')
     }
     
     $scope.getRandomSlotValue = async () => {
-      $scope.slotError === false;
+      $('#slot-alert').hide();
+      $('#slotwon-alert').hide();
       if ($rootScope.hackcoin <= 0) {
-        $scope.slotError.error === true;
+        console.log('not enough coins')
       } else {
-        await coinsService.spendCoin($rootScope.userId);
         $rootScope.hackcoin = $rootScope.hackcoin - 1;
+        await coinsService.spendCoin($rootScope.userId);
         window.localStorage.hackcoin = $rootScope.hackcoin;
         //take a coin on button click, then update window.localstorage.hackcoin
         //disable button until function is done running
@@ -68,11 +65,12 @@ angular.module('app')
         //if result is a winner, add 10 coins to the users
         let result = $scope.randomSlot = $scope.slotValues[Math.floor(Math.random() * $scope.slotValues.length)];
         if (result.value === 'LOSE') {
-          $scope.slotError.error === true;
+          $('#slot-alert').show();
           //show message that says 'You lost- click to try again'
         } else if (result.value === 'WIN') {
-          coinsService.coinPrize($rootScope.userId);
+          $('#slotwon-alert').show();
           $rootScope.hackcoin = $rootScope.hackcoin + 10;
+          coinsService.coinPrize($rootScope.userId);
           window.localStorage.hackcoin = $rootScope.hackcoin;
         }
       }
