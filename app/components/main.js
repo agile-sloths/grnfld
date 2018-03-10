@@ -87,17 +87,16 @@ angular.module('app')
   $scope.init();
 
   $scope.handlePostClick = (clickedValue) => {
-    $('#like-alert').hide();
-    $('#delete-alert').hide();
-    clickedValue === 'featured' ? $scope.currentPost = $scope.featuredPost :
-    $scope.currentPost = $scope.filteredPosts[clickedValue];
-    //get all comments from clicked post
-    commentsService.getComments($scope.currentPost.post_id, (data) => {
-      $scope.comments = data;
-      $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
-      $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
-    });
-
+      $('#like-alert').hide();
+      $('#delete-alert').hide();
+      clickedValue === 'featured' ? $scope.currentPost = $scope.featuredPost :
+      $scope.currentPost = $scope.filteredPosts[clickedValue];
+      //get all comments from clicked post
+      commentsService.getComments($scope.currentPost.post_id, (data) => {
+        $scope.comments = data;
+        $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
+        $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
+      });
   };
 
   //hacky way of refreshing the current view to get new posts
@@ -130,8 +129,12 @@ angular.module('app')
     }
   };
 
-  $scope.deletePost = async (postId) => {
-    console.log('post deleted yay!',postId);
+
+  $scope.deletePost = async (postId, index) => {
+    let res = await postsService.deletePost(postId);
+    if (res.status === 204) {
+      $scope.refresh();
+    }
   };
 
   $scope.message = '';
@@ -209,9 +212,9 @@ angular.module('app')
   $scope.likeComment = async (commentId, postUserId, index) => {
     //need commmentId, usernameId(rootscope), how many coins to use (ng-click to send one and ng-double click to send more?)
     //TODO add modal for ng-doubleclick
-    if ($rootScope.hackcoin <= 0) {
+    if ($rootScope.hackcoin <= 0 && postUserId !== $rootScope.userId) {
       $('#like-error').show();
-    } else {
+    } else if (postUserId !== $rootScope.userId) {
       let res = await commentsService.likeComment({
         commentId: commentId,
         postUserId: postUserId,
@@ -235,7 +238,7 @@ angular.module('app')
   };
 
   $scope.unlikeComment = async (commentId, postUserId, index) => {
-    if ($scope.comments[index].voters[$rootScope.userId] > 0) {
+    if ($scope.comments[index].voters[$rootScope.userId] > 0 && postUserId !== $rootScope.userId) {
       let res = await commentsService.unlikeComment($rootScope.userId, commentId, postUserId, 1);
       if (res.status === 204) {
         $scope.$apply(() => {
@@ -304,7 +307,7 @@ angular.module('app')
 
 
   $scope.multipleUnlike = (commentId, postUserId, index) => {
-    if ($scope.comments[index].voters[$rootScope.userId] > 1) {
+    if ($scope.comments[index].voters[$rootScope.userId] > 1 && postUserId !== $rootScope.userId) {
       $scope.max = $scope.comments[index].voters[$rootScope.userId] - 1;
       $scope.unlikeCommentId = commentId;
       $scope.unlikePostUserId = postUserId;
@@ -318,9 +321,9 @@ angular.module('app')
   };
 
   $scope.multipleLike = (commentId, postUserId, index) => {
-    if ($rootScope.hackcoin <= 0) {
+    if ($rootScope.hackcoin <= 0 && postUserId !== $rootScope.userId) {
       $('#like-error').show();
-    } else {
+    } else if(postUserId !== $rootScope.userId) {
       $scope.commentId = commentId;
       $scope.postUserId = postUserId;
       $scope.index = index;
