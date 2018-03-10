@@ -88,7 +88,6 @@ angular.module('app')
     $scope.currentPost = $scope.filteredPosts[clickedValue];
     //get all comments from clicked post
     commentsService.getComments($scope.currentPost.post_id, (data) => {
-      console.log('comments:',data);
       $scope.comments = data;
       $scope.comments.forEach(comment => comment.message = comment.message.replace(/\{\{([^}]+)\}\}/g, '<code>$1</code>'));
       $scope.currentIndex = clickedValue; //sets index for when submit comment is clicked
@@ -174,18 +173,16 @@ angular.module('app')
         }
       }
     }
-    if ($scope.posts) {
-      $scope.filteredPosts = $scope.posts.filter(post => {
-        if (post.post_id === $scope.featuredPost.post_id) {
-          return;
-        }
-        if ($scope.selectedLanguage.label === 'All') {
-          return post;
-        } else {
-          return post.language === $scope.selectedLanguage.label;
-        }
-      });
-    }
+    $scope.filteredPosts = $scope.posts.filter(post => {
+      if (post.post_id === $scope.featuredPost.post_id) {
+        return;
+      }
+      if ($scope.selectedLanguage.label === 'All') {
+        return post;
+      } else {
+        return post.language === $scope.selectedLanguage.label;
+      }
+    });
   }
 
   $scope.selectSolution = (comment) => {
