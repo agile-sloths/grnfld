@@ -30,7 +30,6 @@
 
                 </small>
 
-
                 <small>
                     <strong>{{featuredPost.username}}</strong>
                 </small>
@@ -41,7 +40,7 @@
             </small>
 
             <h5><strong class="text-warning" ng-show="featuredPost.solution_id !== null">Solved!</strong></h5>
-            
+
           <button ng-show="featuredPost.user_id === $root.userId" ng-click="deletePost(featuredPost.post_id,$index); $event.stopPropagation()" type="button" class="btn btn-warning btn-sm">Delete Post</button>
 
         </div>
@@ -129,7 +128,7 @@
 
 
                                         <!-- Multiple Like Modal -->
-<<<<<<< HEAD
+
 <div class="modal fade" id="like-modal" role="dialog" ng-controller="MainCtrl">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -137,7 +136,7 @@
         <h4 class="modal-title" ><h3 style="text-align: center; color: white;">Submit Multiple Likes!</h3></h4>
       </div>
         <div class="modal-body">
-            <div style="text-align: center; color: white;">Please choose # of hackcoins to submit for *likes*! </div>
+            <div style="text-align: center; color: white;">Please choose # of hackcoins to submit for <strong style="text-decoration: underline; color: gold;">LIKES</strong></div>
         </div>
     <div id="likemultiple-error" class="alert alert-danger alert-dismissible fade in" style="display:none;">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -146,9 +145,9 @@
       <form style="text-align: center;" name="likeForm" ng-submit="submit(likeForm.$valid)" novalidate>
       <div class="modal-body">
           <div class="form-group">
-            <label for="input">Number of hackcoins to use:</label>
-            <br>
-            <input class="form-control" type="number" name="input" ng-model="like.input" required step="1" min="1" max="{{$root.hackcoin}}" required>
+            <label style="color:white;" for="input">Number of hackcoins to use:</label>
+            <br><br>
+            <input class="form-control" style="margin-left: 40%; width: 20%;" type="number" name="input" ng-model="like.input" required step="1" min="1" max="{{$root.hackcoin}}" required>
             <p ng-show="likeForm.input.$error.min || likeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1 and {{$root.hackcoin}}. </p>
             <p ng-show="likeForm.input.$error.required" class="help-block">A number is required.</p>
           </div>
@@ -170,7 +169,7 @@
         <h4 class="modal-title" ><h3 style="text-align: center; color: white;">Submit Multiple Unlikes!</h3></h4>
       </div>
         <div class="modal-body">
-            <div style="text-align: center; color: white;">Please choose # of hackcoins to submit for *unlikes*! </div>
+            <div style="text-align: center; color: white;">Please choose # of hackcoins to submit for <strong style="text-decoration: underline; color: gold;">UNLIKES</strong></div>
         </div>
     <div id="unlikemultiple-error" class="alert alert-danger alert-dismissible fade in" style="display:none;">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -179,9 +178,9 @@
       <form style="text-align: center;" name="unlikeForm" ng-submit="submitUnlikes(unlikeForm.$valid)" novalidate>
       <div class="modal-body">
           <div class="form-group">
-            <label for="input">Number of hackcoins to use: </label>
-            <br>
-            <input class="form-control" type="number" name="input" ng-model="unlike.input" required step="1" min="1" max="{{max}}" required>
+            <label style="color:white;" for="input">Number of hackcoins to use: </label>
+            <br><br>
+            <input class="form-control" style="margin-left: 40%; width: 20%;" type="number" name="input" ng-model="unlike.input" required step="1" min="1" max="{{max}}" required>
             <p ng-show="unlikeForm.input.$error.min || unlikeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1 and {{max}}.</p>
             <p ng-show="unlikeForm.input.$error.required" class="help-block">A number is required.</p>
           </div>
@@ -194,76 +193,7 @@
     </div>
   </div>
 </div>
-=======
-                                        <div class="modal fade" id="like-modal" role="dialog" ng-controller="MainCtrl">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">
-                                                            <h3 style="text-align: center; color: white;">Submit Multiple Likes!</h3>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div style="text-align: center; color: white;">Please choose # of hackcoins to submit for *likes*! </div>
-                                                    </div>
-                                                    <div id="likemultiple-error" class="alert alert-danger alert-dismissible fade in" style="display:none;">
-                                                        <a href="#" class="close" aria-label="close">&times;</a>
-                                                        <strong>Error!</strong> Please specify a valid number and try again.
-                                                    </div>
-                                                    <form style="text-align: center;" name="likeForm" ng-submit="submit(likeForm.$valid)" novalidate>
-                                                        <div class="modal-body">
-                                                            <div class="form-group">
-                                                                <label for="input">Number of hackcoins to use: </label>
-                                                                <input type="number" name="input" ng-model="like.input" required step="1" min="1" max="{{$root.hackcoin}}" required>
-                                                                <p ng-show="likeForm.input.$error.min || likeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1
-                                                                    and {{$root.hackcoin}}. </p>
-                                                                <p ng-show="likeForm.input.$error.required" class="help-block">A number is required.</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-success" ng-click="likeForm.$setPristine()" ng-disabled="likeForm.$invalid">Submit Likes</button>
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Multiple Unike Modal -->
-                                        <div class="modal fade" id="unlike-modal" role="dialog" ng-controller="MainCtrl">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">
-                                                            <h3 style="text-align: center; color: white;">Submit Multiple Unlikes!</h3>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div style="text-align: center; color: white;">Please choose # of hackcoins to submit for *unlikes*! </div>
-                                                    </div>
-                                                    <div id="unlikemultiple-error" class="alert alert-danger alert-dismissible fade in" style="display:none;">
-                                                        <a href="#" class="close" aria-label="close">&times;</a>
-                                                        <strong>Error!</strong> Please specify a valid number and try again.
-                                                    </div>
-                                                    <form style="text-align: center;" name="unlikeForm" ng-submit="submitUnlikes(unlikeForm.$valid)" novalidate>
-                                                        <div class="modal-body">
-                                                            <div class="form-group">
-                                                                <label for="input">Number of hackcoins to use: </label>
-                                                                <input type="number" name="input" ng-model="unlike.input" required step="1" min="1" max="{{max}}" required>
-                                                                <p ng-show="unlikeForm.input.$error.min || unlikeForm.input.$error.max" class="help-block">Number of Hackcoins is out of bounds!!! Must be between 1
-                                                                    and {{max}}.</p>
-                                                                <p ng-show="unlikeForm.input.$error.required" class="help-block">A number is required.</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-success" ng-click="unlikeForm.$setPristine()" ng-disabled="unlikeForm.$invalid">Submit Unlikes</button>
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
->>>>>>> 706cb59f8820bd9b8761ee4abab869dc6303f232
+                                        
 
 
 
