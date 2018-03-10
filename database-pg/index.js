@@ -42,7 +42,7 @@ const getUserPosts = (userId) => {
   return knex.column(knex.raw('posts.*, users.username')).select()
     .from(knex.raw('posts, users'))
     .where(knex.raw(`posts.user_id = ${userId}`))
-    .orderBy('created_at', 'desc');
+    .orderBy('votes', 'desc');
 };
 
 const getVoters = (commentId) => {

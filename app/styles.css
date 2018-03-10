@@ -164,7 +164,7 @@ input[name=username] {
 .users-container{
 	margin-top: 150px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
 }
@@ -172,8 +172,8 @@ input[name=username] {
 .user-container {
   grid-column: 1 / 1;
   border: 1px solid black;
-  min-height: 70px;
-  min-width:  70px;
+/*  min-height: 70px;
+  min-width:  20px;*/
   padding: 5px;
   background: #B58900;
   color: white;
@@ -226,11 +226,18 @@ input[name=username] {
 	margin-left: auto;
 	margin-right: auto;
 	width: 50%;
+	margin-top: 10px;
 }
 
 .user-questions {
 	border: 1px solid #B58900;
 	border-radius: 5px;
+	margin: 10px;
+}
+
+.user-questions-title {
+	/*font-size: 18px;*/
+	margin-top: 15px;
 }
 /**** USER PAGE ****/
 

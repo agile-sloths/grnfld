@@ -26,7 +26,7 @@ angular.module('app')
       console.log($scope.currentUser)
 
       $scope.currentUserPosts = [];
-      let postIds = [];
+      let postIds = []; 
 
       postsService.getUserPosts($scope.currentUser.user_id, (data) => {
         data.data.forEach(post => {
