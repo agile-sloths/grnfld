@@ -16,6 +16,7 @@ angular.module('app')
       {value: 'LOSE'},
       {value: 'LOSE'},
       {value: 'LOSE'},
+      {value: 'LOSE'},
       {value: 'LOSE'}
     ]
 
@@ -55,17 +56,25 @@ angular.module('app')
       $('#slot-alert').hide();
       $('#slot-alert2').hide();
       $('#slotwon-alert').hide();
+      $('#spin').addClass("disabled");
       if ($rootScope.hackcoin <= 0) {
         $('#slot-alert2').show();
+        $('#spin').removeClass("disabled");
       } else {
         $rootScope.hackcoin = $rootScope.hackcoin - 1;
         await coinsService.spendCoin($rootScope.userId);
         window.localStorage.hackcoin = $rootScope.hackcoin;
         let result = $scope.randomSlot = $scope.slotValues[Math.floor(Math.random() * $scope.slotValues.length)];
         if (result.value === 'LOSE') {
-          $('#slot-alert').toggle("slide", "left", "slow");;
+          $('#slot-alert').toggle("slide", "left", "slow");
+          setTimeout(function() {
+            $('#spin').removeClass("disabled");
+          }, 650); 
         } else if (result.value === 'WIN') {
           $('#slotwon-alert').toggle("slide", "left", "slow").effect('shake', 'slow');
+          setTimeout(function() {
+            $('#spin').removeClass("disabled");
+          }, 1000); 
           $rootScope.hackcoin = $rootScope.hackcoin + 10;
           coinsService.coinPrize($rootScope.userId);
           window.localStorage.hackcoin = $rootScope.hackcoin;
