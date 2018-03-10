@@ -227,6 +227,11 @@ input[name=username] {
 	margin-right: auto;
 	width: 50%;
 }
+
+.user-questions {
+	border: 1px solid #B58900;
+	border-radius: 5px;
+}
 /**** USER PAGE ****/
 
 

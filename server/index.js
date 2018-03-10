@@ -103,7 +103,6 @@ app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
 });
 
 app.get('/getUserPosts', async (req, res) => {
-  console.log('reqqqqqqq', req)
   let userId = req.query.userId;
   let posts = await db.getUserPosts(userId);
   res.json(posts);
