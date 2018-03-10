@@ -97,7 +97,7 @@ app.post('/upvotePost', isLoggedIn, async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-})
+});
 
 app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
   let query = url.parse(req.url).query.split('/');
@@ -107,7 +107,14 @@ app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-})
+});
+
+app.get('/getUserPosts', async (req, res) => {
+  let userId = req.query.userId;
+  let posts = await db.getUserPosts(userId);
+  res.json(posts);
+});
+
 
 app.post('/createComment', isLoggedIn, async (req, res) => {
   let comment = req.body;
@@ -129,6 +136,7 @@ app.post('/login', passport.authenticate('local-login'), (req, res) => {
 });
 
 app.post('/register', passport.authenticate('local-signup'), (req, res) => {
+  console.log('user', req.body)
   if (req.user === 'already exists') {
     res.status(409).end();
   } else {
@@ -136,6 +144,7 @@ app.post('/register', passport.authenticate('local-signup'), (req, res) => {
       user_id: req.user[0].user_id,
       username: req.user[0].username,
       hackcoin: req.user[0].hackcoin,
+      req: req,
       session_id: req.sessionID
     })
   }
