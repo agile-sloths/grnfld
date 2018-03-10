@@ -31,11 +31,9 @@ app.get('/posts', async (req, res) => {
   let posts = await db.getAllPosts();
   let postVotes = await db.getPostVotes();
   let featuredPost = await db.getFeaturedPost();
-  console.log(featuredPost);
   if (featuredPost.length > 1) {
     featuredPost = await [featuredPost[Math.floor(Math.random() * featuredPost.length)]]
   }
-  console.log(featuredPost);
   res.json({posts: posts, postVotes: postVotes, featuredPost: featuredPost});
 });
 
@@ -86,8 +84,10 @@ app.post('/createPost', isLoggedIn, async (req, res) => {
 });
 
 app.post('/upvotePost', isLoggedIn, async (req, res) => {
+  console.log('REQ --------->', req.body);
   try {
     let upvote = await db.upvotePost(req.body);
+    console.log('UPVOTE ---------->', upvote);
     upvote ? res.status(201).end() : null;
   } catch (err) {
     console.log(err);
@@ -96,8 +96,10 @@ app.post('/upvotePost', isLoggedIn, async (req, res) => {
 
 app.delete('/downvotePost*', isLoggedIn, async (req, res) => {
   let query = url.parse(req.url).query.split('/');
+  console.log('QUERY --------->', query)
   try {
     let downvote = await db.downvotePost(query[0], query[1], query[2]);
+    console.log('DOWNVOTE--------->', downvote);
     downvote ? res.status(204).end() : null;
   } catch (err) {
     console.log(err);

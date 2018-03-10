@@ -3,7 +3,6 @@ angular.module('app')
   this.getAll = function (callback) {
     $http.get('/posts')
       .then(function ({ data }) {
-        console.log(data);
         callback(data.posts, data.postVotes, data.featuredPost);
       })
       .catch(function (err) {
